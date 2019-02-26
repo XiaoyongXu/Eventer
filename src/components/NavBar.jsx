@@ -1,5 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
 
 export default function NavBar(props) {
   return (
@@ -9,8 +11,9 @@ export default function NavBar(props) {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="#Activities">Activities</Nav.Link>
-            <Nav.Link href="#Discussions">Discussions</Nav.Link>
+            <Link to={'/home'} className="nav-link"> Home </Link>
+            <Link to={'/activities'} className="nav-link">Activities</Link>
+            <Link to={'/discussions'} className="nav-link">Discussions</Link>
             <NavDropdown title="Services" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Courses</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">E-commerce</NavDropdown.Item>
@@ -20,10 +23,8 @@ export default function NavBar(props) {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link href="#login">Login</Nav.Link>
-            <Nav.Link eventKey={2} href="#Admin">
-              Admin
-            </Nav.Link>
+            <Link to={'/Login'} className="nav-link">Login</Link>
+            <Link to={'/Admin'} className="nav-link">Admin</Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
