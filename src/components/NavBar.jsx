@@ -1,13 +1,21 @@
 import React from 'react';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown,Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 
 export default function NavBar(props) {
+  let checkLogin = (<Link to={'/Login'} className="nav-link">Login</Link>)
+  if (props.currentUser.name){
+    checkLogin = (<Button onClick={props.logout} className="nav-link">Logout</Button>)
+  }
+  let checkAdmin = (<Link to={'/Admin'} className="nav-link">Guest</Link>)
+  if (props.currentUser.admin){
+    checkAdmin = (<Link to={'/Admin'} className="nav-link">Admin</Link>)
+  }
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand href="#home">Dream Club</Navbar.Brand>
+        <Navbar.Brand >Dream Club</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
@@ -23,8 +31,10 @@ export default function NavBar(props) {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Link to={'/Login'} className="nav-link">Login</Link>
-            <Link to={'/Admin'} className="nav-link">Admin</Link>
+            <Navbar.Brand>{props.currentUser.name}</Navbar.Brand>
+            {checkLogin}
+            {checkAdmin}
+
           </Nav>
         </Navbar.Collapse>
       </Navbar>

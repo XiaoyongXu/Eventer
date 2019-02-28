@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Form,Button } from 'react-bootstrap';
-class Login extends Component {
-  render() {
+
+export default function Login (props) {
     return (
       <div style={{ width: '50%', marginLeft: "25%", marginTop:"10%" }}>
         <Form>
@@ -20,13 +20,11 @@ class Login extends Component {
           <Form.Group controlId="formBasicChecbox">
             <Form.Check type="checkbox" label="Check me out" />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" onClick={props.login}>
             Submit
           </Button>
         </Form>
       </div>
     );
-  }
-}
 
-export default Login;
+}
