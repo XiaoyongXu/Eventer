@@ -3,16 +3,13 @@ import { Form, Button } from 'react-bootstrap';
 
 
 class Admin extends Component {
-  constructor(props){
-    super(props);
-  }
+
   DemoShow(e) {
     e.preventDefault();
     //call the fetch function
     fetch('http://localhost:5000/demo')
       .then(res => res.json())//response type
-      .then
-      (
+      .then(
         data => console.log(data)
       ); //log the data;
   }
