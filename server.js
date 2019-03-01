@@ -33,6 +33,30 @@ app.post('/login', (req, res) => {
     })
 });
 
+app.post('/register', (req, res) => {
+  knex('users')
+    .select('*')
+    .where('email', req.body.email)
+    .first()
+    .then((row) => {
+      if (row) {
+        res.send('email already exist')
+      }else{
+        knex('users')
+          .insert({
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            password: req.body.password,
+            isAdmin: false
+          }).returning('id').then(()=>{
+            res.send('success')
+          })
+      }
+    })
+
+});
+
 app.post('/api/world', (req, res) => {
   console.log(req.body);
   res.send(

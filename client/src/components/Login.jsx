@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
-import { Form,Button } from 'react-bootstrap';
+import { Form,Button} from 'react-bootstrap';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class Login extends Component {
   constructor(props) {
@@ -28,9 +29,8 @@ class Login extends Component {
         res => {
           if (res.data){
             this.props.login(res.data.first_name,res.data.isAdmin)
-          }else{
           }
-        }
+        },
       );
   }
 
@@ -50,12 +50,13 @@ class Login extends Component {
             <Form.Label>Password</Form.Label>
             <Form.Control type="password" placeholder="Password" onChange={this.handlePasswordChange}/>
           </Form.Group>
-          <Form.Group controlId="formBasicChecbox">
-            <Form.Check type="checkbox" label="Check me out" />
-          </Form.Group>
           <Button variant="primary" type="submit">
             Submit
           </Button>
+          <Form.Group style={{marginTop:'1em'}}>
+            <i>Does not have an account? <Link to={'/register'}> register now </Link></i>
+          </Form.Group>
+
         </Form>
       </div>
     );

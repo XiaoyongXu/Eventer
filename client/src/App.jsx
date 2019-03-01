@@ -7,6 +7,7 @@ import Activities from './components/Activities.jsx';
 import Discussions from './components/Discussions.jsx';
 import Login from './components/Login.jsx';
 import Admin from './components/Admin.jsx';
+import Register from './components/Register.jsx'
 
 
 function withProps(Component, props) {
@@ -77,6 +78,7 @@ class App extends Component {
             <Route exact path='/Discussions' component={Discussions} />
             <Route exact path='/Login' component={withProps(Login, { login:this.login})} />
             <Route exact path='/Admin' component={withProps(Admin,{addActivity: this.addActivity})} />
+            <Route exact path='/register' component={withProps(Register, {login: this.login})} />
           </Switch>
         </div>
       </Router>
