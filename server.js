@@ -18,12 +18,28 @@ app.use(function (req, res, next) {
 app.get('/api/hello', (req, res) => {
   res.send({ express: 'Hello From Express' });
 });
+
+app.post('/login', (req, res) => {
+  knex('users')
+    .select('*')
+    .where('email',req.body.email)
+    .first()
+    .then((row)=>{
+      if (row){
+        if (row.password === req.body.password){
+          res.send(row)
+        }
+      }
+    })
+});
+
 app.post('/api/world', (req, res) => {
   console.log(req.body);
   res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`,
+    `I received your POST request. This is what you sent me: ${req.body.Title}`,
   );
 });
+
 app.get("/demo", (req, res) => {
   var data = [
     { id: 1, name: "Tony", job: "Project Manager" },
