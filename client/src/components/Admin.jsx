@@ -22,7 +22,7 @@ class Admin extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    axios.post('http://localhost:5000/api/world', {
+    axios.post('http://localhost:5000/admin', {
       Title: this.state.title,
       Description: this.state.description
     })//response type

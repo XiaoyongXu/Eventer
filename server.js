@@ -1,5 +1,5 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT || 5000;
 const ENV = process.env.ENV || "development";
@@ -9,39 +9,67 @@ const knex = require("knex")(knexConfig[ENV]);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   next();
 });
 
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
+app.get("/api/hello", (req, res) => {
+  res.send({ express: "Hello From Express" });
 });
-app.post('/api/world', (req, res) => {
+app.post("/api/world", (req, res) => {
   console.log(req.body);
+  knex.insert; // instead of res.send
   res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`,
+    `I received your POST request. This is what you sent me: ${req.body.Title}`
   );
 });
 app.get("/demo", (req, res) => {
   var data = [
     { id: 1, name: "Tony", job: "Project Manager" },
-    { id: 2, name: "Rohit", job: "Mentor" },
+    { id: 2, name: "Rohit", job: "Mentor" }
   ];
   res.send({ data: data });
 });
 
 app.get("/test", (req, res) => {
-  knex('users')
-    .select('*')
-    .then(function (rows) {
+  console.log("yoyoyoyo");
+  knex("users")
+    .select("*")
+    .then(function(rows) {
       rows.forEach(row => {
-        console.log(row)
-      })
-      res.redirect("/demo");
-    })
-})
+        console.log(row);
+      });
+      res.send(rows);
+    });
+});
+
+app.post("/test", (req, res) => {
+  console.log(req);
+  res.send("got the request");
+});
+
+app.post("/admin", (req, res) => {
+  knex('events')
+  .insert({
+    title: req.body.Title,
+    user_id: 1,
+    description: req.body.Description,
+    start_date: '2019-04-30',
+    end_date: '2019-04-30'
+  }).returning('id')
+  .then((id) => {
+    res.send(id)
+    console.log(id);
+  })
+
+});
+
+
 
 
 
