@@ -7,6 +7,8 @@ import Activities from './components/Activities.jsx';
 import Discussions from './components/Discussions.jsx';
 import Login from './components/Login.jsx';
 import Admin from './components/Admin.jsx';
+import Register from './components/Register.jsx'
+
 
 function withProps(Component, props) {
   return function (matchProps) {
@@ -19,7 +21,7 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: {
-        name: 'Tony', admin: true, response: '',
+        name: '', admin: false, response: '',
         post: '',
         responseToPost: ''},
       activities: [{ id: 1, title: 'first activity', description: 'testing' }, { id: 2, title: 'second activity', description: 'testing2' }]
@@ -55,8 +57,8 @@ class App extends Component {
   logout() {
     this.setState({ currentUser: { 'name': '', admin: false } });
   }
-  login() {
-    this.setState({ currentUser: { 'name': 'Tony', admin: true } });
+  login(name,admin) {
+    this.setState({ currentUser: { 'name': name, admin: admin } });
   }
   addActivity(title,description){
     this.state.activities.push({title:title,description:description})
@@ -76,6 +78,7 @@ class App extends Component {
             <Route exact path='/Discussions' component={Discussions} />
             <Route exact path='/Login' component={withProps(Login, { login:this.login})} />
             <Route exact path='/Admin' component={withProps(Admin,{addActivity: this.addActivity})} />
+            <Route exact path='/register' component={withProps(Register, {login: this.login})} />
           </Switch>
         </div>
       </Router>
