@@ -22,7 +22,6 @@ app.get("/api/hello", (req, res) => {
   res.send({ express: "Hello From Express" });
 });
 
-<<<<<<< HEAD
 app.get("/events", (req, res) => {
   knex('events')
     .select('*')
@@ -44,12 +43,6 @@ app.post('/login', (req, res) => {
   knex('users')
     .select('*')
     .where('email',req.body.email)
-=======
-app.post("/login", (req, res) => {
-  knex("users")
-    .select("*")
-    .where("email", req.body.email)
->>>>>>> 3f5f9f4e3e6b2fecfc23557a7805a9b1072f45b1
     .first()
     .then(row => {
       if (row) {
