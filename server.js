@@ -22,6 +22,7 @@ app.get("/api/hello", (req, res) => {
   res.send({ express: "Hello From Express" });
 });
 
+<<<<<<< HEAD
 app.get("/events", (req, res) => {
   knex('events')
     .select('*')
@@ -43,45 +44,52 @@ app.post('/login', (req, res) => {
   knex('users')
     .select('*')
     .where('email',req.body.email)
+=======
+app.post("/login", (req, res) => {
+  knex("users")
+    .select("*")
+    .where("email", req.body.email)
+>>>>>>> 3f5f9f4e3e6b2fecfc23557a7805a9b1072f45b1
     .first()
-    .then((row)=>{
-      if (row){
-        if (row.password === req.body.password){
-          res.send(row)
+    .then(row => {
+      if (row) {
+        if (row.password === req.body.password) {
+          res.send(row);
         }
       }
-    })
+    });
 });
 
-app.post('/register', (req, res) => {
-  knex('users')
-    .select('*')
-    .where('email', req.body.email)
+app.post("/register", (req, res) => {
+  knex("users")
+    .select("*")
+    .where("email", req.body.email)
     .first()
-    .then((row) => {
+    .then(row => {
       if (row) {
-        res.send('email already exist')
-      }else{
-        knex('users')
+        res.send("email already exist");
+      } else {
+        knex("users")
           .insert({
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             email: req.body.email,
             password: req.body.password,
             isAdmin: false
-          }).returning('id').then(()=>{
-            res.send('success')
           })
+          .returning("id")
+          .then(() => {
+            res.send("success");
+          });
       }
-    })
-
+    });
 });
 
-app.post('/api/world', (req, res) => {
+app.post("/api/world", (req, res) => {
   console.log(req.body);
   knex.insert; // instead of res.send
   res.send(
-    `I received your POST request. This is what you sent me: ${req.body.Title}`,
+    `I received your POST request. This is what you sent me: ${req.body.Title}`
   );
 });
 
@@ -111,23 +119,18 @@ app.post("/test", (req, res) => {
 });
 
 app.post("/admin", (req, res) => {
-  knex('events')
-  .insert({
-    title: req.body.Title,
-    user_id: 1,
-    description: req.body.Description,
-    start_date: '2019-04-30',
-    end_date: '2019-04-30'
-  }).returning('id')
-  .then((id) => {
-    res.send(id)
-    console.log(id);
-  })
-
+  knex("events")
+    .insert({
+      title: req.body.title,
+      user_id: 1,
+      description: req.body.description,
+      start_date: req.body.start_date,
+      end_date: req.body.end_date
+    })
+    .returning("id")
+    .then(id => {
+      res.send(id);
+    });
 });
-
-
-
-
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
