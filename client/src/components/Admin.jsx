@@ -7,7 +7,7 @@ import DateInput from './DateInput.jsx'
 class Admin extends Component {
   constructor(props) {
     super(props);
-    this.state = { title: "", description: "", start_date: new Date(), end_date: new Date(),location:""};
+    this.state = { title: "", description: "", start_date: new Date(), end_date: new Date(),location:"",weather:"sunny"};
 
     this.handleStartDate = this.handleStartDate.bind(this);
     this.handleEndDate = this.handleEndDate.bind(this);
@@ -44,7 +44,9 @@ class Admin extends Component {
         title: this.state.title,
         description: this.state.description,
         start_date: this.state.start_date,
-        end_date: this.state.end_date
+        end_date: this.state.end_date,
+        location: this.state.location,
+        weather: this.state.weather
       }) //response type
       .then(res => console.log(res.data));
   }
