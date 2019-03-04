@@ -10,7 +10,7 @@ export default function NavBar(props) {
   }
   let checkAdmin = (<Link to={'/home'} className="nav-link">Guest</Link>)
   if (props.currentUser.admin){
-    checkAdmin = (<Link to={'/Admin'} className="nav-link">Admin</Link>)
+    checkAdmin = (<Link to={'/admin'} className="nav-link">Admin</Link>)
   }
   return (
     <div>
