@@ -12,11 +12,9 @@ class Activities extends Component {
   }
   componentDidMount() {
     axios.get('/events').then(response => {
-      // returning the data here allows the caller to get it through another .then(...)
-      console.log(response.data);
+      // console.log(response.data);
       this.setState({activities:response.data})
     })
-    // this.setState({ activities: activities});
   }
 
   render() {

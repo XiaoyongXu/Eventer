@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
+import DateInput from './DateInput.jsx'
+
 
 class Admin extends Component {
   constructor(props) {
     super(props);
-    this.state = { title: "", description: "", start_date: "", end_date: "" };
+    this.state = { title: "", description: "", start_date: new Date(), end_date: new Date() };
 
     this.handleStartDate = this.handleStartDate.bind(this);
     this.handleEndDate = this.handleEndDate.bind(this);
@@ -15,11 +17,11 @@ class Admin extends Component {
   }
 
   handleStartDate(event) {
-    this.setState({ start_date: event.target.value });
+    this.setState({ start_date: event.target.value});
   }
 
   handleEndDate(event) {
-    this.setState({ end_date: event.target.value });
+    this.setState({ end_date: event.target.value});
   }
 
   handleTitleChange(event) {
@@ -45,25 +47,8 @@ class Admin extends Component {
   render() {
     return (
       <div style={{ width: "50%", marginLeft: "25%", marginTop: "10%" }}>
+
         <Form onSubmit={this.handleSubmit}>
-          <Form.Group controlId="exampleForm.ControlInput2">
-            <Form.Label>Start Date</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="YYYY-MM-DD"
-              onChange={this.handleStartDate}
-            />
-          </Form.Group>
-
-          <Form.Group controlId="exampleForm.ControlInput3">
-            <Form.Label>End Date</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="YYYY-MM-DD"
-              onChange={this.handleEndDate}
-            />
-          </Form.Group>
-
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Activity name</Form.Label>
             <Form.Control
@@ -79,6 +64,15 @@ class Admin extends Component {
               rows="3"
               onChange={this.handleDescripChange}
             />
+          </Form.Group>
+          <Form.Group controlId="exampleForm.ControlInput2" >
+            <Form.Label>Start Date</Form.Label>
+            <div onChange={this.handleStartDate}>< DateInput /></div>
+          </Form.Group>
+
+          <Form.Group controlId="exampleForm.ControlInput3">
+            <Form.Label>End Date</Form.Label>
+            <div onChange={this.handleEndDate}>< DateInput /></div>
           </Form.Group>
           <Button variant="primary" type="submit">
             Submit

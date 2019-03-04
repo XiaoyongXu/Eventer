@@ -29,7 +29,7 @@ app.get("/events", (req, res) => {
       let events=[]
       rows.forEach(
         row => {
-          events.push({id:row.id, title:row.title, desciption:row.description})
+          events.push(row)
         }
       )
       return events;
