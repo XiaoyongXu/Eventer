@@ -8,7 +8,7 @@ import Discussions from './components/Discussions.jsx';
 import Login from './components/Login.jsx';
 import Admin from './components/Admin.jsx';
 import Register from './components/Register.jsx'
-
+import Calendar from './components/Calendar.jsx'
 
 function withProps(Component, props) {
   return function (matchProps) {
@@ -80,6 +80,19 @@ class App extends Component {
             <Route exact path='/Admin' component={withProps(Admin,{addActivity: this.addActivity})} />
             <Route exact path='/register' component={withProps(Register, {login: this.login})} />
           </Switch>
+          <div className="Calendar">
+            <header>
+              <div id="logo">
+                <span className="icon">date_range</span>
+                <span>
+                  react<b>calendar</b>
+                </span>
+              </div>
+            </header>
+            <main>
+              <Calendar />
+            </main>
+          </div>
         </div>
       </Router>
     );
