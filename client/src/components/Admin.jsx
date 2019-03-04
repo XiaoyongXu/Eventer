@@ -7,13 +7,14 @@ import DateInput from './DateInput.jsx'
 class Admin extends Component {
   constructor(props) {
     super(props);
-    this.state = { title: "", description: "", start_date: new Date(), end_date: new Date() };
+    this.state = { title: "", description: "", start_date: new Date(), end_date: new Date(),location:""};
 
     this.handleStartDate = this.handleStartDate.bind(this);
     this.handleEndDate = this.handleEndDate.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleDescripChange = this.handleDescripChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLocation = this.handleLocation.bind(this);
   }
 
   handleStartDate(event) {
@@ -30,6 +31,10 @@ class Admin extends Component {
 
   handleDescripChange(event) {
     this.setState({ description: event.target.value });
+  }
+
+  handleLocation(event) {
+    this.setState({ location: event.target.value });
   }
 
   handleSubmit(event) {
@@ -73,6 +78,13 @@ class Admin extends Component {
           <Form.Group controlId="exampleForm.ControlInput3">
             <Form.Label>End Date</Form.Label>
             <div onChange={this.handleEndDate}>< DateInput /></div>
+          </Form.Group>
+          <Form.Group controlId="exampleForm.ControlInput4">
+            <Form.Label>Location</Form.Label>
+            <Form.Control as="select" onChange={this.handleLocation}>
+              <option>Vancouver</option>
+              <option>Victoria</option>
+            </Form.Control>
           </Form.Group>
           <Button variant="primary" type="submit">
             Submit
