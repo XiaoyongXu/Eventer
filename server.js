@@ -22,6 +22,23 @@ app.get("/api/hello", (req, res) => {
   res.send({ express: "Hello From Express" });
 });
 
+app.get("/events", (req, res) => {
+  knex('events')
+    .select('*')
+    .then(function (rows) {
+      let events=[]
+      rows.forEach(
+        row => {
+          events.push({id:row.id, title:row.title, desciption:row.description})
+        }
+      )
+      return events;
+      })
+    .then(events=>{
+      res.send(events)
+    })
+});
+
 app.post('/login', (req, res) => {
   knex('users')
     .select('*')
