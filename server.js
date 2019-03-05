@@ -41,7 +41,7 @@ app.get("/events", (req, res) => {
 
 app.post('/login', (req, res) => {
   if (req.body.googleid){
-    return knex('users')
+    knex('users')
       .select('*')
       .where('email', req.body.email)
       .first()
@@ -51,26 +51,30 @@ app.post('/login', (req, res) => {
             res.send(row);
           }
         }else{
+          console.log('try to insert')
           knex('users').insert({
             first_name:req.body.first_name,
             last_name:req.body.last_name,
             email:req.body.email,
             googleid:req.body.googleid,
             isAdmin:false
+          }).then(()=>{
+            res.send({first_name: req.body.first_name, isAdmin:false})
           })
-          .returning("id")
-          .then(
-            (id) => {
-              return knex('users')
-                .select('*')
-                .where("id", id)
-                .first()
-                .then(row => {
-                  res.send(row)
-                })
-            }
+          // .returning('email')
+          // .then(
+          //   (email) => {
+          //     console.log(typeof(email))
+          //     knex('users')
+          //       .select('*')
+          //       .where('email', email)
+          //       .first()
+          //       .then(row => {
+          //         res.send(row)
+          //       })
+          //   }
 
-          )
+          // )
         }
       });
   }else{

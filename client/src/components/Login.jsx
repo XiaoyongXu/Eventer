@@ -25,7 +25,7 @@ class Login extends Component {
   }
 
   responseGoogle = (response) => {
-    console.log('try to login now')
+
     axios.post('http://localhost:5000/login', {
       email: response.profileObj.email,
       first_name: response.profileObj.givenName,
