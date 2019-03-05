@@ -2,6 +2,9 @@ import React,{Component} from 'react';
 import { Form,Button} from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
+
+
 
 class Login extends Component {
   constructor(props) {
@@ -10,7 +13,13 @@ class Login extends Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.responseGoogle = this.responseGoogle.bind(this);
   }
+  responseGoogle = (response) => {
+    console.log(response.profileObj)
+    console.log(response.profileObj.givenName)
+  }
+
   handleEmailChange(event) {
     this.setState({ email: event.target.value });
   }
@@ -56,6 +65,12 @@ class Login extends Component {
           <Form.Group style={{marginTop:'1em'}}>
             <i>Does not have an account? <Link to={'/register'}> register now </Link></i>
           </Form.Group>
+          <GoogleLogin
+            clientId="1011081543585-2vhet0rfh1hi4iuofcqgcq99iiau3e20.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={this.responseGoogle}
+            onFailure={this.responseGoogle}
+          />
 
         </Form>
       </div>
