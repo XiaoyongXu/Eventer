@@ -48,7 +48,7 @@ class Admin extends Component {
         location: this.state.location,
         weather: this.state.weather
       }) //response type
-      .then(res => console.log(res.data));
+      .then(res => console.log(res));
   }
 
   render() {

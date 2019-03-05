@@ -115,7 +115,6 @@ app.post("/admin", (req, res) => {
   knex("events")
     .insert({
       title: req.body.title,
-      user_id: 1,
       description: req.body.description,
       start_date: req.body.start_date,
       end_date: req.body.end_date,
