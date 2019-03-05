@@ -128,4 +128,16 @@ app.post("/admin", (req, res) => {
     });
 });
 
+app.get("/discussions", (req, res) => {
+  knex("messages")
+  .select('*')
+    .then(function (msgs) {
+      let msglist=[]
+      msgs.forEach(msg => {
+        msglist.push(msg)
+      });
+      res.send(msglist);
+    })
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
