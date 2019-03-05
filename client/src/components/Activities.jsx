@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
-import { CardColumns } from 'react-bootstrap'
-import ActivityItem from './ActivityItem.jsx'
+import { CardColumns } from 'react-bootstrap';
+import ActivityItem from './ActivityItem.jsx';
+import axios from 'axios';
+
 class Activities extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activities:[],
+    }
+  }
+  componentDidMount() {
+    axios.get('/events').then(response => {
+      // console.log(response.data);
+      this.setState({activities:response.data})
+    })
+  }
 
   render() {
-    const activities = this.props.activities.map(activity => {
+    const activities = this.state.activities.map(activity => {
       return (<ActivityItem key={activity.id} activity={activity} />)
     });
     return (

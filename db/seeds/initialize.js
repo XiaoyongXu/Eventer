@@ -23,16 +23,20 @@ exports.seed = function(knex, Promise) {
               title: 'activity1',
               user_id: 1,
               description: 'this is the first activity',
-              start_date: '2019-03-01',
-              end_date: '2019-03-02',
+              location: 'Vancouver',
+              weather: 'rain',
+              start_date: new Date('Jan 13, 2019 04:20'),
+              end_date: new Date('Jan 13, 2019 05:20'),
             },
             {
               id: 2,
               title: 'activity2',
               user_id: 1,
               description: 'this is the second activity',
-              start_date: '2019-03-02',
-              end_date: '2019-03-03',
+              location: 'Victoria',
+              weather: 'sunny',
+              start_date: new Date('Jan 14, 2019 04:20'),
+              end_date: new Date('Jan 14, 2019 05:20'),
             }
           ])
         })
