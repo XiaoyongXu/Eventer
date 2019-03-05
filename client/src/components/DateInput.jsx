@@ -17,7 +17,6 @@ const styles = theme => ({
 
 function DateAndTimePickers(props) {
   const { classes } = props;
-
   return (
       <TextField
         id="datetime-local"

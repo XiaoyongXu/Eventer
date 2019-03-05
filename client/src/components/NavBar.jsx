@@ -3,6 +3,8 @@ import { Navbar, Nav, NavDropdown,Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 
+
+
 export default function NavBar(props) {
   let checkLogin = (<Link to={'/Login'} className="nav-link">Login</Link>)
   if (props.currentUser.name){
@@ -12,6 +14,8 @@ export default function NavBar(props) {
   if (props.currentUser.admin){
     checkAdmin = (<Link to={'/admin'} className="nav-link">Admin</Link>)
   }
+
+
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -29,12 +33,12 @@ export default function NavBar(props) {
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">More Sections</NavDropdown.Item>
             </NavDropdown>
+
           </Nav>
           <Nav>
             <Navbar.Brand>{props.currentUser.name}</Navbar.Brand>
             {checkLogin}
             {checkAdmin}
-
           </Nav>
         </Navbar.Collapse>
       </Navbar>

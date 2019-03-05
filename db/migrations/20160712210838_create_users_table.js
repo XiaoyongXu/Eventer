@@ -6,7 +6,8 @@ exports.up = function(knex, Promise) {
       table.string('first_name');
       table.string('last_name');
       table.boolean('isAdmin');
-      table.string('password')
+      table.string('password');
+      table.string('googleid');
     })
   ])
 };

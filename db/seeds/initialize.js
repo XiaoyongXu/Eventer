@@ -5,11 +5,10 @@ exports.seed = function(knex, Promise) {
     .then(()=> {
       // Inserts seed entries
       return knex('users').insert([
-        {
-          id: 1,
-          email: 'leon123@gmail.com',
-          first_name: 'Leon',
-          last_name: 'Wong',
+        { id:999,
+          email: 'admin@admin.com',
+          first_name: 'Admin',
+          last_name: 'admin',
           isAdmin: true,
           password: '123'
         },
@@ -19,9 +18,8 @@ exports.seed = function(knex, Promise) {
         .then(()=>{
           return knex('events').insert([
             {
-              id: 1,
+              id: 998,
               title: 'activity1',
-              user_id: 1,
               description: 'this is the first activity',
               location: 'Vancouver',
               weather: 'rain',
@@ -29,9 +27,8 @@ exports.seed = function(knex, Promise) {
               end_date: new Date('Jan 13, 2019 05:20'),
             },
             {
-              id: 2,
+              id: 999,
               title: 'activity2',
-              user_id: 1,
               description: 'this is the second activity',
               location: 'Victoria',
               weather: 'sunny',
@@ -45,15 +42,15 @@ exports.seed = function(knex, Promise) {
         .then(() => {
           return knex('messages').insert([
             {
-              id: 1,
-              event_id: 1,
-              user_id: 1,
+              id: 998,
+              event_id: 998,
+              user_id: 999,
               contents: 'Hello there'
             },
             {
-              id: 2,
-              event_id: 2,
-              user_id: 1,
+              id: 999,
+              event_id: 999,
+              user_id: 999,
               contents: 'Hi'
             }
           ])

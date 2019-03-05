@@ -40,17 +40,43 @@ app.get("/events", (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  knex('users')
-    .select('*')
-    .where('email',req.body.email)
-    .first()
-    .then(row => {
-      if (row) {
-        if (row.password === req.body.password) {
-          res.send(row);
+  if (req.body.googleid){
+    knex('users')
+      .select('*')
+      .where('email', req.body.email)
+      .first()
+      .then(row => {
+        if (row) {
+          if (row.googleid === req.body.googleid) {
+            res.send(row);
+          }
+        }else{
+          knex('users').insert({
+            first_name:req.body.first_name,
+            last_name:req.body.last_name,
+            email:req.body.email,
+            googleid:req.body.googleid,
+            isAdmin:false
+          }).then(()=>{
+            res.send({first_name: req.body.first_name, isAdmin:false})
+          })
+
         }
-      }
-    });
+      });
+  }else{
+    return knex('users')
+      .select('*')
+      .where('email', req.body.email)
+      .first()
+      .then(row => {
+        if (row) {
+          if (row.password === req.body.password) {
+            res.send(row);
+          }
+        }
+      });
+  }
+
 });
 
 app.post("/register", (req, res) => {
@@ -115,7 +141,6 @@ app.post("/admin", (req, res) => {
   knex("events")
     .insert({
       title: req.body.title,
-      user_id: 1,
       description: req.body.description,
       start_date: req.body.start_date,
       end_date: req.body.end_date,
@@ -126,6 +151,18 @@ app.post("/admin", (req, res) => {
     .then(id => {
       res.send(id);
     });
+});
+
+app.get("/discussions", (req, res) => {
+  knex("messages")
+  .select('*')
+    .then(function (msgs) {
+      let msglist=[]
+      msgs.forEach(msg => {
+        msglist.push(msg)
+      });
+      res.send(msglist);
+    })
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

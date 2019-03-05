@@ -38,6 +38,7 @@ class App extends Component {
   }
   login(name,admin) {
     this.setState({ currentUser: { 'name': name, admin: admin } });
+
   }
   addActivity(title,description){
     this.state.activities.push({title:title,description:description})
@@ -54,7 +55,8 @@ class App extends Component {
           <Switch>
             <Route exact path='/home' component={Home} />
             <Route exact path='/Activities' component={withProps(Activities, { activities: this.state.activities })} />
-            <Route exact path='/Discussions' component={Discussions} />
+            <Route exact path='/Discussions' component={withProps(Discussions, {
+              messages: this.state.messages })} />
             <Route exact path='/Login' component={withProps(Login, { login:this.login})} />
             <Route exact path='/Admin' component={withProps(Admin,{addActivity: this.addActivity})} />
             <Route exact path='/register' component={withProps(Register, {login: this.login})} />

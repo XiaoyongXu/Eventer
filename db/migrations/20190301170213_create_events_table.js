@@ -4,7 +4,6 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('events', function (table) {
       table.increments();
       table.string('title');
-      table.integer('user_id').references('users.id');
       table.string('description');
       table.string('weather');
       table.string('location');

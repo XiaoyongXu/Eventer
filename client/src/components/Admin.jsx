@@ -48,7 +48,7 @@ class Admin extends Component {
         location: this.state.location,
         weather: this.state.weather
       }) //response type
-      .then(res => console.log(res.data));
+      .then(res => console.log(res));
   }
 
   render() {
@@ -84,6 +84,7 @@ class Admin extends Component {
           <Form.Group controlId="exampleForm.ControlInput4">
             <Form.Label>Location</Form.Label>
             <Form.Control as="select" onChange={this.handleLocation}>
+              <option>Defalut empty</option>
               <option>Vancouver</option>
               <option>Victoria</option>
             </Form.Control>
