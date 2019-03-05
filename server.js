@@ -51,7 +51,6 @@ app.post('/login', (req, res) => {
             res.send(row);
           }
         }else{
-          console.log('try to insert')
           knex('users').insert({
             first_name:req.body.first_name,
             last_name:req.body.last_name,
@@ -61,20 +60,7 @@ app.post('/login', (req, res) => {
           }).then(()=>{
             res.send({first_name: req.body.first_name, isAdmin:false})
           })
-          // .returning('email')
-          // .then(
-          //   (email) => {
-          //     console.log(typeof(email))
-          //     knex('users')
-          //       .select('*')
-          //       .where('email', email)
-          //       .first()
-          //       .then(row => {
-          //         res.send(row)
-          //       })
-          //   }
 
-          // )
         }
       });
   }else{
