@@ -40,17 +40,53 @@ app.get("/events", (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  knex('users')
-    .select('*')
-    .where('email',req.body.email)
-    .first()
-    .then(row => {
-      if (row) {
-        if (row.password === req.body.password) {
-          res.send(row);
+  if (req.body.googleid){
+    return knex('users')
+      .select('*')
+      .where('email', req.body.email)
+      .first()
+      .then(row => {
+        if (row) {
+          if (row.googleid === req.body.googleid) {
+            res.send(row);
+          }
+        }else{
+          knex('users').insert({
+            first_name:req.body.first_name,
+            last_name:req.body.last_name,
+            email:req.body.email,
+            googleid:req.body.googleid,
+            isAdmin:false
+          })
+          .returning("id")
+          .then(
+            (id) => {
+              return knex('users')
+                .select('*')
+                .where("id", id)
+                .first()
+                .then(row => {
+                  res.send(row)
+                })
+            }
+
+          )
         }
-      }
-    });
+      });
+  }else{
+    return knex('users')
+      .select('*')
+      .where('email', req.body.email)
+      .first()
+      .then(row => {
+        if (row) {
+          if (row.password === req.body.password) {
+            res.send(row);
+          }
+        }
+      });
+  }
+
 });
 
 app.post("/register", (req, res) => {

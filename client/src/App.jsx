@@ -38,6 +38,7 @@ class App extends Component {
   }
   login(name,admin) {
     this.setState({ currentUser: { 'name': name, admin: admin } });
+    return (<Route exact path='/home' component={Home} />)
   }
   addActivity(title,description){
     this.state.activities.push({title:title,description:description})

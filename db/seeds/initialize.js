@@ -5,8 +5,7 @@ exports.seed = function(knex, Promise) {
     .then(()=> {
       // Inserts seed entries
       return knex('users').insert([
-        {
-          id: 1,
+        { id:999,
           email: 'admin@admin.com',
           first_name: 'Admin',
           last_name: 'admin',
@@ -43,15 +42,15 @@ exports.seed = function(knex, Promise) {
         .then(() => {
           return knex('messages').insert([
             {
-              id: 1,
+              id: 998,
               event_id: 998,
-              user_id: 1,
+              user_id: 999,
               contents: 'Hello there'
             },
             {
-              id: 2,
+              id: 999,
               event_id: 999,
-              user_id: 1,
+              user_id: 999,
               contents: 'Hi'
             }
           ])
