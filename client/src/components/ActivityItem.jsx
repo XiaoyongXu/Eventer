@@ -10,7 +10,7 @@ class ActivityItem extends Component{
     super(props);
     this.state = {
       activity_id: props.activity.id,
-      currentUser: props.currentUser,
+
       join:""
     }
     this.handleJoinClick = this.handleJoinClick.bind(this);
@@ -19,8 +19,8 @@ class ActivityItem extends Component{
     axios
     .post('http://localhost:5000/newMessage', {
       activity_id:this.state.activity_id,
-      currentUser_id:this.state.currentUser.id,
-      currentUser_name:this.state.currentUser.name
+      currentUser_id:this.props.currentUser.id,
+      currentUser_name:this.props.currentUser.name
     }).then(response => {
       this.setState({ join: response.data })
     });
@@ -29,7 +29,7 @@ class ActivityItem extends Component{
     axios
       .post('http://localhost:5000/joinCheck',{
           event_id: this.state.activity_id,
-          user_id: this.state.currentUser.id
+          user_id: this.props.currentUser.id
       })
     .then(response => {
       this.setState({ join: response.data })
@@ -46,6 +46,8 @@ class ActivityItem extends Component{
     if (this.state.join) {
       checkJoin = (<Button>Joined</Button>)
     }
+
+
     return (
       <Card style={{ width: '18rem' }}>
         <Card.Body>

@@ -8,7 +8,6 @@ class Activities extends Component {
     super(props);
     this.state = {
       activities:[],
-      currentUser: props.currentUser
     }
 
   }
@@ -20,7 +19,7 @@ class Activities extends Component {
 
   render() {
     const activities = this.state.activities.map(activity => {
-      return (<ActivityItem key={activity.id} activity={activity} currentUser={this.state.currentUser}/>)
+      return (<ActivityItem key={activity.id} activity={activity} currentUser={this.props.currentUser}/>)
     });
     return (
       <div>

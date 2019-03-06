@@ -57,8 +57,9 @@ app.post('/login', (req, res) => {
             email:req.body.email,
             googleid:req.body.googleid,
             isAdmin:false
-          }).then(()=>{
-            res.send({first_name: req.body.first_name, isAdmin:false, id:req.body.id})
+          }).returning(['id'])
+          .then(([user]) =>{
+            res.send({first_name: req.body.first_name, isAdmin:false, id:user.id})
           })
 
         }
@@ -150,6 +151,7 @@ app.get("/discussions", (req, res) => {
 
 app.post("/newMessage", (req, res) => {
   const content = req.body.currentUser_name+" joined"
+  console.log(req.body)
   knex("messages")
     .insert({
       event_id: req.body.activity_id,
