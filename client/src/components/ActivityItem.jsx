@@ -1,9 +1,6 @@
 import React from 'react';
 import { Card, ListGroup, ListGroupItem} from 'react-bootstrap'
 
-
-
-
 export default function ActivityItem(props) {
   const start_time = (new Date(props.activity.start_date)).toGMTString()
   const end_time = (new Date(props.activity.end_date)).toGMTString()
