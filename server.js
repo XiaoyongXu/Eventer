@@ -143,8 +143,13 @@ app.get("/discussions", (req, res) => {
 app.get("/discussions/:eventId", (req, res) => {
   console.log(req.params.eventId)
   knex("messages")
-    .where({ id: req.params.eventId })
-    .then(function (msgs) {
+    .select('*')
+    .where('event_id',req.params.eventId )
+    .then(function (rows) {
+      let msgs = []
+      rows.forEach((row) => {
+        msgs.push(row)
+      })
       res.send(msgs);
     })
 });
