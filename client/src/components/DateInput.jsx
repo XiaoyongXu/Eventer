@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import moment from 'moment';
 
 const styles = theme => ({
   container: {
@@ -17,15 +18,18 @@ const styles = theme => ({
 
 function DateAndTimePickers(props) {
   const { classes } = props;
+  const date = moment().format('YYYY-MM-DDTHH:mm')
   return (
       <TextField
+        onChange={props.handleDate}
         id="datetime-local"
         type="datetime-local"
-        defaultValue="2019-01-01T10:30:00"
+        defaultValue={date}
         className={classes.textField}
         InputLabelProps={{
           shrink: true,
         }}
+
       />
   );
 }
