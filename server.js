@@ -169,11 +169,11 @@ app.get("/activities/:id", (req, res) => {
   knex("messages").where({
     event_id: 998
   }).select('contents')
-    .then(function (msgs) {
-      let msglist = []
-      msgs.forEach(msg => {
-        msglist.push(msg)
-      });
+    .then(function (msgslist) {
+      // let msglist = []
+      // msgs.forEach(msg => {
+      //   msglist.push(msg)
+      // });
       res.send(msglist);
     })
 });
