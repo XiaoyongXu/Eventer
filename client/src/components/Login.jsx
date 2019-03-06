@@ -35,7 +35,7 @@ class Login extends Component {
       .then(
         res => {
           if (res.data) {
-            this.props.login(res.data.first_name, res.data.isAdmin)
+            this.props.login(res.data.first_name, res.data.isAdmin, res.data.id)
           }
         },
       )
@@ -50,7 +50,7 @@ class Login extends Component {
       .then(
         res => {
           if (res.data){
-            this.props.login(res.data.first_name,res.data.isAdmin)
+            this.props.login(res.data.first_name,res.data.isAdmin,res.data.id)
           }
         },
       );
