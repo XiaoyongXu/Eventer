@@ -105,7 +105,6 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/api/world", (req, res) => {
-  console.log(req.body);
   knex.insert; // instead of res.send
   res.send(
     `I received your POST request. This is what you sent me: ${req.body.Title}`
@@ -120,22 +119,6 @@ app.get("/demo", (req, res) => {
   res.send({ data: data });
 });
 
-app.get("/test", (req, res) => {
-  console.log("yoyoyoyo");
-  knex("users")
-    .select("*")
-    .then(function(rows) {
-      rows.forEach(row => {
-        console.log(row);
-      });
-      res.send(rows);
-    });
-});
-
-app.post("/test", (req, res) => {
-  console.log(req);
-  res.send("got the request");
-});
 
 app.post("/admin", (req, res) => {
   knex("events")
@@ -177,7 +160,6 @@ app.post("/newMessage", (req, res) => {
 });
 
 app.post("/joinCheck", (req, res) => {
-  console.log(req.body)
   if (req.body.user_id){
     knex("messages")
       .select('*')
