@@ -26,17 +26,8 @@ app.get("/events", (req, res) => {
   knex('events')
     .select('*')
     .then(function (rows) {
-      let events=[]
-      rows.forEach(
-        row => {
-          events.push(row)
-        }
-      )
-      return events;
+      res.send(rows);
       })
-    .then(events=>{
-      res.send(events)
-    })
 });
 
 app.post('/login', (req, res) => {
@@ -165,4 +156,44 @@ app.get("/discussions", (req, res) => {
     })
 });
 
+app.get("/discussions/:eventId", (req, res) => {
+  console.log(req.params.eventId)
+  knex("messages")
+    .where({ id: req.params.eventId })
+    .then(function (msgs) {
+      res.send(msgs);
+    })
+});
+
+app.get("/activities/:id", (req, res) => {
+  knex("messages").where({
+    event_id: 998
+  }).select('contents')
+    .then(function (msgs) {
+      let msglist = []
+      msgs.forEach(msg => {
+        msglist.push(msg)
+      });
+      res.send(msglist);
+    })
+});
+
+
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
+
+// knex.select('contents')
+//   .from('messages')
+//   .then(function (messages) {
+//     knex.select('first_name')
+//       .from('users')
+//       .then(function (users) {
+//         res.render('messages', {
+//           users: users,
+//           messages: messages
+//         });
+//       });
+//   }).catch(function (error) {
+//     console.log(error);
+//   });

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-
 import DiscussionItem from './DiscussionItem.jsx';
-import Nav from 'react-bootstrap/Nav'
+import Sidebar from './Sidebar.jsx';
+// import Nav from 'react-bootstrap/Nav'
 
 import axios from 'axios';
 
@@ -10,32 +10,35 @@ class Discussions extends Component {
     super(props);
     this.state = {
       messages: [],
-      event_id: ""
+      events: []
     }
+    this.handleItemClick = this.handleItemClick.bind(this);
+  }
+
+  handleItemClick(event) {
+    axios.get(`/discussions/${event.id}`).then(response => {
+      // console.log(response.data)
+      this.setState({ messages: response.data})
+    })
   }
 
   componentDidMount() {
-    axios.get('/discussions').then(response => {
-      this.setState({ messages: response.data })
+    axios.get('/events').then(response => {
+      this.setState({ events: response.data })
     })
   }
 
   render() {
+
     const messages = this.state.messages.map(message => {
-      return (<DiscussionItem key={message.id} message={message} />)
+      return (
+        <DiscussionItem key={message.id} message={message} />
+        )
+
     });
     return (
     <div className="row no-gutters">
-        <div className="col-2">
-      <Nav defaultActiveKey="/home" className="flex-column">
-        <Nav.Link href="/home">Active</Nav.Link>
-        <Nav.Link eventKey="link-1" >Event 2</Nav.Link>
-        <Nav.Link eventKey="link-2">Event 3</Nav.Link>
-        <Nav.Link eventKey="disabled" disabled>
-          Disabled
-        </Nav.Link>
-      </Nav>
-        </div>
+        <Sidebar handleItemClick={this.handleItemClick} events={this.state.events}></Sidebar>
         <div className="col-10">
           {messages}
       </div>
