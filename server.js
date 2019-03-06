@@ -26,17 +26,8 @@ app.get("/events", (req, res) => {
   knex('events')
     .select('*')
     .then(function (rows) {
-      let events=[]
-      rows.forEach(
-        row => {
-          events.push(row)
-        }
-      )
-      return events;
+      res.send(rows);
       })
-    .then(events=>{
-      res.send(events)
-    })
 });
 
 app.post('/login', (req, res) => {
@@ -57,8 +48,9 @@ app.post('/login', (req, res) => {
             email:req.body.email,
             googleid:req.body.googleid,
             isAdmin:false
-          }).then(()=>{
-            res.send({first_name: req.body.first_name, isAdmin:false})
+          }).returning(['id'])
+          .then(([user]) =>{
+            res.send({first_name: req.body.first_name, isAdmin:false, id:user.id})
           })
 
         }
@@ -105,7 +97,6 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/api/world", (req, res) => {
-  console.log(req.body);
   knex.insert; // instead of res.send
   res.send(
     `I received your POST request. This is what you sent me: ${req.body.Title}`
@@ -120,22 +111,6 @@ app.get("/demo", (req, res) => {
   res.send({ data: data });
 });
 
-app.get("/test", (req, res) => {
-  console.log("yoyoyoyo");
-  knex("users")
-    .select("*")
-    .then(function(rows) {
-      rows.forEach(row => {
-        console.log(row);
-      });
-      res.send(rows);
-    });
-});
-
-app.post("/test", (req, res) => {
-  console.log(req);
-  res.send("got the request");
-});
 
 app.post("/admin", (req, res) => {
   knex("events")
@@ -165,4 +140,80 @@ app.get("/discussions", (req, res) => {
     })
 });
 
+app.get("/discussions/:eventId", (req, res) => {
+  console.log(req.params.eventId)
+  knex("messages")
+    .select('*')
+    .where('event_id',req.params.eventId )
+    .then(function (rows) {
+      let msgs = []
+      rows.forEach((row) => {
+        msgs.push(row)
+      })
+      res.send(msgs);
+    })
+});
+
+app.get("/activities/:id", (req, res) => {
+  knex("messages").where({
+    event_id: 998
+  }).select('contents')
+    .then(function (msgslist) {
+      // let msglist = []
+      // msgs.forEach(msg => {
+      //   msglist.push(msg)
+      // });
+      res.send(msglist);
+    })
+});
+
+
+app.post("/newMessage", (req, res) => {
+  const content = req.body.currentUser_name+" joined"
+  console.log(req.body)
+  knex("messages")
+    .insert({
+      event_id: req.body.activity_id,
+      user_id:req.body.currentUser_id,
+      contents: content
+    })
+    .then(res.send(true))
+});
+
+app.post("/joinCheck", (req, res) => {
+  if (req.body.user_id){
+    knex("messages")
+      .select('*')
+      .where('event_id', req.body.event_id)
+      .where('user_id', req.body.user_id)
+      .first()
+      .then(row => {
+        if (row) {
+          res.send(true)
+        } else {
+          res.send(false)
+        }
+      })
+  }else{
+    res.send(false)
+  }
+
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
+
+// knex.select('contents')
+//   .from('messages')
+//   .then(function (messages) {
+//     knex.select('first_name')
+//       .from('users')
+//       .then(function (users) {
+//         res.render('messages', {
+//           users: users,
+//           messages: messages
+//         });
+//       });
+//   }).catch(function (error) {
+//     console.log(error);
+//   });

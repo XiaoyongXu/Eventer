@@ -14,8 +14,6 @@ export default function NavBar(props) {
   if (props.currentUser.admin){
     checkAdmin = (<Link to={'/admin'} className="nav-link">Admin</Link>)
   }
-
-
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">

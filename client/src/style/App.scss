@@ -32,3 +32,15 @@
     transform: rotate(360deg);
   }
 }
+
+.meetup-filter-container{
+    position: absolute;
+    width: 250px;
+    left: 0;
+}
+.meetup-record-holder{
+    width: 100%;
+    padding-left: 250px;
+    overflow: auto;
+        padding-bottom: 15px;
+}
