@@ -21,7 +21,7 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: {
-        name: '', admin: false, response: '',
+        name: '', admin: false,id:'', response: '',
         post: '',
         responseToPost: ''},
     }
@@ -34,10 +34,10 @@ class App extends Component {
   }
 
   logout() {
-    this.setState({ currentUser: { 'name': '', admin: false } });
+    this.setState({ currentUser: { 'name': '', admin: false, id:'' } });
   }
-  login(name,admin) {
-    this.setState({ currentUser: { 'name': name, admin: admin } });
+  login(name,admin,id) {
+    this.setState({ currentUser: { 'name': name, admin: admin, id:id } });
 
   }
   addActivity(title,description){
@@ -54,10 +54,9 @@ class App extends Component {
           </div>
           <Switch>
             <Route exact path='/home' component={Home} />
-            <Route exact path='/Activities' component={withProps(Activities, { activities: this.state.activities })} />
-            <Route exact path='/Discussions' component={withProps(Discussions, {
-              messages: this.state.messages })} />
-            <Route exact path='/Login' component={withProps(Login, { login:this.login})} />
+            <Route exact path='/Activities' component={withProps(Activities, { activities: this.state.activities, currentUser:this.state.currentUser})} />
+            <Route exact path='/Discussions' component={withProps(Discussions, { messages: this.state.messages,currentUser:this.state.currentUser })} />
+            <Route exact path='/Login' component={withProps(Login, { login: this.login, currentUser:this.state.currentUser})} />
             <Route exact path='/Admin' component={withProps(Admin,{addActivity: this.addActivity})} />
             <Route exact path='/register' component={withProps(Register, {login: this.login})} />
           </Switch>

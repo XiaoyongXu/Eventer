@@ -8,22 +8,23 @@ class Activities extends Component {
     super(props);
     this.state = {
       activities:[],
+      currentUser: props.currentUser
     }
+
   }
   componentDidMount() {
     axios.get('/events').then(response => {
-      // console.log(response.data);
       this.setState({activities:response.data})
     })
   }
 
   render() {
     const activities = this.state.activities.map(activity => {
-      return (<ActivityItem key={activity.id} activity={activity} />)
+      return (<ActivityItem key={activity.id} activity={activity} currentUser={this.state.currentUser}/>)
     });
     return (
-      <div style={{ width: '80%',backgroundColor:"grey", marginLeft:"10%" } }>
-        <CardColumns style={{ width: '80%', marginLeft: "10%" }}>
+      <div>
+        <CardColumns style={{ width: '90%', marginLeft: "5%" }}>
           {activities}
         </CardColumns>
       </div>

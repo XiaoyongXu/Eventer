@@ -58,7 +58,7 @@ app.post('/login', (req, res) => {
             googleid:req.body.googleid,
             isAdmin:false
           }).then(()=>{
-            res.send({first_name: req.body.first_name, isAdmin:false})
+            res.send({first_name: req.body.first_name, isAdmin:false, id:req.body.id})
           })
 
         }
@@ -163,6 +163,38 @@ app.get("/discussions", (req, res) => {
       });
       res.send(msglist);
     })
+});
+
+app.post("/newMessage", (req, res) => {
+  const content = req.body.currentUser_name+" joined"
+  knex("messages")
+    .insert({
+      event_id: req.body.activity_id,
+      user_id:req.body.currentUser_id,
+      contents: content
+    })
+    .then(res.send(true))
+});
+
+app.post("/joinCheck", (req, res) => {
+  console.log(req.body)
+  if (req.body.user_id){
+    knex("messages")
+      .select('*')
+      .where('event_id', req.body.event_id)
+      .where('user_id', req.body.user_id)
+      .first()
+      .then(row => {
+        if (row) {
+          res.send(true)
+        } else {
+          res.send(false)
+        }
+      })
+  }else{
+    res.send(false)
+  }
+
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
