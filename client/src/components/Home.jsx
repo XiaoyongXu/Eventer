@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import Calendar from 'react-calendar';
 
 let events = [
@@ -68,19 +67,8 @@ class MyApp extends Component {
           value={this.state.date}
         />
       </div>
-=======
-
-class Home extends Component {
-  render() {
-    return (
-     <div>Home</div>
->>>>>>> 5c0e93c5bda137c4a1c072c054567efcec05dd9b
     );
   }
 }
 
-<<<<<<< HEAD
 export default MyApp;
-=======
-export default Home;
->>>>>>> 5c0e93c5bda137c4a1c072c054567efcec05dd9b
