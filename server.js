@@ -141,7 +141,7 @@ app.get("/discussions", (req, res) => {
 });
 
 app.get("/discussions/:eventId", (req, res) => {
-  console.log(req.params.eventId)
+
   knex("messages")
     .select('*')
     .where('event_id',req.params.eventId )
@@ -170,7 +170,7 @@ app.get("/activities/:id", (req, res) => {
 
 app.post("/newMessage", (req, res) => {
   const content = req.body.currentUser_name+" joined"
-  console.log(req.body)
+
   knex("messages")
     .insert({
       event_id: req.body.activity_id,

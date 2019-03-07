@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import { Card, ListGroup, ListGroupItem, Button} from 'react-bootstrap';
 import axios from 'axios'
+import moment from 'moment'
 
 
 class ActivityItem extends Component{
@@ -34,8 +35,8 @@ class ActivityItem extends Component{
     })
   }
   render(){
-    const start_time = (new Date(this.props.activity.start_date)).toGMTString()
-    const end_time = (new Date(this.props.activity.end_date)).toGMTString()
+    const start_time = moment(this.props.activity.start_date).format('lll')
+    const end_time = moment(this.props.activity.end_date).format('lll')
     let weather = '☀️';
     if (this.props.activity.weather === 'rain') {
       weather = '🌧️';
