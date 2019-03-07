@@ -46,7 +46,6 @@ class App extends Component {
     this.setState({activities:actList})
   }
   render() {
-
     return (
       <Router>
         <div>
