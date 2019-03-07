@@ -18,6 +18,10 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.get("/", (req, res) => {
+  res.json(["blue", "yellow", "red"])
+});
+
 app.get("/api/hello", (req, res) => {
   res.send({ express: "Hello From Express" });
 });
@@ -153,6 +157,21 @@ app.get("/discussions/:eventId", (req, res) => {
       res.send(msgs);
     })
 });
+
+app.get("/activities", (req, res) => {
+  console.log('yaaaay', req.query.date)
+  const myDate = `${req.query.date}`;
+  //res.json(['beans']);
+  knex("events")
+    .select('*')
+    .whereRaw(`start_date::timestamp::date = to_date(?, 'YYYY-MM-DD')`, [myDate])
+    // .where("start_date > '2019-01-13'")
+    // .where(`start_date::timestamp::date = to_date('2019-01-13', 'YYYY-MM-DD')`)
+    .then(function (msgslist){
+      console.log("Here's my result", msgslist);
+      res.json(msgslist);
+    })
+})
 
 app.get("/activities/:id", (req, res) => {
   knex("messages").where({
