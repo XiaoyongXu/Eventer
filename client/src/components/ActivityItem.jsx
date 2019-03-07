@@ -3,8 +3,6 @@ import { Card, ListGroup, ListGroupItem, Button} from 'react-bootstrap';
 import axios from 'axios'
 
 
-
-
 class ActivityItem extends Component{
   constructor(props) {
     super(props);
