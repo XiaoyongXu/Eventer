@@ -31,7 +31,6 @@ class ActivityItem extends Component{
       .post('http://localhost:5000/deleteEvent', {
         activity_id: this.state.activity_id
       }).then(response => {
-        console.log(response)
         if (response){
           this.props.reload()
         }

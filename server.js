@@ -18,20 +18,24 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.json(["blue", "yellow", "red"])
-});
 
-app.get("/api/hello", (req, res) => {
-  res.send({ express: "Hello From Express" });
-});
-
-app.get("/events", (req, res) => {
-  knex('events')
-    .select('*')
-    .then(function (rows) {
-      res.send(rows);
+app.post("/events", (req, res) => {
+  if (req.body.date){
+    const myDate = req.body.date;
+    knex("events")
+      .select('*')
+      .whereRaw(`start_date::timestamp::date = to_date(?, 'YYYY-MM-DD')`, [myDate])
+      .then(function (rows) {
+        res.send(rows);
       })
+  }else{
+    knex('events')
+      .select('*')
+      .then(function (rows) {
+        res.send(rows);
+      })
+  }
+
 });
 
 app.post('/login', (req, res) => {
@@ -100,20 +104,6 @@ app.post("/register", (req, res) => {
     });
 });
 
-app.post("/api/world", (req, res) => {
-  knex.insert; // instead of res.send
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.Title}`
-  );
-});
-
-app.get("/demo", (req, res) => {
-  var data = [
-    { id: 1, name: "Tony", job: "Project Manager" },
-    { id: 2, name: "Rohit", job: "Mentor" }
-  ];
-  res.send({ data: data });
-});
 
 
 app.post("/admin", (req, res) => {
@@ -158,33 +148,18 @@ app.get("/discussions/:eventId", (req, res) => {
     })
 });
 
-app.get("/activities", (req, res) => {
-  console.log('yaaaay', req.query.date)
-  const myDate = `${req.query.date}`;
-  //res.json(['beans']);
+app.get("/activities/:date", (req, res) => {
+  const myDate = req.params.date;
+
   knex("events")
     .select('*')
     .whereRaw(`start_date::timestamp::date = to_date(?, 'YYYY-MM-DD')`, [myDate])
-    // .where("start_date > '2019-01-13'")
-    // .where(`start_date::timestamp::date = to_date('2019-01-13', 'YYYY-MM-DD')`)
     .then(function (msgslist){
-      console.log("Here's my result", msgslist);
-      res.json(msgslist);
+      res.send(msgslist);
     })
 })
 
-app.get("/activities/:id", (req, res) => {
-  knex("messages").where({
-    event_id: 998
-  }).select('contents')
-    .then(function (msgslist) {
-      // let msglist = []
-      // msgs.forEach(msg => {
-      //   msglist.push(msg)
-      // });
-      res.send(msglist);
-    })
-})
+
 app.post("/auth", (req, res) => {
   if (req.body.user_id){
     res.send(true)
@@ -237,9 +212,6 @@ app.post("/joinCheck", (req, res) => {
 });
 
 app.post("/chatMessage", (req, res) => {
-  console.log("we are in the chat message post server");
-  const content = req.body
-  console.log(req.body)
   knex("messages")
     .insert({
       event_id: req.body.event_id,
