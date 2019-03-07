@@ -20,7 +20,8 @@ class ActivityItem extends Component{
     .post('http://localhost:5000/newMessage', {
       activity_id:this.state.activity_id,
       currentUser_id:this.props.currentUser.id,
-      currentUser_name:this.props.currentUser.name
+      currentUser_name:this.props.currentUser.name,
+      join_message: true
     }).then(response => {
       this.setState({ join: response.data })
     });

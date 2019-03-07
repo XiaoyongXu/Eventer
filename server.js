@@ -203,6 +203,7 @@ app.post("/newMessage", (req, res) => {
     .insert({
       event_id: req.body.activity_id,
       user_id:req.body.currentUser_id,
+      join_message: req.body.join_message,
       contents: content
     })
     .then(res.send(true))
@@ -243,7 +244,8 @@ app.post("/chatMessage", (req, res) => {
     .insert({
       event_id: req.body.event_id,
       user_id: req.body.user_id,
-      contents: req.body.contents
+      contents: req.body.contents,
+      join_message: false
     })
     .returning(['event_id'])
     .then(([msg])=>{

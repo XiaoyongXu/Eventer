@@ -40,12 +40,10 @@ class Discussions extends Component {
         user_id: this.props.currentUser.id,
         contents: this.state.nextMsg
       }).then(response => {
-        console.log("we are in the response");
-        console.log(response);
+        console.log('response', response);
         this.setState({ messages: response.data })
       }).catch(function(e){
-        console.log("we are are in the error");
-        console.log(e);
+        console.log('error', e);
       })
       event.target.value = '';
     }
@@ -73,7 +71,7 @@ class Discussions extends Component {
     return (
     <div className="row no-gutters">
       <Sidebar handleItemClick={this.handleItemClick} events={this.state.events}></Sidebar>
-      <div className="col-10">
+      <div className="col-8">
         {messages}
         {chat}
       </div>
