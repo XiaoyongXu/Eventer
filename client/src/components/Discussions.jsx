@@ -52,7 +52,7 @@ class Discussions extends Component {
   }
 
   componentDidMount() {
-    axios.get('/events').then(response => {
+    axios.post('/events').then(response => {
       this.setState({ events: response.data })
     })
   }
@@ -67,9 +67,8 @@ class Discussions extends Component {
     });
     let chat = (<span></span>)
     if (this.state.chatBar){
-      chat = (< Chatbar handleEnterPress={this.handleEnterPress.bind(this)} handleChange={this.handleChange.bind(this)}/>)
+      chat = (<Chatbar handleEnterPress={this.handleEnterPress.bind(this)} handleChange={this.handleChange.bind(this)}/>)
     }
-
     return (
     <div className="row no-gutters">
       <Sidebar handleItemClick={this.handleItemClick} events={this.state.events}></Sidebar>
