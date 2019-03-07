@@ -154,6 +154,15 @@ app.get("/discussions/:eventId", (req, res) => {
     })
 });
 
+app.post("/auth", (req, res) => {
+  if (req.body.user_id){
+    res.send(true)
+  }else{
+    res.send(false)
+  }
+});
+
+
 
 
 app.post("/newMessage", (req, res) => {

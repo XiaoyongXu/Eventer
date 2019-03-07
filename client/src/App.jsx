@@ -20,7 +20,6 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      navigate: false,
       currentUser: {
         name: '', admin: false,id:'', response: '',
         post: '',
@@ -38,7 +37,7 @@ class App extends Component {
     this.setState({ currentUser: { 'name': '', admin: false, id:'' } });
   }
   login(name,admin,id) {
-    this.setState({ currentUser: { 'name': name, admin: admin, id: id, navigate: true } });
+    this.setState({ currentUser: { 'name': name, admin: admin, id: id } });
   }
   addActivity(title,description){
     this.state.activities.push({title:title,description:description})
