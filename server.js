@@ -154,6 +154,21 @@ app.get("/discussions/:eventId", (req, res) => {
     })
 });
 
+<<<<<<< HEAD
+=======
+app.get("/activities/:id", (req, res) => {
+  knex("messages").where({
+    event_id: 998
+  }).select('contents')
+    .then(function (msgslist) {
+      // let msglist = []
+      // msgs.forEach(msg => {
+      //   msglist.push(msg)
+      // });
+      res.send(msgslist);
+    })
+});
+>>>>>>> 69650a30192d1af5af773ab3f037eb9cbf52b463
 
 
 app.post("/newMessage", (req, res) => {
@@ -193,6 +208,27 @@ app.post("/joinCheck", (req, res) => {
     res.send(false)
   }
 
+});
+
+app.post("/chatMessage", (req, res) => {
+  console.log("we are in the chat message post server");
+  const content = req.body
+  console.log(req.body)
+  knex("messages")
+    .insert({
+      event_id: req.body.event_id,
+      user_id: req.body.user_id,
+      contents: req.body.contents
+    })
+    .returning(['event_id'])
+    .then(([msg])=>{
+      knex("messages")
+      .select('*')
+        .where('event_id', msg.event_id)
+        .then(function (rows) {
+          res.send(rows);
+      })
+    })
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

@@ -4,8 +4,6 @@ import axios from 'axios'
 import moment from 'moment'
 
 
-
-
 class ActivityItem extends Component{
   constructor(props) {
     super(props);
