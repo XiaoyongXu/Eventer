@@ -184,6 +184,7 @@ app.get("/activities/:id", (req, res) => {
       // });
       res.send(msglist);
     })
+})
 app.post("/auth", (req, res) => {
   if (req.body.user_id){
     res.send(true)

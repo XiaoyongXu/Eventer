@@ -3,7 +3,7 @@ import { CardColumns } from 'react-bootstrap';
 import ActivityItem from './ActivityItem.jsx';
 import axios from 'axios';
 import Calendar from './CalendarSideBar.jsx';
-import moment from  'moment';
+
 class Activities extends Component {
   constructor(props) {
     super(props);
