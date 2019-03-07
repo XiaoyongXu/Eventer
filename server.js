@@ -154,21 +154,6 @@ app.get("/discussions/:eventId", (req, res) => {
     })
 });
 
-<<<<<<< HEAD
-=======
-app.get("/activities/:id", (req, res) => {
-  knex("messages").where({
-    event_id: 998
-  }).select('contents')
-    .then(function (msgslist) {
-      // let msglist = []
-      // msgs.forEach(msg => {
-      //   msglist.push(msg)
-      // });
-      res.send(msgslist);
-    })
-});
->>>>>>> 69650a30192d1af5af773ab3f037eb9cbf52b463
 
 
 app.post("/newMessage", (req, res) => {
