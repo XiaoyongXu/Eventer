@@ -145,7 +145,7 @@ app.get("/discussions", (req, res) => {
 });
 
 app.get("/discussions/:eventId", (req, res) => {
-  console.log(req.params.eventId)
+
   knex("messages")
     .select('*')
     .where('event_id',req.params.eventId )
@@ -184,18 +184,33 @@ app.get("/activities/:id", (req, res) => {
       // });
       res.send(msglist);
     })
+app.post("/auth", (req, res) => {
+  if (req.body.user_id){
+    res.send(true)
+  }else{
+    res.send(false)
+  }
 });
+
+
 
 
 app.post("/newMessage", (req, res) => {
   const content = req.body.currentUser_name+" joined"
-  console.log(req.body)
+
   knex("messages")
     .insert({
       event_id: req.body.activity_id,
       user_id:req.body.currentUser_id,
       contents: content
     })
+    .then(res.send(true))
+});
+
+app.post("/deleteEvent", (req, res) => {
+  knex("events")
+    .where('id', req.body.activity_id)
+    .del()
     .then(res.send(true))
 });
 
@@ -219,20 +234,25 @@ app.post("/joinCheck", (req, res) => {
 
 });
 
+app.post("/chatMessage", (req, res) => {
+  console.log("we are in the chat message post server");
+  const content = req.body
+  console.log(req.body)
+  knex("messages")
+    .insert({
+      event_id: req.body.event_id,
+      user_id: req.body.user_id,
+      contents: req.body.contents
+    })
+    .returning(['event_id'])
+    .then(([msg])=>{
+      knex("messages")
+      .select('*')
+        .where('event_id', msg.event_id)
+        .then(function (rows) {
+          res.send(rows);
+      })
+    })
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
-
-
-// knex.select('contents')
-//   .from('messages')
-//   .then(function (messages) {
-//     knex.select('first_name')
-//       .from('users')
-//       .then(function (users) {
-//         res.render('messages', {
-//           users: users,
-//           messages: messages
-//         });
-//       });
-//   }).catch(function (error) {
-//     console.log(error);
-//   });

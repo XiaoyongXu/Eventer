@@ -8,7 +8,6 @@ class Admin extends Component {
   constructor(props) {
     super(props);
     this.state = { title: "", description: "", start_date: new Date(), end_date: new Date(),location:"",weather:"sunny"};
-
     this.handleStartDate = this.handleStartDate.bind(this);
     this.handleEndDate = this.handleEndDate.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
@@ -48,7 +47,7 @@ class Admin extends Component {
         location: this.state.location,
         weather: this.state.weather
       }) //response type
-      .then(res => console.log(res));
+      .then(res => console.log(res.data));
   }
 
   render() {
@@ -74,17 +73,17 @@ class Admin extends Component {
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlInput2" >
             <Form.Label>Start Date</Form.Label>
-            <div onChange={this.handleStartDate}>< DateInput /></div>
+            <div>< DateInput handleDate={this.handleStartDate}/></div>
           </Form.Group>
 
           <Form.Group controlId="exampleForm.ControlInput3">
             <Form.Label>End Date</Form.Label>
-            <div onChange={this.handleEndDate}>< DateInput /></div>
+            <div>< DateInput handleDate={this.handleEndDate}/></div>
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlInput4">
             <Form.Label>Location</Form.Label>
             <Form.Control as="select" onChange={this.handleLocation}>
-              <option>Defalut empty</option>
+              <option>Select One</option>
               <option>Vancouver</option>
               <option>Victoria</option>
             </Form.Control>

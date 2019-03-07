@@ -10,7 +10,12 @@ class Activities extends Component {
     this.state = {
       activities:[],
     }
-
+    this.reload = this.reload.bind(this);
+  }
+  reload(){
+    axios.get('/events').then(response => {
+      this.setState({ activities: response.data })
+    })
   }
 
   componentDidMount() {

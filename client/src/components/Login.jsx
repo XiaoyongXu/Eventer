@@ -1,20 +1,26 @@
 import React,{Component} from 'react';
+
 import { Form,Button} from 'react-bootstrap';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link,Redirect } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
 
 
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { email: '', password: '', redirect:false };
+
+    this.state = {
+      email: '',
+      password: '',
+      redirect:false
+    };
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.responseGoogle = this.responseGoogle.bind(this);
-  }
 
+  }
 
   handleEmailChange(event) {
     this.setState({ email: event.target.value });
@@ -36,6 +42,7 @@ class Login extends Component {
         res => {
           if (res.data) {
             this.props.login(res.data.first_name, res.data.isAdmin, res.data.id)
+
           }
         },
       )
@@ -51,12 +58,24 @@ class Login extends Component {
         res => {
           if (res.data){
             this.props.login(res.data.first_name,res.data.isAdmin,res.data.id)
+
           }
         },
-      );
+      )
+  }
+  componentDidMount() {
+    axios.post('/auth',{user_id: this.props.currentUser.id}).then(response => {
+      if (response.data){
+        this.setState({ redirect: true })
+      }
+    })
   }
 
   render(){
+    let { from } = { from: { pathname: "/discussions" } };
+    let redirectToReferrer = this.state.redirect;
+    if (redirectToReferrer) return <Redirect to={from} />
+
     return (
       <div style={{ width: '50%', marginLeft: "25%", marginTop: "10%" }}>
         <Form onSubmit={this.handleSubmit}>

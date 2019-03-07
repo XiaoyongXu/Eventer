@@ -37,8 +37,7 @@ class App extends Component {
     this.setState({ currentUser: { 'name': '', admin: false, id:'' } });
   }
   login(name,admin,id) {
-    this.setState({ currentUser: { 'name': name, admin: admin, id:id } });
-
+    this.setState({ currentUser: { 'name': name, admin: admin, id: id } });
   }
   addActivity(title,description){
     this.state.activities.push({title:title,description:description})
