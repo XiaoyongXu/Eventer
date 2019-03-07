@@ -8,7 +8,6 @@ class Admin extends Component {
   constructor(props) {
     super(props);
     this.state = { title: "", description: "", start_date: new Date(), end_date: new Date(),location:"",weather:"sunny"};
-
     this.handleStartDate = this.handleStartDate.bind(this);
     this.handleEndDate = this.handleEndDate.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);

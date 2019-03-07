@@ -154,18 +154,6 @@ app.get("/discussions/:eventId", (req, res) => {
     })
 });
 
-app.get("/activities/:id", (req, res) => {
-  knex("messages").where({
-    event_id: 998
-  }).select('contents')
-    .then(function (msgslist) {
-      // let msglist = []
-      // msgs.forEach(msg => {
-      //   msglist.push(msg)
-      // });
-      res.send(msglist);
-    })
-});
 
 
 app.post("/newMessage", (req, res) => {
@@ -177,6 +165,13 @@ app.post("/newMessage", (req, res) => {
       user_id:req.body.currentUser_id,
       contents: content
     })
+    .then(res.send(true))
+});
+
+app.post("/deleteEvent", (req, res) => {
+  knex("events")
+    .where('id', req.body.activity_id)
+    .del()
     .then(res.send(true))
 });
 

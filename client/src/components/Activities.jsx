@@ -9,7 +9,12 @@ class Activities extends Component {
     this.state = {
       activities:[],
     }
-
+    this.reload = this.reload.bind(this);
+  }
+  reload(){
+    axios.get('/events').then(response => {
+      this.setState({ activities: response.data })
+    })
   }
   componentDidMount() {
     axios.get('/events').then(response => {
@@ -19,7 +24,7 @@ class Activities extends Component {
 
   render() {
     const activities = this.state.activities.map(activity => {
-      return (<ActivityItem key={activity.id} activity={activity} currentUser={this.props.currentUser}/>)
+      return (<ActivityItem key={activity.id} activity={activity} reload={this.reload} currentUser={this.props.currentUser}/>)
     });
     return (
       <div>

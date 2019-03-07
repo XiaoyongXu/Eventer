@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+
 import { Form,Button} from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -8,6 +9,7 @@ import GoogleLogin from 'react-google-login';
 class Login extends Component {
   constructor(props) {
     super(props);
+
     this.state = { email: '', password: '', redirect:false };
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -56,7 +58,9 @@ class Login extends Component {
       );
   }
 
+
   render(){
+
     return (
       <div style={{ width: '50%', marginLeft: "25%", marginTop: "10%" }}>
         <Form onSubmit={this.handleSubmit}>

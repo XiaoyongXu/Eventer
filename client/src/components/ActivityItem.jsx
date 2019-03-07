@@ -15,6 +15,7 @@ class ActivityItem extends Component{
       join:""
     }
     this.handleJoinClick = this.handleJoinClick.bind(this);
+    this.handleDeleteClick = this.handleDeleteClick.bind(this);
   }
   handleJoinClick(){
     axios
@@ -25,6 +26,17 @@ class ActivityItem extends Component{
     }).then(response => {
       this.setState({ join: response.data })
     });
+  }
+  handleDeleteClick() {
+    axios
+      .post('http://localhost:5000/deleteEvent', {
+        activity_id: this.state.activity_id
+      }).then(response => {
+        console.log(response)
+        if (response){
+          this.props.reload()
+        }
+      });
   }
   componentDidMount() {
     axios
@@ -45,10 +57,12 @@ class ActivityItem extends Component{
     }
     let checkJoin = (<Button onClick={this.handleJoinClick}>Join</Button>)
     if (this.state.join) {
-      checkJoin = (<Button>Joined</Button>)
+      checkJoin = (<Button variant="secondary">Joined</Button>)
     }
-
-
+    let checkAdmin = (<span></span>)
+    if (this.props.currentUser.admin){
+      checkAdmin = (<Button variant="danger" onClick={this.handleDeleteClick} style={{float:'right'}}>Delete</Button>)
+    }
     return (
       <Card style={{ width: '18rem' }}>
         <Card.Body>
@@ -65,7 +79,7 @@ class ActivityItem extends Component{
         </ListGroup>
         <Card.Body>
           {checkJoin}
-          <Card.Link href="#">More info</Card.Link>
+          {checkAdmin}
         </Card.Body>
       </Card>
     )
