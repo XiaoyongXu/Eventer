@@ -138,10 +138,13 @@ app.get("/discussions", (req, res) => {
   .select('*')
     .then(function (msgs) {
       let msglist=[]
+
       msgs.forEach(msg => {
+        // console.log(msg)
+
         msglist.push(msg)
       });
-      res.send(msglist);
+      res.send(msglist)
     })
 });
 
@@ -150,12 +153,21 @@ app.get("/discussions/:eventId", (req, res) => {
   knex("messages")
     .select('*')
     .where('event_id',req.params.eventId )
-    .then(function (rows) {
-      let msgs = []
-      rows.forEach((row) => {
-        msgs.push(row)
+    .then(function (msgs) {
+      let msglist = []
+      let userlist = []
+      msgs.forEach(msg => {
+        // console.log(msg)
+        if (msg.join_message) {
+          userlist.push(msg.contents)
+        } else {
+          msglist.push(msg)
+        }
+      });
+      res.send({
+        userlist: userlist,
+        msglist: msglist,
       })
-      res.send(msgs);
     })
 });
 
@@ -181,12 +193,13 @@ app.post("/auth", (req, res) => {
 
 
 app.post("/newMessage", (req, res) => {
-  const content = req.body.currentUser_name+" joined"
+  const content = req.body.currentUser_name
 
   knex("messages")
     .insert({
       event_id: req.body.activity_id,
       user_id:req.body.currentUser_id,
+      join_message: req.body.join_message,
       contents: content
     })
     .then(res.send(true))
@@ -224,7 +237,8 @@ app.post("/chatMessage", (req, res) => {
     .insert({
       event_id: req.body.event_id,
       user_id: req.body.user_id,
-      contents: req.body.contents
+      contents: req.body.contents,
+      join_message: false
     })
     .returning(['event_id'])
     .then(([msg])=>{
