@@ -4,8 +4,10 @@ import Sidebar from './Sidebar.jsx';
 // import Nav from 'react-bootstrap/Nav'
 import Chatbar from './Chatbar.jsx';
 import JoinedSidebar from './JoinedSidebar.jsx';
+import EventDescription from './EventDescription.jsx';
 
 import axios from 'axios';
+
 
 class Discussions extends Component {
   constructor(props) {
@@ -17,15 +19,15 @@ class Discussions extends Component {
       nextMsg: '',
       current_event_id:"",
       userList: [],
-      attendees: false
+      attendees: false,
+      description: false
     }
     this.handleItemClick = this.handleItemClick.bind(this);
   }
 
   handleItemClick(event) {
     axios.get(`http://localhost:5000/discussions/${event.id}`).then(response => {
-      // console.log(response.data)
-      this.setState({ messages: response.data.msglist, chatBar: true, current_event_id: event.id, userList: response.data.userlist, attendees: true })
+      this.setState({ messages: response.data.msglist, chatBar: true, current_event_id: event.id, userList: response.data.userlist, attendees: true, description: true })
     })
   }
 
@@ -53,8 +55,11 @@ class Discussions extends Component {
   }
 
   componentDidMount() {
-    axios.post('/events').then(response => {
-      this.setState({ events: response.data })
+    axios.post('/eventsget',{currentUser: this.props.currentUser}).then(response => {
+      if(response.data){
+        this.setState({ events: response.data })
+      }
+
     })
   }
 
@@ -71,24 +76,41 @@ class Discussions extends Component {
       chat = (<Chatbar handleEnterPress={this.handleEnterPress.bind(this)} handleChange={this.handleChange.bind(this)}/>)
     }
 
+
     let rightside = (<span></span>)
     if (this.state.attendees) {
       rightside = (<JoinedSidebar userList={this.state.userList} className="col-2"></JoinedSidebar>)
     }
 
 
-    return (
-      <div className="row no-gutters">
-      <Sidebar handleItemClick={this.handleItemClick} events={this.state.events}></Sidebar>
-      <div className="col-8">
-      {messages}
-      {chat}
-        <div>
+
+    let eventDescription = (<div></div>);
+    this.state.events.forEach((element)=>{
+      if (element.id === this.state.current_event_id){
+        eventDescription = <EventDescription events={element} />
+      }
+    })
+
+    // if current user does not exists, render please
+    if (this.props.currentUser.id){
+      return (
+        <div className="row no-gutters">
+          <Sidebar handleItemClick={this.handleItemClick} events={this.state.events}></Sidebar>
+
+          <div className="col-8">
+            {eventDescription}
+            {messages}
+            {chat}
+            <div>
+            </div>
+          </div>
+          {rightside}
         </div>
-      </div>
-        {rightside}
-    </div>
-    );
+      );
+    }
+    return (<div></div>)
+
+
   }
 }
 

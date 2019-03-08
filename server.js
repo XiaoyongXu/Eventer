@@ -18,6 +18,28 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.post("/eventsget", (req, res) => {
+
+  if (req.body.currentUser.id){
+    knex("messages")
+      .select('*')
+      .where('join_message', true)
+      .andWhere('user_id', req.body.currentUser.id)
+      .then(rows => {
+        const eventlist = rows.map((row)=>{
+          return row.event_id
+        })
+        knex('events')
+          .select('*')
+          .whereIn('id', eventlist)
+          .then(function (rows) {
+            res.send(rows);
+          })
+      })
+  } else {
+    res.send(false)
+  }
+})
 
 app.post("/events", (req, res) => {
   if (req.body.date){
@@ -28,14 +50,13 @@ app.post("/events", (req, res) => {
       .then(function (rows) {
         res.send(rows);
       })
-  }else{
+  } else {
     knex('events')
       .select('*')
       .then(function (rows) {
         res.send(rows);
       })
   }
-
 });
 
 app.post('/login', (req, res) => {
@@ -148,7 +169,10 @@ app.get("/discussions/:eventId", (req, res) => {
       msgs.forEach(msg => {
         // console.log(msg)
         if (msg.join_message) {
-          userlist.push(msg.contents)
+          userlist.push({
+            name:msg.contents,
+            id:msg.id
+          })
         } else {
           msglist.push(msg)
         }
