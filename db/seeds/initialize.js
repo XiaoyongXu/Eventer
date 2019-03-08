@@ -12,6 +12,14 @@ exports.seed = function(knex, Promise) {
           isAdmin: true,
           password: '123'
         },
+        {
+          id: 1,
+          email: 'ty@123.com',
+          first_name: 't',
+          last_name: 'y',
+          isAdmin: false,
+          password: '123'
+        }
       ]);
     }).then(()=>{
       return knex('events').del()
@@ -42,17 +50,41 @@ exports.seed = function(knex, Promise) {
         .then(() => {
           return knex('messages').insert([
             {
-              id: 998,
+              id: 994,
+              event_id: 998,
+              user_id: 1,
+              contents: 'this is not from an admin'
+            },
+            {
+              id: 995,
               event_id: 998,
               user_id: 999,
-              contents: 'Hello there'
+              contents: 'Hello there - from an ADMIN'
+            },
+            {
+              id: 996,
+              event_id: 998,
+              user_id: 999,
+              contents: 'asdsadasd from an ADMIN!'
+            },
+            {
+            id: 997,
+            event_id: 998,
+            user_id: 1,
+            contents: '123 this is also not from an admin'
+            },
+            {
+              id: 998,
+              event_id: 999,
+              user_id: 1,
+              contents: 'Not from admin!'
             },
             {
               id: 999,
               event_id: 999,
               user_id: 999,
-              contents: 'Hi'
-            }
+              contents: 'abc from an ADMIN!'
+            },
           ])
         })
     })
