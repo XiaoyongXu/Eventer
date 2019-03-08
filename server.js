@@ -1,3 +1,4 @@
+var multer = require('multer')
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
@@ -5,6 +6,16 @@ const port = process.env.PORT || 5000;
 const ENV = process.env.ENV || "development";
 const knexConfig = require("./knexfile");
 const knex = require("knex")(knexConfig[ENV]);
+
+
+const storage = multer.diskStorage({
+  destination: './files',
+  filename(req, file, cb) {
+    cb(null, `${new Date()}-${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -169,8 +180,6 @@ app.post("/auth", (req, res) => {
 });
 
 
-
-
 app.post("/newMessage", (req, res) => {
   const content = req.body.currentUser_name+" joined"
 
@@ -226,6 +235,18 @@ app.post("/chatMessage", (req, res) => {
           res.send(rows);
       })
     })
+});
+
+app.post("/imgUpload", (req, res) => {
+  console.log(req.file)
+  res.send('succeed')
+});
+
+app.post('/files', upload.single('file'), (req, res) => {
+  const file = req.file; // file passed from client
+  const meta = req.body; // all other values passed from the client, like name, etc..
+  console.log(file)
+  res.send('success')
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
