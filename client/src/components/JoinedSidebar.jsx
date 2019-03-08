@@ -1,23 +1,16 @@
 import React from 'react';
-import Nav from 'react-bootstrap/Nav'
+import { Card } from 'react-bootstrap'
 
-
-export default function Sidebar(props) {
-  // console.log(props)
-  function renderEvents(events) {
-    return events.map((event) => {
-      // console.log(event)
-      return (
-        <Nav.Link onClick={() => props.handleItemClick(event)} key={event.id} eventKey="link-2">{event.title}</Nav.Link>
-      );
-    })
-  }
+export default function UsersJoined(props) {
+  console.log("this is the stuff ", props.userList)
   return (
-    <div className="col-2">
-      <Nav position="right" className="flex-column">
-        {renderEvents(props.events)}
-      </Nav>
-    </div>
-
+    <Card >
+      <Card.Header>Attendees</Card.Header>
+      <Card.Body>
+        {props.userList.map(user => {
+           return <ul>{user}</ul>
+        })}
+      </Card.Body>
+    </Card>
   )
 }

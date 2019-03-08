@@ -3,6 +3,7 @@ import DiscussionItem from './DiscussionItem.jsx';
 import Sidebar from './Sidebar.jsx';
 // import Nav from 'react-bootstrap/Nav'
 import Chatbar from './Chatbar.jsx';
+import JoinedSidebar from './JoinedSidebar.jsx';
 
 import axios from 'axios';
 
@@ -14,15 +15,17 @@ class Discussions extends Component {
       events: [],
       chatBar:false,
       nextMsg: '',
-      current_event_id:""
+      current_event_id:"",
+      userList: [],
+      attendees: false
     }
     this.handleItemClick = this.handleItemClick.bind(this);
   }
 
   handleItemClick(event) {
-    axios.get(`/discussions/${event.id}`).then(response => {
+    axios.get(`http://localhost:5000/discussions/${event.id}`).then(response => {
       // console.log(response.data)
-      this.setState({ messages: response.data, chatBar: true, current_event_id: event.id})
+      this.setState({ messages: response.data.msglist, chatBar: true, current_event_id: event.id, userList: response.data.userlist, attendees: true })
     })
   }
 
@@ -67,14 +70,23 @@ class Discussions extends Component {
     if (this.state.chatBar){
       chat = (<Chatbar handleEnterPress={this.handleEnterPress.bind(this)} handleChange={this.handleChange.bind(this)}/>)
     }
+
+    let rightside = (<span></span>)
+    if (this.state.attendees) {
+      rightside = (<JoinedSidebar userList={this.state.userList} className="col-2"></JoinedSidebar>)
+    }
+
+
     return (
-    <div className="row no-gutters">
+      <div className="row no-gutters">
       <Sidebar handleItemClick={this.handleItemClick} events={this.state.events}></Sidebar>
       <div className="col-8">
-        {messages}
-        {chat}
+      {messages}
+      {chat}
+        <div>
+        </div>
       </div>
-
+        {rightside}
     </div>
     );
   }
