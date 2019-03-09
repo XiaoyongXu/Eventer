@@ -19,6 +19,7 @@ const styles = theme => ({
 function DateAndTimePickers(props) {
   const { classes } = props;
   const date = moment().format('YYYY-MM-DDTHH:mm')
+
   return (
       <TextField
         onChange={props.handleDate}

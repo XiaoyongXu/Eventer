@@ -6,9 +6,22 @@ const ENV = process.env.ENV || "development";
 const knexConfig = require("./knexfile");
 const knex = require("knex")(knexConfig[ENV]);
 
+<<<<<<< HEAD
+=======
+
+const storage = multer.diskStorage({
+  destination: './files',
+  filename(req, file, cb) {
+    cb(null, `${new Date().getTime()}-${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage });
+
+>>>>>>> w9d5/test
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(express.static('files'));
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -125,17 +138,27 @@ app.post("/register", (req, res) => {
     });
 });
 
+// app.post('/files', upload.single('file'), (req, res) => {
+//   const file = req.file; // file passed from client
+//   const meta = req.body; // all other values passed from the client, like name, etc..
+//   console.log(file)
+//   res.send('success')
+// });
 
-
-app.post("/admin", (req, res) => {
+app.post("/files", upload.single('file'), (req, res) => {
+  const file = req.file;
+  const meta = req.body;
+  const url = 'http://localhost:5000/' + file.filename
+  console.log(meta.start_date);
   knex("events")
     .insert({
-      title: req.body.title,
-      description: req.body.description,
-      start_date: req.body.start_date,
-      end_date: req.body.end_date,
-      location: req.body.location,
-      weather: req.body.weather
+      title: meta.title,
+      description: meta.description,
+      start_date: meta.start_date,
+      end_date: meta.end_date,
+      location: meta.location,
+      weather: meta.weather,
+      url: url
     })
     .returning("id")
     .then(id => {
@@ -267,4 +290,10 @@ app.post("/chatMessage", (req, res) => {
     })
 });
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> w9d5/test
 app.listen(port, () => console.log(`Listening on port ${port}`));
