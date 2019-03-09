@@ -63,6 +63,7 @@ class ActivityItem extends Component{
     }
     return (
       <Card style={{ width: '18rem' }}>
+        <Card.Img variant="top" src={this.props.activity.url} />
         <Card.Body>
           <span>{weather}</span>
           <Card.Title>{this.props.activity.title}</Card.Title>
