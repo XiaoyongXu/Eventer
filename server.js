@@ -260,6 +260,7 @@ app.post("/chatMessage", (req, res) => {
       knex("messages")
       .select('*')
         .where('event_id', msg.event_id)
+        .andWhere('join_message', false)
         .then(function (rows) {
           res.send(rows);
       })
