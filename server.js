@@ -1,4 +1,5 @@
 const express = require("express");
+const multer = require("multer");
 const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT || 5000;
@@ -6,8 +7,6 @@ const ENV = process.env.ENV || "development";
 const knexConfig = require("./knexfile");
 const knex = require("knex")(knexConfig[ENV]);
 
-<<<<<<< HEAD
-=======
 
 const storage = multer.diskStorage({
   destination: './files',
@@ -18,7 +17,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
->>>>>>> w9d5/test
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('files'));
@@ -290,10 +288,7 @@ app.post("/chatMessage", (req, res) => {
     })
 });
 
-<<<<<<< HEAD
-=======
 
 
 
->>>>>>> w9d5/test
 app.listen(port, () => console.log(`Listening on port ${port}`));
