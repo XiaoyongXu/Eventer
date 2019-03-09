@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
       table.string('description');
       table.string('weather');
       table.string('location');
+      table.string('url')
       table.timestamp('start_date');
       table.timestamp('end_date');
     })

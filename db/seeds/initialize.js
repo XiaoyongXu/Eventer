@@ -25,6 +25,7 @@ exports.seed = function(knex, Promise) {
               weather: 'rain',
               start_date: new Date('Jan 13, 2019 04:20'),
               end_date: new Date('Jan 13, 2019 05:20'),
+              url:'http://localhost:5000/test.jpg'
             },
             {
               id: 999,
@@ -34,6 +35,7 @@ exports.seed = function(knex, Promise) {
               weather: 'sunny',
               start_date: new Date('Jan 14, 2019 04:20'),
               end_date: new Date('Jan 14, 2019 05:20'),
+              url: 'http://localhost:5000/test.jpg'
             }
           ])
         })
@@ -45,14 +47,16 @@ exports.seed = function(knex, Promise) {
               id: 998,
               event_id: 998,
               user_id: 999,
-              contents: 'Hello there'
+              join_message: true,
+              contents: 'activity 1'
             },
             {
               id: 999,
               event_id: 999,
               user_id: 999,
-              contents: 'Hi'
-            }
+              join_message: true,
+              contents: 'activity 2 abcd'
+            },
           ])
         })
     })

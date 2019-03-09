@@ -20,7 +20,8 @@ class ActivityItem extends Component{
     .post('http://localhost:5000/newMessage', {
       activity_id:this.state.activity_id,
       currentUser_id:this.props.currentUser.id,
-      currentUser_name:this.props.currentUser.name
+      currentUser_name:this.props.currentUser.name,
+      join_message: true
     }).then(response => {
       this.setState({ join: response.data })
     });
@@ -30,7 +31,6 @@ class ActivityItem extends Component{
       .post('http://localhost:5000/deleteEvent', {
         activity_id: this.state.activity_id
       }).then(response => {
-        console.log(response)
         if (response){
           this.props.reload()
         }
@@ -63,6 +63,7 @@ class ActivityItem extends Component{
     }
     return (
       <Card style={{ width: '18rem' }}>
+        <Card.Img variant="top" src={this.props.activity.url} />
         <Card.Body>
           <span>{weather}</span>
           <Card.Title>{this.props.activity.title}</Card.Title>

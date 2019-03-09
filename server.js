@@ -1,4 +1,5 @@
 const express = require("express");
+const multer = require("multer");
 const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT || 5000;
@@ -6,9 +7,19 @@ const ENV = process.env.ENV || "development";
 const knexConfig = require("./knexfile");
 const knex = require("knex")(knexConfig[ENV]);
 
+
+const storage = multer.diskStorage({
+  destination: './files',
+  filename(req, file, cb) {
+    cb(null, `${new Date().getTime()}-${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage });
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(express.static('files'));
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -18,20 +29,45 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.json(["blue", "yellow", "red"])
-});
+app.post("/eventsget", (req, res) => {
 
-app.get("/api/hello", (req, res) => {
-  res.send({ express: "Hello From Express" });
-});
-
-app.get("/events", (req, res) => {
-  knex('events')
-    .select('*')
-    .then(function (rows) {
-      res.send(rows);
+  if (req.body.currentUser.id){
+    knex("messages")
+      .select('*')
+      .where('join_message', true)
+      .andWhere('user_id', req.body.currentUser.id)
+      .then(rows => {
+        const eventlist = rows.map((row)=>{
+          return row.event_id
+        })
+        knex('events')
+          .select('*')
+          .whereIn('id', eventlist)
+          .then(function (rows) {
+            res.send(rows);
+          })
       })
+  } else {
+    res.send(false)
+  }
+})
+
+app.post("/events", (req, res) => {
+  if (req.body.date){
+    const myDate = req.body.date;
+    knex("events")
+      .select('*')
+      .whereRaw(`start_date::timestamp::date = to_date(?, 'YYYY-MM-DD')`, [myDate])
+      .then(function (rows) {
+        res.send(rows);
+      })
+  } else {
+    knex('events')
+      .select('*')
+      .then(function (rows) {
+        res.send(rows);
+      })
+  }
 });
 
 
@@ -102,31 +138,27 @@ app.post("/register", (req, res) => {
     });
 });
 
-app.post("/api/world", (req, res) => {
-  knex.insert; // instead of res.send
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.Title}`
-  );
-});
+// app.post('/files', upload.single('file'), (req, res) => {
+//   const file = req.file; // file passed from client
+//   const meta = req.body; // all other values passed from the client, like name, etc..
+//   console.log(file)
+//   res.send('success')
+// });
 
-app.get("/demo", (req, res) => {
-  var data = [
-    { id: 1, name: "Tony", job: "Project Manager" },
-    { id: 2, name: "Rohit", job: "Mentor" }
-  ];
-  res.send({ data: data });
-});
-
-
-app.post("/admin", (req, res) => {
+app.post("/files", upload.single('file'), (req, res) => {
+  const file = req.file;
+  const meta = req.body;
+  const url = 'http://localhost:5000/' + file.filename
+  console.log(meta.start_date);
   knex("events")
     .insert({
-      title: req.body.title,
-      description: req.body.description,
-      start_date: req.body.start_date,
-      end_date: req.body.end_date,
-      location: req.body.location,
-      weather: req.body.weather
+      title: meta.title,
+      description: meta.description,
+      start_date: meta.start_date,
+      end_date: meta.end_date,
+      location: meta.location,
+      weather: meta.weather,
+      url: url
     })
     .returning("id")
     .then(id => {
@@ -139,10 +171,13 @@ app.get("/discussions", (req, res) => {
   .select('*')
     .then(function (msgs) {
       let msglist=[]
+
       msgs.forEach(msg => {
+        // console.log(msg)
+
         msglist.push(msg)
       });
-      res.send(msglist);
+      res.send(msglist)
     })
 });
 
@@ -151,12 +186,24 @@ app.get("/discussions/:eventId", (req, res) => {
   knex("messages")
     .select('*')
     .where('event_id',req.params.eventId )
-    .then(function (rows) {
-      let msgs = []
-      rows.forEach((row) => {
-        msgs.push(row)
+    .then(function (msgs) {
+      let msglist = []
+      let userlist = []
+      msgs.forEach(msg => {
+        // console.log(msg)
+        if (msg.join_message) {
+          userlist.push({
+            name:msg.contents,
+            id:msg.id
+          })
+        } else {
+          msglist.push(msg)
+        }
+      });
+      res.send({
+        userlist: userlist,
+        msglist: msglist,
       })
-      res.send(msgs);
     })
 });
 
@@ -212,26 +259,12 @@ app.get("/activities", (req, res) => {
   knex("events")
     .select('*')
     .whereRaw(`start_date::timestamp::date = to_date(?, 'YYYY-MM-DD')`, [myDate])
-    // .where("start_date > '2019-01-13'")
-    // .where(`start_date::timestamp::date = to_date('2019-01-13', 'YYYY-MM-DD')`)
     .then(function (msgslist){
-      console.log("Here's my result", msgslist);
-      res.json(msgslist);
+      res.send(msgslist);
     })
 })
 
-app.get("/activities/:id", (req, res) => {
-  knex("messages").where({
-    event_id: 998
-  }).select('contents')
-    .then(function (msgslist) {
-      // let msglist = []
-      // msgs.forEach(msg => {
-      //   msglist.push(msg)
-      // });
-      res.send(msglist);
-    })
-})
+
 app.post("/auth", (req, res) => {
   if (req.body.user_id){
     res.send(true)
@@ -244,12 +277,13 @@ app.post("/auth", (req, res) => {
 
 
 app.post("/newMessage", (req, res) => {
-  const content = req.body.currentUser_name+" joined"
+  const content = req.body.currentUser_name
 
   knex("messages")
     .insert({
       event_id: req.body.activity_id,
       user_id:req.body.currentUser_id,
+      join_message: req.body.join_message,
       contents: content
     })
     .then(res.send(true))
@@ -283,24 +317,36 @@ app.post("/joinCheck", (req, res) => {
 });
 
 app.post("/chatMessage", (req, res) => {
-  console.log("we are in the chat message post server");
-  const content = req.body
-  console.log(req.body)
   knex("messages")
     .insert({
       event_id: req.body.event_id,
       user_id: req.body.user_id,
-      contents: req.body.contents
+      contents: req.body.contents,
+      join_message: false
     })
     .returning(['event_id'])
     .then(([msg])=>{
       knex("messages")
       .select('*')
         .where('event_id', msg.event_id)
+        .andWhere('join_message', false)
         .then(function (rows) {
           res.send(rows);
       })
     })
 });
+
+app.get('/user/:id', (req, res) => {
+  knex('users')
+    .select('*')
+    .where('id', req.params.id)
+    .first()
+    .then(row => {
+      if (row) {
+        res.send(row);
+      }
+    })
+})
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

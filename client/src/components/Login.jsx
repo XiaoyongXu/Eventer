@@ -97,13 +97,14 @@ class Login extends Component {
           <Form.Group style={{ marginTop: '1em' }}>
             <i>Does not have an account? <Link to={'/register'}> register now </Link></i>
           </Form.Group>
-          <GoogleLogin
-            clientId="1011081543585-2vhet0rfh1hi4iuofcqgcq99iiau3e20.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={this.responseGoogle}
-            onFailure={this.responseGoogle}
-          />
+
         </Form>
+        <GoogleLogin
+          clientId="1011081543585-2vhet0rfh1hi4iuofcqgcq99iiau3e20.apps.googleusercontent.com"
+          buttonText="Login"
+          onSuccess={this.responseGoogle}
+          onFailure={this.responseGoogle}
+        />
       </div>
     );
   }
