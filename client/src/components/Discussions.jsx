@@ -67,7 +67,7 @@ class Discussions extends Component {
 
     const messages = this.state.messages.map(message => {
       return (
-        <DiscussionItem key={message.id} message={message} />
+        <DiscussionItem key={message.id} message={message} currentUser={this.props.currentUser}/>
         )
 
     });

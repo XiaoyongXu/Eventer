@@ -288,7 +288,17 @@ app.post("/chatMessage", (req, res) => {
     })
 });
 
-
+app.get('/user/:id', (req, res) => {
+  knex('users')
+    .select('*')
+    .where('id', req.params.id)
+    .first()
+    .then(row => {
+      if (row) {
+        res.send(row);
+      }
+    })
+})
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
