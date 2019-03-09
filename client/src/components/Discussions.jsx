@@ -14,7 +14,7 @@ class Discussions extends Component {
       events: [],
       chatBar:false,
       nextMsg: '',
-      current_event_id:""
+      current_event_id:"",
     }
     this.handleItemClick = this.handleItemClick.bind(this);
   }
@@ -58,7 +58,7 @@ class Discussions extends Component {
   }
 
   render() {
-
+    console.log('messages', this.state.messages)
     const messages = this.state.messages.map(message => {
       return (
         <DiscussionItem key={message.id} message={message} />

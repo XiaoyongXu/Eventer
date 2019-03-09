@@ -10,9 +10,13 @@ export default function NavBar(props) {
   if (props.currentUser.name){
     checkLogin = (<Button onClick={props.logout} className="nav-link">Logout</Button>)
   }
-  let checkAdmin = (<Link to={'/home'} className="nav-link">Guest</Link>)
-  if (props.currentUser.admin){
-    checkAdmin = (<Link to={'/admin'} className="nav-link">Admin</Link>)
+  let checkAdmin = (<Link to={'/home'} className="nav-link">guest</Link>)
+  if (props.currentUser.name) {
+    if (props.currentUser.admin) {
+      checkAdmin = (<Link to={'/admin'} className="nav-link">Admin</Link>)
+    } else {
+      checkAdmin = (<Link to={'/profile'} className="nav-link">profile</Link>)
+    }
   }
   return (
     <div>

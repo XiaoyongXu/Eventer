@@ -34,6 +34,8 @@ app.get("/events", (req, res) => {
       })
 });
 
+
+
 app.post('/login', (req, res) => {
   if (req.body.googleid){
     knex('users')
@@ -155,6 +157,51 @@ app.get("/discussions/:eventId", (req, res) => {
         msgs.push(row)
       })
       res.send(msgs);
+    })
+});
+
+// app.get("/profile/:userId", (req, res) => {
+//   knex("users")
+//     .select('*')
+//     .where('id', req.params.userId)
+//     .then(function (rows) {
+//       let userInfo = rows[0];
+//       res.send(userInfo);
+//     })
+// });
+
+app.get("/user/:id", (req, res) => {
+  knex('users')
+    .select('*')
+    .where('id', req.params.id)
+    .first()
+    .then(row => {
+      if (row) {
+        res.send(row);
+      }
+    })
+})
+
+app.post("/user/:id", (req, res) => {
+  console.log(req.body);
+  knex('users')
+    .select('*')
+    .where('id', req.params.id)
+    .update({
+      first_name:req.body.firstName,
+      last_name:req.body.lastName,
+      email:req.body.email
+    })
+})
+
+app.get("/profileedit/:userId", (req, res) => {
+  knex("users")
+    .select('*')
+    .where('id', req.params.userId)
+    .then(function (rows) {
+      let userInfo = rows[0];
+      console.log(rows);
+      res.send(userInfo);
     })
 });
 

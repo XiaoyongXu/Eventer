@@ -8,7 +8,8 @@ import Discussions from './components/Discussions.jsx';
 import Login from './components/Login.jsx';
 import Admin from './components/Admin.jsx';
 import Register from './components/Register.jsx'
-
+import Profile from './components/Profile.jsx'
+import ProfileEdit from './components/ProfileEdit.jsx'
 
 function withProps(Component, props) {
   return function (matchProps) {
@@ -21,9 +22,11 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: {
-        name: '', admin: false,id:'', response: '',
+        name: '', admin: false,id:'',
+         response: '',
         post: '',
         responseToPost: ''},
+        apiUrl: 'http://localhost:5000'
     }
     this.logout = this.logout.bind(this);
     this.login = this.login.bind(this);
@@ -37,13 +40,15 @@ class App extends Component {
     this.setState({ currentUser: { 'name': '', admin: false, id:'' } });
   }
   login(name,admin,id) {
-    this.setState({ currentUser: { 'name': name, admin: admin, id: id } });
+
+    this.setState({ currentUser: { 'name': name, admin: admin, id: id, } });
   }
   addActivity(title,description){
     this.state.activities.push({title:title,description:description})
     const actList=this.state.activities
     this.setState({activities:actList})
   }
+
   render() {
     return (
       <Router>
@@ -54,11 +59,13 @@ class App extends Component {
           <Switch>
             <Route exact path='/home' component={Home} />
             <Route exact path='/Activities' component={withProps(Activities, { activities: this.state.activities, currentUser:this.state.currentUser})} />
-            <Route exact path='/Discussions' component={withProps(Discussions, { messages: this.state.messages,currentUser:this.state.currentUser })} />
+            <Route exact path='/Discussions' component={withProps(Discussions, { messages: this.state.messages,currentUser:this.state.currentUser})} />
             <Route exact path='/Login' component={withProps(Login, { login: this.login, currentUser:this.state.currentUser})} />
             <Route exact path='/Admin' component={withProps(Admin,{addActivity: this.addActivity})} />
             <Route exact path='/register' component={withProps(Register, {login: this.login})} />
-          </Switch>
+            <Route exact path='/Profile' component={withProps(Profile, { apiUrl: this.state.apiUrl, currentUser: this.state.currentUser})} />
+            <Route exact path='/ProfileEdit' component={withProps(ProfileEdit, { apiUrl: this.state.apiUrl, currentUser: this.state.currentUser })} />
+            </Switch>
         </div>
       </Router>
     );
