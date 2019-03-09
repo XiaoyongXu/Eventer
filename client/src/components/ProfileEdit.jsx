@@ -33,7 +33,7 @@ class ProfileEdit extends Component {
   }
 
   handleSubmit = (event)=>{
-    console.log(this.state);
+    // console.log(this.state);
     axios.post(`http://localhost:5000/user/${this.props.currentUser.id}`,
     {
       firstName: this.state.new_firstName,
@@ -43,7 +43,8 @@ class ProfileEdit extends Component {
     ).then(
       res => {
         if(res){
-          //this.history.pushState(null, '/activities')
+          // this.history.pushState(null, '/activities')
+          this.props.login(this.state.new_firstName,false,res.data)
         }
 
       }

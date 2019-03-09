@@ -18,8 +18,8 @@ class Profile extends Component {
     //check if props.currentUser.ID  is set if not redirect
   }
   handleUserInfo = () => {
-    console.log(this.props.currentUser);
-    axios.get(`${this.props.apiUrl}/profile/${this.props.currentUser.id}`).then(response => {
+
+    axios.get(`${this.props.apiUrl}/user/${this.props.currentUser.id}`).then(response => {
       this.setState({email: response.data.email,
         firstName: response.data.first_name,
         lastName: response.data.last_name})

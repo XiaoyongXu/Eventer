@@ -18,12 +18,9 @@ class Discussions extends Component {
       chatBar:false,
       nextMsg: '',
       current_event_id:"",
-<<<<<<< HEAD
-=======
       userList: [],
       attendees: false,
       description: false
->>>>>>> 31ac3cf1eedd12c3ffd9f31710f8960a0ff5ef8f
     }
     this.handleItemClick = this.handleItemClick.bind(this);
   }
@@ -67,7 +64,7 @@ class Discussions extends Component {
   }
 
   render() {
-    console.log('messages', this.state.messages)
+
     const messages = this.state.messages.map(message => {
       return (
         <DiscussionItem key={message.id} message={message} currentUser={this.props.currentUser}/>

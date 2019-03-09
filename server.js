@@ -138,18 +138,13 @@ app.post("/register", (req, res) => {
     });
 });
 
-// app.post('/files', upload.single('file'), (req, res) => {
-//   const file = req.file; // file passed from client
-//   const meta = req.body; // all other values passed from the client, like name, etc..
-//   console.log(file)
-//   res.send('success')
-// });
+
 
 app.post("/files", upload.single('file'), (req, res) => {
   const file = req.file;
   const meta = req.body;
   const url = 'http://localhost:5000/' + file.filename
-  console.log(meta.start_date);
+
   knex("events")
     .insert({
       title: meta.title,
@@ -173,7 +168,7 @@ app.get("/discussions", (req, res) => {
       let msglist=[]
 
       msgs.forEach(msg => {
-        // console.log(msg)
+
 
         msglist.push(msg)
       });
@@ -190,7 +185,7 @@ app.get("/discussions/:eventId", (req, res) => {
       let msglist = []
       let userlist = []
       msgs.forEach(msg => {
-        // console.log(msg)
+
         if (msg.join_message) {
           userlist.push({
             name:msg.contents,
@@ -230,7 +225,7 @@ app.get("/user/:id", (req, res) => {
 })
 
 app.post("/user/:id", (req, res) => {
-  console.log(req.body);
+
   knex('users')
     .select('*')
     .where('id', req.params.id)
@@ -239,21 +234,24 @@ app.post("/user/:id", (req, res) => {
       last_name:req.body.lastName,
       email:req.body.email
     })
+    .then(function(){
+      res.send(req.params.id)
+    });
+
 })
 
 app.get("/profileedit/:userId", (req, res) => {
   knex("users")
     .select('*')
     .where('id', req.params.userId)
-    .then(function (rows) {
-      let userInfo = rows[0];
-      console.log(rows);
-      res.send(userInfo);
+    .first()
+    .then(function (row) {
+      res.send(row);
     })
 });
 
 app.get("/activities", (req, res) => {
-  console.log('yaaaay', req.query.date)
+
   const myDate = `${req.query.date}`;
   //res.json(['beans']);
   knex("events")

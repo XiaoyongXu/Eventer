@@ -64,7 +64,7 @@ class App extends Component {
             <Route exact path='/Admin' component={withProps(Admin,{addActivity: this.addActivity})} />
             <Route exact path='/register' component={withProps(Register, {login: this.login})} />
             <Route exact path='/Profile' component={withProps(Profile, { apiUrl: this.state.apiUrl, currentUser: this.state.currentUser})} />
-            <Route exact path='/ProfileEdit' component={withProps(ProfileEdit, { apiUrl: this.state.apiUrl, currentUser: this.state.currentUser })} />
+            <Route exact path='/ProfileEdit' component={withProps(ProfileEdit, { apiUrl: this.state.apiUrl, currentUser: this.state.currentUser, login:this.login })} />
             </Switch>
         </div>
       </Router>
