@@ -18,6 +18,8 @@ class Admin extends Component {
       start_date: moment().format('YYYY-MM-DDTHH:mm'),
       end_date: moment().format('YYYY-MM-DDTHH:mm'),
       location:null,
+      lat:null,
+      lng:null,
       weather:"sunny",
       file: null,
       imagePreviewUrl: ''
@@ -69,7 +71,7 @@ class Admin extends Component {
   }
 
   handleLocation(event) {
-    this.setState({ location: event.place });
+    this.setState({ location: event.place, lat: event.coordinates.lat, lng: event.coordinates.lng});
   }
 
   handleSubmit(event) {
@@ -82,6 +84,8 @@ class Admin extends Component {
     formData.append('end_date', this.state.end_date)
     formData.append('location', this.state.location)
     formData.append('weather', this.state.weather)
+    formData.append('lat', this.state.lat)
+    formData.append('lng', this.state.lng)
     axios
       .post("http://localhost:5000/files", formData) //response type
   }

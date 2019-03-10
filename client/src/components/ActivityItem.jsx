@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import { Card, ListGroup, ListGroupItem, Button} from 'react-bootstrap';
 import axios from 'axios'
 import moment from 'moment'
-
+import GMap from './GMap.jsx'
 
 
 class ActivityItem extends Component{
@@ -10,7 +10,6 @@ class ActivityItem extends Component{
     super(props);
     this.state = {
       activity_id: props.activity.id,
-
       join:""
     }
     this.handleJoinClick = this.handleJoinClick.bind(this);
@@ -62,7 +61,14 @@ class ActivityItem extends Component{
     if (this.props.currentUser.admin){
       checkAdmin = (<Button variant="danger" onClick={this.handleDeleteClick} style={{float:'right'}}>Delete</Button>)
     }
+
+    const center =
+      {
+      lat: parseFloat(this.props.activity.lat),
+      lng: parseFloat(this.props.activity.lng)
+      }
     return (
+
       <Card style={{ width: '18rem' }}>
         <Card.Img variant="top" src={this.props.activity.url} />
         <Card.Body>
@@ -78,9 +84,13 @@ class ActivityItem extends Component{
           <ListGroupItem>{this.props.activity.location}</ListGroupItem>
         </ListGroup>
         <Card.Body>
+          < GMap location={this.props.activity.location} center={center} lat={parseFloat(this.props.activity.lat)} lng={parseFloat(this.props.activity.lng)} zoom={8}/>
+        </Card.Body>
+        <Card.Body>
           {checkJoin}
           {checkAdmin}
         </Card.Body>
+
       </Card>
     )
   }
