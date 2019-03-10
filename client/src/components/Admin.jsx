@@ -4,9 +4,9 @@ import axios from "axios";
 import DateInput from './DateInput.jsx';
 import moment from 'moment';
 import { GoogleComponent } from 'react-google-location'
+require('dotenv').config();
 
-
-const API_KEY = 'AIzaSyB3pTVRksYrYQ22R34jvZQZB20DrV1Hzi8'
+const API_KEY = process.env.REACT_APP_API_KEY
 
 
 class Admin extends Component {
@@ -88,7 +88,6 @@ class Admin extends Component {
 
 
   render() {
-
     let { imagePreviewUrl } = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {
