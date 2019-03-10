@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 
+const API_KEY = process.env.REACT_APP_API_KEY
 const AnyReactComponent = ({ text }) =>
   (<div>
     <i className="material-icons">
@@ -18,7 +19,7 @@ class GMap extends Component {
       // Important! Always set the container height explicitly
       <div style={{ height: '30vh', width: '100%' }}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyDmtvXZVTTnflwR7CYdeWAvuMMf7MsQ34U' }}
+          bootstrapURLKeys={{ key: API_KEY }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
         >
