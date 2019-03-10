@@ -44,3 +44,61 @@
     overflow: auto;
         padding-bottom: 15px;
 }
+h3{
+  margin-left: 15px
+}
+
+
+.fileInput{
+  border-bottom: 4px solid lightgray;
+  border-right: 4px solid lightgray;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  padding: 10px;
+  cursor: pointer;
+}
+
+
+.imgPreview{
+  text-align: center;
+  height: 200px;
+  width: 200px;
+  img{
+    width: 100%;
+    height: 100%;
+  }
+}
+
+
+
+
+.previewText{
+  width: 100%;
+  margin-top: 20px;
+}
+
+
+.submitButton{
+  padding: 12px;
+  margin-left: 10px;
+  background: white;
+  border: 4px solid lightgray;
+  border-radius: 15px;
+  font-weight: 700;
+  font-size: 10pt;
+  cursor: pointer;
+  &:hover{
+     background: #efefef;
+  }
+
+}
+
+
+.centerText{
+  text-align: center;
+  width: 500p;
+}
+
+.current-local-ico{
+  float:left
+}

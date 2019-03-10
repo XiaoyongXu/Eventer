@@ -1,8 +1,12 @@
 import React, { Component } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button} from "react-bootstrap";
 import axios from "axios";
 import DateInput from './DateInput.jsx';
 import moment from 'moment';
+import { GoogleComponent } from 'react-google-location'
+
+
+const API_KEY = 'AIzaSyB3pTVRksYrYQ22R34jvZQZB20DrV1Hzi8'
 
 
 class Admin extends Component {
@@ -13,9 +17,9 @@ class Admin extends Component {
       description: "",
       start_date: moment().format('YYYY-MM-DDTHH:mm'),
       end_date: moment().format('YYYY-MM-DDTHH:mm'),
-      location:"",
+      location:null,
       weather:"sunny",
-      file: '',
+      file: null,
       imagePreviewUrl: ''
     };
 
@@ -65,7 +69,7 @@ class Admin extends Component {
   }
 
   handleLocation(event) {
-    this.setState({ location: event.target.value });
+    this.setState({ location: event.place });
   }
 
   handleSubmit(event) {
@@ -82,16 +86,6 @@ class Admin extends Component {
       .post("http://localhost:5000/files", formData) //response type
   }
 
-  // _handleSubmit(e) {
-  //   e.preventDefault();
-  //   const formData = new FormData()
-  //   formData.append('file', this.state.file)
-  //   console.log(this.state.file)
-  //   axios.post("http://localhost:5000/files", formData
-  //   ).then(res => {
-  //     console.log(res.data)
-  //   })
-  // }
 
   render() {
 
@@ -104,16 +98,10 @@ class Admin extends Component {
     }
     return (
       <div style={{ width: "50%", marginLeft: "25%", marginTop: "10%" }}>
-        <div className="previewComponent">
-          <form onSubmit={(e) => this._handleSubmit(e)}>
-            <input className="fileInput"
-              type="file"
-              onChange={(e) => this._handleImageChange(e)} />
-          </form>
-          <div className="imgPreview">
-            {$imagePreview}
-          </div>
-        </div>
+
+
+
+
         <Form onSubmit={this.handleSubmit}>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Activity name</Form.Label>
@@ -131,6 +119,8 @@ class Admin extends Component {
               onChange={this.handleDescripChange}
             />
           </Form.Group>
+
+
           <Form.Group controlId="exampleForm.ControlInput2" >
             <Form.Label>Start Date</Form.Label>
             <div>< DateInput handleDate={this.handleStartDate}/></div>
@@ -140,18 +130,34 @@ class Admin extends Component {
             <Form.Label>End Date</Form.Label>
             <div>< DateInput handleDate={this.handleEndDate}/></div>
           </Form.Group>
-          <Form.Group controlId="exampleForm.ControlInput4">
-            <Form.Label>Location</Form.Label>
-            <Form.Control as="select" onChange={this.handleLocation}>
-              <option>Select One</option>
-              <option>Vancouver</option>
-              <option>Victoria</option>
-            </Form.Control>
+          <Form.Group controlId="exampleForm.ControlInput0" onSubmit={(e) => this._handleSubmit(e)}>
+            <Form.Label>Poster</Form.Label>
+            <div>
+              <input className="fileInput"
+                type="file"
+                onChange={(e) => this._handleImageChange(e)} />
+            </div>
+            {$imagePreview}
           </Form.Group>
-          <Button variant="outline-success" type="submit">
-            Submit
-          </Button>
+          <Form.Group>
+            <Form.Label>Location</Form.Label>
+            <GoogleComponent
+              apiKey={API_KEY}
+              language={'en'}
+              country={'country:in|country:ca'}
+              coordinates={true}
+              locationBoxStyle={'form-control'}
+              locationListStyle={'list-group-item'}
+              onChange={this.handleLocation} />
+          </Form.Group>
+
+          <Form.Group>
+            <Button variant="outline-success" type="submit">
+              Submit
+            </Button>
+          </Form.Group>
         </Form>
+
       </div>
     );
   }

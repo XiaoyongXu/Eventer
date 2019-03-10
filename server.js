@@ -143,8 +143,10 @@ app.post("/register", (req, res) => {
 app.post("/files", upload.single('file'), (req, res) => {
   const file = req.file;
   const meta = req.body;
-  const url = 'http://localhost:5000/' + file.filename
-
+  let url = null;
+  if (file){
+    url = 'http://localhost:5000/' + file.filename
+  }
   knex("events")
     .insert({
       title: meta.title,
