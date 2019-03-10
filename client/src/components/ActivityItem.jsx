@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import { Card, ListGroup, ListGroupItem, Button} from 'react-bootstrap';
 import axios from 'axios'
 import moment from 'moment'
+import Gmap from './GoogleMap.jsx'
 
 
 class ActivityItem extends Component{
@@ -79,6 +80,12 @@ class ActivityItem extends Component{
         <Card.Body>
           {checkJoin}
           {checkAdmin}
+        </Card.Body>
+        <Card.Body>
+          <div>
+            test
+          </div>
+          < Gmap/>
         </Card.Body>
       </Card>
     )
