@@ -143,8 +143,10 @@ app.post("/register", (req, res) => {
 app.post("/files", upload.single('file'), (req, res) => {
   const file = req.file;
   const meta = req.body;
-  const url = 'http://localhost:5000/' + file.filename
-
+  let url = null;
+  if (file){
+    url = 'http://localhost:5000/' + file.filename
+  }
   knex("events")
     .insert({
       title: meta.title,
@@ -152,6 +154,8 @@ app.post("/files", upload.single('file'), (req, res) => {
       start_date: meta.start_date,
       end_date: meta.end_date,
       location: meta.location,
+      lat: meta.lat,
+      lng:meta.lng,
       weather: meta.weather,
       url: url
     })
@@ -202,15 +206,6 @@ app.get("/discussions/:eventId", (req, res) => {
     })
 });
 
-// app.get("/profile/:userId", (req, res) => {
-//   knex("users")
-//     .select('*')
-//     .where('id', req.params.userId)
-//     .then(function (rows) {
-//       let userInfo = rows[0];
-//       res.send(userInfo);
-//     })
-// });
 
 app.get("/user/:id", (req, res) => {
   knex('users')
