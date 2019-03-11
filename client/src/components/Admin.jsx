@@ -53,7 +53,7 @@ class Admin extends Component {
 
   handleStartDate(event) {
     const date = moment(event.target.value).format('YYYY-MM-DDTHH:mm')
-    console.log(date)
+
     this.setState({ start_date: date});
   }
 
