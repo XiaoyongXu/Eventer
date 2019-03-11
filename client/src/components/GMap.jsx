@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
+require('dotenv').config();
 
 const API_KEY = process.env.REACT_APP_API_KEY
 const AnyReactComponent = ({ text }) =>
@@ -15,6 +16,7 @@ const AnyReactComponent = ({ text }) =>
 
 class GMap extends Component {
   render() {
+
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '30vh', width: '100%' }}>
