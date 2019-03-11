@@ -1,13 +1,15 @@
 import React, { Component } from "react";
-import { Form, Button} from "react-bootstrap";
+import { Form, Button, Col} from "react-bootstrap";
 import axios from "axios";
 import DateInput from './DateInput.jsx';
 import moment from 'moment';
-import { GoogleComponent } from 'react-google-location'
+import { GoogleComponent } from 'react-google-location';
+import ReactWeather from 'react-open-weather';
+import 'react-open-weather/lib/css/ReactWeather.css';
 require('dotenv').config();
 
 const API_KEY = process.env.REACT_APP_API_KEY
-
+const WEATHER_API_KEY = process.env.REACT_APP_WEATHER_API_KEY
 
 class Admin extends Component {
   constructor(props) {
@@ -20,7 +22,7 @@ class Admin extends Component {
       location:null,
       lat:null,
       lng:null,
-      weather:"sunny",
+      weather:"pending",
       file: null,
       imagePreviewUrl: ''
     };
@@ -31,6 +33,7 @@ class Admin extends Component {
     this.handleDescripChange = this.handleDescripChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLocation = this.handleLocation.bind(this);
+    this.handleWeatherChange=this.handleWeatherChange.bind(this);
   }
 
 
@@ -70,6 +73,10 @@ class Admin extends Component {
     this.setState({ description: event.target.value });
   }
 
+  handleWeatherChange(event) {
+    this.setState({ weather: event.target.value });
+  }
+
   handleLocation(event) {
     this.setState({ location: event.place, lat: event.coordinates.lat, lng: event.coordinates.lng});
   }
@@ -99,60 +106,99 @@ class Admin extends Component {
     } else {
       $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
     }
+    let weather = <div></div>
+    if (this.state.lat){
+      weather = (<ReactWeather
+        forecast="5days"
+        apikey={WEATHER_API_KEY}
+        type="geo"
+        lat={this.state.lat.toString()}
+        lon={this.state.lng.toString()} />)
+    }
+
     return (
       <div style={{ width: "50%", marginLeft: "25%", marginTop: "10%" }}>
-
-
-
-
         <Form onSubmit={this.handleSubmit}>
-          <Form.Group controlId="exampleForm.ControlInput1">
-            <Form.Label>Activity name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="title"
-              onChange={this.handleTitleChange}
-            />
-          </Form.Group>
-          <Form.Group controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows="3"
-              onChange={this.handleDescripChange}
-            />
-          </Form.Group>
+          <Form.Row>
+            <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+              <Form.Label>Activity name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="title"
+                onChange={this.handleTitleChange}
+              />
+            </Form.Group>
+          </Form.Row>
+
+          <Form.Row>
+            <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows="3"
+                onChange={this.handleDescripChange}
+              />
+            </Form.Group>
+          </Form.Row>
+
+          <Form.Row>
+            <Form.Group as={Col} controlId="exampleForm.ControlInput6">
+              <Form.Label>Location</Form.Label>
+              <GoogleComponent
+                apiKey={API_KEY}
+                language={'en'}
+                country={'country:in|country:ca'}
+                coordinates={true}
+                locationBoxStyle={'form-control'}
+                locationListStyle={'list-group-item'}
+                onChange={this.handleLocation} />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} controlId="exampleForm.ControlInput5">
+              {weather}
+            </Form.Group>
+          </Form.Row>
+
+          <Form.Row>
+            <Form.Group as={Col} controlId="exampleForm.ControlInput2" >
+              <Form.Label>Start Date:</Form.Label>
+              <div>< DateInput handleDate={this.handleStartDate} /></div>
+            </Form.Group>
+            <Form.Group as={Col} controlId="exampleForm.ControlInput3">
+              <Form.Label>End Date:</Form.Label>
+              <div>< DateInput handleDate={this.handleEndDate} /></div>
+            </Form.Group>
+          </Form.Row>
+
+          <Form.Row>
+            <Form.Group as={Col} controlId="weather">
+              <Form.Label>Weather</Form.Label>
+              <Form.Control as="select" onChange={this.handleWeatherChange}>
+                <option>choose one</option>
+                <option>sunny</option>
+                <option>snow</option>
+                <option>rain</option>
+                <option>cloudy</option>
+                <option>pending</option>
+              </Form.Control>
+            </Form.Group>
+          </Form.Row>
 
 
-          <Form.Group controlId="exampleForm.ControlInput2" >
-            <Form.Label>Start Date</Form.Label>
-            <div>< DateInput handleDate={this.handleStartDate}/></div>
-          </Form.Group>
+          <Form.Row>
+            <Form.Group as={Col} controlId="exampleForm.ControlInput0" onSubmit={(e) => this._handleSubmit(e)}>
+              <Form.Label>Poster</Form.Label>
+              <div>
+                <input className="fileInput"
+                  type="file"
+                  onChange={(e) => this._handleImageChange(e)} />
+              </div>
+              {$imagePreview}
+            </Form.Group>
+          </Form.Row>
 
-          <Form.Group controlId="exampleForm.ControlInput3">
-            <Form.Label>End Date</Form.Label>
-            <div>< DateInput handleDate={this.handleEndDate}/></div>
-          </Form.Group>
-          <Form.Group controlId="exampleForm.ControlInput0" onSubmit={(e) => this._handleSubmit(e)}>
-            <Form.Label>Poster</Form.Label>
-            <div>
-              <input className="fileInput"
-                type="file"
-                onChange={(e) => this._handleImageChange(e)} />
-            </div>
-            {$imagePreview}
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Location</Form.Label>
-            <GoogleComponent
-              apiKey={API_KEY}
-              language={'en'}
-              country={'country:in|country:ca'}
-              coordinates={true}
-              locationBoxStyle={'form-control'}
-              locationListStyle={'list-group-item'}
-              onChange={this.handleLocation} />
-          </Form.Group>
+
 
           <Form.Group>
             <Button variant="outline-success" type="submit">
