@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from 'react-router-dom';
 import {
   Card,
   ListGroup,
@@ -11,18 +12,19 @@ import axios from "axios";
 import moment from "moment";
 import GMap from "./GMap.jsx";
 
+
 class ActivityItem extends Component{
   constructor(props) {
     super(props);
     this.state = {
       activity_id: props.activity.id,
-      join: ""
+      join: null,
+      redirect:false
     };
     this.handleJoinClick = this.handleJoinClick.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
   }
   handleJoinClick() {
-    console.log(this.props.currentUser.id);
     axios
       .post("http://localhost:5000/newMessage", {
         activity_id: this.state.activity_id,
@@ -31,7 +33,7 @@ class ActivityItem extends Component{
         join_message: true
       })
       .then(response => {
-        this.setState({ join: response.data });
+        this.setState({ join: response.data, redirect: response.data});
       });
   }
   handleDeleteClick() {
@@ -52,7 +54,7 @@ class ActivityItem extends Component{
         user_id: this.props.currentUser.id
       })
       .then(response => {
-        this.setState({ join: response.data });
+        this.setState({ join: response.data,redirect:this.state.redirect});
       });
   }
   render() {
@@ -68,9 +70,11 @@ class ActivityItem extends Component{
     } else if (this.props.activity.weather === "cloudy") {
       weather = <i className="fas fa-cloud" />;
     }
-    let checkJoin = <Button onClick={this.handleJoinClick}>Join</Button>;
+    let checkJoin = (<div>Reserved by members</div>);
     if (this.state.join) {
       checkJoin = <Button variant="secondary">Joined</Button>;
+    }else if(this.props.currentUser.id){
+      checkJoin = <Button onClick={this.handleJoinClick}>Join</Button>;
     }
     let checkAdmin = <span />;
     if (this.props.currentUser.admin) {
@@ -111,21 +115,26 @@ class ActivityItem extends Component{
         </Button>
       </OverlayTrigger>
     );
+    let { from } = { from: { pathname: "/discussions" } };
+    let redirectToReferrer = this.state.redirect;
+    if (redirectToReferrer) return <Redirect to={from} />
     return (
       <div className = "activityClass">
-      <Card style={{ width: '18rem' }}>
-        <Card.Img variant="top" src={this.props.activity.url} />
+      <Card width='100' m-1='true'>
+        <Card.Img variant="top" src={this.props.activity.url} height= '250' />
         <Card.Body>
           <span>{weather}</span>
           <Card.Title>{this.props.activity.title}</Card.Title>
           <Card.Text>{this.props.activity.description}</Card.Text>
         </Card.Body>
         <ListGroup className="list-group-flush">
-          <ListGroupItem>{start_time}</ListGroupItem>
-          <ListGroupItem>{end_time}</ListGroupItem>
+
+            <ListGroupItem>{start_time}, {end_time}</ListGroupItem>
           <ListGroupItem>
-            {this.props.activity.location}
-            <Example />
+
+               {this.props.activity.location}
+                <Example />
+
           </ListGroupItem>
         </ListGroup>
 

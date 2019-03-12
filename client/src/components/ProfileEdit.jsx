@@ -13,7 +13,8 @@ class ProfileEdit extends Component {
       new_lastName: '',
       new_email:'',
       file: null,
-      imagePreviewUrl: ''
+      imagePreviewUrl: '',
+
     }
   }
 
@@ -50,7 +51,6 @@ class ProfileEdit extends Component {
         if (res) {
           this.props.login(this.state.new_firstName, false, res.data)
         }
-
       }
     )
   }
@@ -62,10 +62,11 @@ class ProfileEdit extends Component {
           email: res.data.email,
           firstName: res.data.first_name,
           lastName: res.data.last_name,
-          new_email:res.data.email
+          new_email:res.data.email,
         })
       }
     )
+
   }
 
 
@@ -80,46 +81,47 @@ class ProfileEdit extends Component {
     } else {
       $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
     }
-    return (
-      <div style={{ width: "50%", marginLeft: "25%", marginTop: "10%" }}>
-      <Form>
+
+      return (
+        <div style={{ width: "50%", marginLeft: "25%", marginTop: "10%" }}>
+          <Form>
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control type="" name="new_firstName" placeholder={this.state.firstName} onChange={this.handleChange} />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridPassword">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control type="" name="new_lastName" placeholder={this.state.lastName} onChange={this.handleChange} />
+              </Form.Group>
+            </Form.Row>
 
 
-        <Form.Row>
-          <Form.Group as={Col} controlId="formGridEmail">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control type="" name="new_firstName" placeholder={this.state.firstName} onChange={this.handleChange}/>
-          </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridPassword">
-            <Form.Label>Last Name</Form.Label>
-              <Form.Control type="" name="new_lastName" placeholder={this.state.lastName} onChange={this.handleChange} />
-          </Form.Group>
-        </Form.Row>
-
-
-
-        <Form.Group controlId="formGridAddress1">
-          <Form.Label>Email</Form.Label>
-            <Form.Control name="new_email" defaultValue={this.state.email} placeholder={this.state.email} onChange={this.handleChange} />
-        </Form.Group>
-        <Form.Row>
-          <Form.Group as={Col} controlId="exampleForm.ControlInput0" onSubmit={(e) => this._handleSubmit(e)}>
-            <Form.Label>Avatar</Form.Label>
-            <div>
-              <input className="fileInput"
-                type="file"
-                onChange={(e) => this._handleImageChange(e)} />
-            </div>
-            {$imagePreview}
-          </Form.Group>
-        </Form.Row>
-        <Button variant="primary" type="button" onClick={this.handleSubmit}>
-          Submit
+            <Form.Group controlId="formGridAddress1">
+              <Form.Label>Email</Form.Label>
+              <Form.Control name="new_email" defaultValue={this.state.email} placeholder={this.state.email} onChange={this.handleChange} />
+            </Form.Group>
+            <Form.Row>
+              <Form.Group as={Col} controlId="exampleForm.ControlInput0" onSubmit={(e) => this._handleSubmit(e)}>
+                <Form.Label>Avatar</Form.Label>
+                <div>
+                  <input className="fileInput"
+                    type="file"
+                    onChange={(e) => this._handleImageChange(e)} />
+                </div>
+                {$imagePreview}
+              </Form.Group>
+            </Form.Row>
+            <Button variant="primary" type="button" onClick={this.handleSubmit}>
+              Submit
        </Button>
-      </Form>
-    </div>
-    );
+          </Form>
+        </div>
+      );
+
+
   }
 }
 

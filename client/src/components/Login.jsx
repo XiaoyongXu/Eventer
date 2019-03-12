@@ -72,8 +72,7 @@ class Login extends Component {
   }
 
   render(){
-    console.log("HELLO")
-    let { from } = { from: { pathname: "/discussions" } };
+    let { from } = { from: { pathname: "/activities" } };
     let redirectToReferrer = this.state.redirect;
     if (redirectToReferrer) return <Redirect to={from} />
 
