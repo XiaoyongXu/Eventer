@@ -1,8 +1,11 @@
 import React,{Component} from 'react';
-import { Card, ListGroup, ListGroupItem, Button} from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Button,Popover,OverlayTrigger} from 'react-bootstrap';
 import axios from 'axios'
 import moment from 'moment'
 import GMap from './GMap.jsx'
+
+
+
 
 
 class ActivityItem extends Component{
@@ -73,6 +76,16 @@ class ActivityItem extends Component{
       lat: parseFloat(this.props.activity.lat),
       lng: parseFloat(this.props.activity.lng)
       }
+    const popover = (
+      <Popover id="popover-basic" title="location" style={{width:"25rem",height:"18rem"}}>
+        < GMap location={this.props.activity.location} center={center} lat={parseFloat(this.props.activity.lat)} lng={parseFloat(this.props.activity.lng)} zoom={11} />
+      </Popover>
+    );
+    const Example = () => (
+      <OverlayTrigger trigger="click" placement="top" overlay={popover}>
+        <Button variant="info" style={{float:"right"}}>map</Button>
+      </OverlayTrigger>
+    );
     return (
 
       <Card style={{ width: '18rem' }}>
@@ -87,11 +100,12 @@ class ActivityItem extends Component{
         <ListGroup className="list-group-flush">
           <ListGroupItem>{start_time}</ListGroupItem>
           <ListGroupItem>{end_time}</ListGroupItem>
-          <ListGroupItem>{this.props.activity.location}</ListGroupItem>
+          <ListGroupItem>{this.props.activity.location}<Example /></ListGroupItem>
         </ListGroup>
-        <Card.Body>
-          < GMap location={this.props.activity.location} center={center} lat={parseFloat(this.props.activity.lat)} lng={parseFloat(this.props.activity.lng)} zoom={8}/>
-        </Card.Body>
+
+
+
+
         <Card.Body>
           {checkJoin}
           {checkAdmin}

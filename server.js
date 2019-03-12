@@ -84,11 +84,13 @@ app.post('/login', (req, res) => {
             res.send(row);
           }
         }else{
+
           knex('users').insert({
             first_name:req.body.first_name,
             last_name:req.body.last_name,
             email:req.body.email,
             googleid:req.body.googleid,
+            url: req.body.url,
             isAdmin:false
           }).returning(['id'])
           .then(([user]) =>{
@@ -219,15 +221,21 @@ app.get("/user/:id", (req, res) => {
     })
 })
 
-app.post("/user/:id", (req, res) => {
-
+app.post("/user/:id", upload.single('file'),(req, res) => {
+  const file = req.file;
+  const meta = req.body;
+  let url = null;
+  if (file) {
+    url = 'http://localhost:5000/' + file.filename
+  }
   knex('users')
     .select('*')
     .where('id', req.params.id)
     .update({
-      first_name:req.body.firstName,
-      last_name:req.body.lastName,
-      email:req.body.email
+      first_name:meta.firstName,
+      last_name:meta.lastName,
+      email:meta.email,
+      url:url
     })
     .then(function(){
       res.send(req.params.id)

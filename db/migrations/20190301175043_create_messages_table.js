@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
       table.integer('user_id').references('users.id');
       table.string('contents');
       table.boolean('join_message');
+      table.string('url');
       table.timestamp('created_at').defaultTo(knex.fn.now());
     })
   ])
