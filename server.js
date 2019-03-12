@@ -16,6 +16,8 @@ const storage = multer.diskStorage({
   }
 });
 
+
+
 const upload = multer({ storage });
 
 app.use(bodyParser.json());
@@ -29,6 +31,7 @@ app.use(function(req, res, next) {
   );
   next();
 });
+
 
 app.post("/eventsget", (req, res) => {
   if (req.body.currentUser.id) {
@@ -403,7 +406,8 @@ app.get("/user/:id", (req, res) => {
       if (row) {
         res.send(row);
       }
-    });
-});
+    })
+})
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
+

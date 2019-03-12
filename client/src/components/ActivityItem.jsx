@@ -11,7 +11,7 @@ import axios from "axios";
 import moment from "moment";
 import GMap from "./GMap.jsx";
 
-class ActivityItem extends Component {
+class ActivityItem extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -112,7 +112,8 @@ class ActivityItem extends Component {
       </OverlayTrigger>
     );
     return (
-      <Card style={{ width: "18rem" }}>
+      <div className = "activityClass">
+      <Card style={{ width: '18rem' }}>
         <Card.Img variant="top" src={this.props.activity.url} />
         <Card.Body>
           <span>{weather}</span>
@@ -133,7 +134,8 @@ class ActivityItem extends Component {
           {checkAdmin}
         </Card.Body>
       </Card>
-    );
+      </div>
+    )
   }
 }
 export default ActivityItem;
