@@ -117,7 +117,7 @@ class ActivityItem extends Component{
 
     return (
       <div className = "activityClass">
-      <Card width='100' m-1>
+      <Card width='100' m-1='true'>
         <Card.Img variant="top" src={this.props.activity.url} height= '250' />
         <Card.Body>
           <span>{weather}</span>
