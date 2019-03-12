@@ -10,8 +10,8 @@ exports.up = function(knex, Promise) {
       table.string('url');
       table.string('lat');
       table.string('lng');
-      table.timestamp('start_date');
-      table.timestamp('end_date');
+      table.string('start_date');
+      table.string('end_date');
     })
   ])
 };

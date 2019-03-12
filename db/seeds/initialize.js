@@ -35,8 +35,8 @@ exports.seed = function(knex, Promise) {
               lat: '49.2812035',
               lng: '-123.1170317',
               weather: 'rain',
-              start_date: new Date('Jan 13, 2019 04:20'),
-              end_date: new Date('Jan 13, 2019 05:20'),
+              start_date: 'Jan 13, 2019 04:20',
+              end_date: 'Jan 13, 2019 05:20',
               url:'http://localhost:5000/test.jpg'
             },
             {
@@ -47,8 +47,8 @@ exports.seed = function(knex, Promise) {
               lat: '48.4238195',
               lng: '-123.3662719',
               weather: 'sunny',
-              start_date: new Date('Jan 14, 2019 04:20'),
-              end_date: new Date('Jan 14, 2019 05:20'),
+              start_date: 'Jan 14, 2019 04:20',
+              end_date: 'Jan 14, 2019 05:20',
               url: 'http://localhost:5000/test.jpg'
             }
           ])

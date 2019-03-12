@@ -275,10 +275,11 @@ function sendEmail(email, event_id) {
     .where("id", event_id)
     .first()
     .then(row => {
+      let text=null
       if (email.includes("@gmail.com")) {
         const title = row.title.split(" ").join("+");
         const description = row.description.split(" ").join("+");
-        const date = moment(row.start_date).format("YYYYMMDDTHHmmss") + "Z" +'/'+ moment(row.end_date).format("YYYYMMDDTHHmmss") + "Z"
+        const date = moment(row.start_date).format("YYYYMMDDTHHmmss") +'/'+ moment(row.end_date).format("YYYYMMDDTHHmmss")
         const location = row.location.split(" ").join("+");
         const link = `https://calendar.google.com/calendar/r/eventedit?text=${title}&dates=${date}&details=${description}&location=${location}`;
 
@@ -293,11 +294,11 @@ function sendEmail(email, event_id) {
         </tr>
 
         <tr>
-          <td>Start Date: ${moment(row.start_date).format("LLLL")} </td>
+          <td>Start Date: ${row.start_date} </td>
         </tr>
 
         <tr>
-          <td>End Date: ${moment(row.end_date).format("LLLL")}</td>
+          <td>End Date: ${row.end_date}</td>
         </tr>
 
         <tr>
@@ -309,7 +310,7 @@ function sendEmail(email, event_id) {
         </tr>
       </table>`;
       } else {
-        let text = `<table>
+        text = `<table>
 
         <tr>
           <td><h3>${row.title}</h3></td>
@@ -320,11 +321,11 @@ function sendEmail(email, event_id) {
         </tr>
 
         <tr>
-          <td>Start Date: ${moment(row.start_date).format("LLLL")} </td>
+          <td>Start Date: ${row.start_date} </td>
         </tr>
 
         <tr>
-          <td>End Date: ${moment(row.end_date).format("LLLL")}</td>
+          <td>End Date: ${row.end_date}</td>
         </tr>
 
         <tr>
