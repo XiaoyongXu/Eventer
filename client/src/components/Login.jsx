@@ -31,12 +31,12 @@ class Login extends Component {
   }
 
   responseGoogle = (response) => {
-
     axios.post('http://localhost:5000/login', {
       email: response.profileObj.email,
       first_name: response.profileObj.givenName,
       last_name: response.profileObj.familyName,
-      googleid: response.profileObj.googleId
+      googleid: response.profileObj.googleId,
+      url: response.profileObj.imageUrl
     })//response type
       .then(
         res => {

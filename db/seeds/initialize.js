@@ -10,7 +10,17 @@ exports.seed = function(knex, Promise) {
           first_name: 'Admin',
           last_name: 'admin',
           isAdmin: true,
-          password: '123'
+          password: '123',
+          url: 'http://localhost:5000/test.jpg'
+        },
+        {
+          id: 998,
+          email: 'tony@tony.com',
+          first_name: 'Tony',
+          last_name: 'Xu',
+          isAdmin: false,
+          password: '123',
+          url: 'http://localhost:5000/test.jpg'
         },
       ]);
     }).then(()=>{
@@ -52,14 +62,16 @@ exports.seed = function(knex, Promise) {
               event_id: 998,
               user_id: 999,
               join_message: true,
-              contents: 'activity 1'
+              contents: 'activity 1',
+              url: 'http://localhost:5000/test.jpg'
             },
             {
               id: 999,
               event_id: 999,
               user_id: 999,
               join_message: true,
-              contents: 'activity 2 abcd'
+              contents: 'activity 2 abcd',
+              url: 'http://localhost:5000/test.jpg'
             },
           ])
         })

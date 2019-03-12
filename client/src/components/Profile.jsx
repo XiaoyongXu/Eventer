@@ -13,6 +13,7 @@ class Profile extends Component {
       email: '',
       firstName: '',
       lastName: '',
+      url:''
     }
     this.handleUserInfo();
     //check if props.currentUser.ID  is set if not redirect
@@ -33,6 +34,7 @@ class Profile extends Component {
           email: res.data.email,
           firstName: res.data.first_name,
           lastName: res.data.last_name,
+          url: res.data.url
         })
       }
     )
@@ -45,7 +47,7 @@ class Profile extends Component {
 
         <CardGroup>
           <Card>
-            <Card.Img variant="top" src="holder.js/100px160" />
+            <Card.Img variant="top" src={this.state.url} />
             <Card.Body>
               <Card.Title>Card title</Card.Title>
               <Card.Text>
@@ -75,9 +77,9 @@ class Profile extends Component {
                 </Link>
               </Card.Footer>
             </ListGroup>
-          </Card>;
+          </Card>
 
-        </CardGroup>;
+        </CardGroup>
 
       </div>
     );
