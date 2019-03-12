@@ -117,7 +117,7 @@ class ActivityItem extends Component{
 
     return (
       <div className = "activityClass">
-      <Card width='100' m-1>
+      <Card width='100' m-1 = "true">
         <Card.Img variant="top" src={this.props.activity.url} height= '250' />
         <Card.Body>
           <span>{weather}</span>
@@ -126,7 +126,8 @@ class ActivityItem extends Component{
         </Card.Body>
         <ListGroup className="list-group-flush">
 
-            <ListGroupItem>{start_time}, {end_time}</ListGroupItem>
+            <ListGroupItem>{start_time}</ListGroupItem>
+            <ListGroupItem>{end_time}</ListGroupItem>
           <ListGroupItem>
 
                {this.props.activity.location}

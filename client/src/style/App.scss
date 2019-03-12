@@ -118,19 +118,29 @@ h3{
 .calendar-button{
   width:100%;
   margin:auto;
+  background-color: #343a40;
+  color: white
 }
 
 .ActTable{
-  width: 1000px;
-  background-color: #ABB2B9;
+  width: 100%;
+  background-color: White;
   margin: auto;
+}
+
+.weatherForHomePage{
+  width: 100%;
 }
 
 .modal-body{
   margin:auto;
 }
 
+.imageHomepage{
+  width:100%;
+  height:600px;
 
+}
 .col-7 {
   flex: 1;
   height: 100vh;
