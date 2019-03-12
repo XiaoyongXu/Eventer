@@ -5,7 +5,7 @@ export default function Chatbar(props) {
 
   return (
 
-      <input className="chatbar-message"
+      <input className="chatbar"
 
         placeholder="Type a message and press ENTER"
         onChange={props.handleChange}

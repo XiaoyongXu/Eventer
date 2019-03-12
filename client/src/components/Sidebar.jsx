@@ -13,7 +13,7 @@ export default function Sidebar(props) {
       })
     }
   return (
-    <div className="col-2">
+    <div className="col-3">
       <Nav defaultActiveKey="/home" className="flex-column">
         {renderEvents(props.events)}
       </Nav>

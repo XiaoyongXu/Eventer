@@ -118,12 +118,16 @@ class Discussions extends Component {
             events={this.state.events}
           />
 
-          <div className="col-8">
-            {eventDescription}
-            {messages}
-            {chat}
+          <div className="col-7">
+            <div className="eventDescription">{eventDescription}</div>
+            <div className="messages">{messages}</div>
+
           </div>
-          <div styles={{ height: "100%" }}>{rightside}</div>
+          <div className="chatbar-input">{chat}</div>
+          <div className="rightsidebar" styles={{ height: "100vh" }}>
+            {rightside}
+          </div>
+
         </div>
       );
     }
