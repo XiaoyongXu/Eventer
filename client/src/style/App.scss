@@ -105,17 +105,31 @@ h3{
 
 .activityClass{
   padding: 15px;
-  margin: auto;
+  margin-left: 10px;
+  margin-right: 10px;
 
 }
 
-.buttonCalendar{
-  margin-left: 10px;
+.yachtImage{
+  height:200px;
+  width:100%;
+}
+
+.calendar-button{
+  width:100%;
+  margin:auto;
+}
+
+.ActTable{
+  width: 1000px;
+  background-color: #ABB2B9;
+  margin: auto;
 }
 
 .modal-body{
   margin:auto;
 }
+
 
 .col-7 {
   flex: 1;

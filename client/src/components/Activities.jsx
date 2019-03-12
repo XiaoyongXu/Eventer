@@ -40,8 +40,11 @@ class Activities extends Component {
     });
     return (
       <div className= "ActTable">
+      <div>
+          <img className= "yachtImage" alt="" src="http://localhost:5000/Yachtimage.jpg"></img>
+      </div>
         <div className="buttonCalendar">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+        <button type="button" class="calendar-button" data-toggle="modal" data-target="#exampleModalCenter">
                   Calendar
         </button>
       </div>
