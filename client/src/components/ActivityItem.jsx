@@ -49,9 +49,15 @@ class ActivityItem extends Component{
   render(){
     const start_time = moment(this.props.activity.start_date).format('lll')
     const end_time = moment(this.props.activity.end_date).format('lll')
-    let weather = '☀️';
+    let weather = (<i className="far fa-question-circle"></i>);
     if (this.props.activity.weather === 'rain') {
-      weather = '🌧️';
+      weather = (<i className="fas fa-cloud-rain"></i>);
+    } else if (this.props.activity.weather === 'sunny'){
+      weather = (<i className="fas fa-sun"></i>);
+    } else if (this.props.activity.weather === 'snow'){
+      weather = (<i className="far fa-snowflake"></i>);
+    } else if (this.props.activity.weather === 'cloudy') {
+      weather = (<i className="fas fa-cloud"></i>);
     }
     let checkJoin = (<Button onClick={this.handleJoinClick}>Join</Button>)
     if (this.state.join) {
