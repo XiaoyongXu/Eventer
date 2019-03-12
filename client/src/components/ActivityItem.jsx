@@ -11,6 +11,7 @@ import axios from "axios";
 import moment from "moment";
 import GMap from "./GMap.jsx";
 
+
 class ActivityItem extends Component{
   constructor(props) {
     super(props);
@@ -68,9 +69,11 @@ class ActivityItem extends Component{
     } else if (this.props.activity.weather === "cloudy") {
       weather = <i className="fas fa-cloud" />;
     }
-    let checkJoin = <Button onClick={this.handleJoinClick}>Join</Button>;
+    let checkJoin = (<div>Reserved by members</div>);
     if (this.state.join) {
       checkJoin = <Button variant="secondary">Joined</Button>;
+    }else if(this.props.currentUser.id){
+      checkJoin = <Button onClick={this.handleJoinClick}>Join</Button>;
     }
     let checkAdmin = <span />;
     if (this.props.currentUser.admin) {
@@ -111,6 +114,7 @@ class ActivityItem extends Component{
         </Button>
       </OverlayTrigger>
     );
+
     return (
       <div className = "activityClass">
       <Card style={{ width: '18rem' }}>
@@ -124,8 +128,10 @@ class ActivityItem extends Component{
           <ListGroupItem>{start_time}</ListGroupItem>
           <ListGroupItem>{end_time}</ListGroupItem>
           <ListGroupItem>
-            {this.props.activity.location}
-            <Example />
+
+               {this.props.activity.location}
+                <Example />
+
           </ListGroupItem>
         </ListGroup>
 
