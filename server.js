@@ -7,6 +7,7 @@ const ENV = process.env.ENV || "development";
 const knexConfig = require("./knexfile");
 const knex = require("knex")(knexConfig[ENV]);
 const nodemailer = require("nodemailer");
+const moment = require("moment");
 
 const storage = multer.diskStorage({
   destination: "./files",
@@ -135,8 +136,8 @@ app.post("/register", (req, res) => {
             isAdmin: false
           })
           .returning("id")
-          .then(() => {
-            res.send("success");
+          .then(id => {
+            res.send(id);
           });
       }
     });
@@ -268,37 +269,59 @@ app.post("/auth", (req, res) => {
   }
 });
 
-function sendEmail(email,event_id) {
-  knex('events')
-    .select('*')
-    .where('id',event_id)
+function sendEmail(email, event_id) {
+  knex("events")
+    .select("*")
+    .where("id", event_id)
     .first()
-    .then((row)=>{
-      const text = `${row.title}+${row.start_date}+${row.location}`
+    .then(row => {
+      const text = `<table>
+
+        <tr>
+          <td><h3>${row.title}</h3></td>
+        </tr>
+
+        <tr>
+          <td>Event Description: ${row.description}</td>
+        </tr>
+
+        <tr>
+          <td>Start Date: ${moment(row.start_date).format('LLLL')} </td>
+        </tr>
+
+        <tr>
+          <td>End Date: ${moment(row.end_date).format('LLLL')}</td>
+        </tr>
+
+        <tr>
+          <td>Location: ${row.location} </td>
+        </tr>
+
+      </table>`;
+
       let transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: "gmail",
         auth: {
-          user: 'lhlfinal2019@gmail.com',
-          pass: 'LHL12345'
+          user: "lhlfinal2019@gmail.com",
+          pass: "LHL12345"
         }
       });
 
       let mailOptions = {
-        from: 'lhlfinal2019@gmail.com',
+        from: "lhlfinal2019@gmail.com",
         to: email,
-        subject: 'Sending Email using Node.js',
-        text: text
+        subject: "Sending Email using Node.js",
+        html: text
       };
 
-      transporter.sendMail(mailOptions, function (error, info) {
+      transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
           console.log(error);
         } else {
-          console.log('Email sent: ' + info.response);
+          console.log("Email sent: " + info.response);
         }
       });
-    })
-
+    });
 }
 
 app.post("/newMessage", (req, res) => {
@@ -311,16 +334,14 @@ app.post("/newMessage", (req, res) => {
       join_message: req.body.join_message,
       contents: content
     })
-    .then(()=>{
+    .then(() => {
       knex("users")
         .select("*")
         .where("id", req.body.currentUser_id)
         .first()
         .then(row => {
-
           if (row) {
-
-            sendEmail(row.email, req.body.activity_id)
+            sendEmail(row.email, req.body.activity_id);
             res.send(true);
           }
         });

@@ -41,8 +41,8 @@ class Register extends Component {
       })//response type
         .then(
           res => {
-            if (res.data === 'success') {
-              this.props.login(this.state.first_name, false)
+            if (res.data) {
+              this.props.login(this.state.first_name, false, res.data)
             } else {
 
             }
