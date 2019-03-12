@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import DiscussionItem from './DiscussionItem.jsx';
-import Sidebar from './Sidebar.jsx';
+import React, { Component } from "react";
+import DiscussionItem from "./DiscussionItem.jsx";
+import Sidebar from "./Sidebar.jsx";
 // import Nav from 'react-bootstrap/Nav'
-import Chatbar from './Chatbar.jsx';
-import JoinedSidebar from './JoinedSidebar.jsx';
-import EventDescription from './EventDescription.jsx';
+import Chatbar from "./Chatbar.jsx";
+import JoinedSidebar from "./JoinedSidebar.jsx";
+import EventDescription from "./EventDescription.jsx";
 
-import axios from 'axios';
-
+import axios from "axios";
 
 class Discussions extends Component {
   constructor(props) {
@@ -15,20 +14,29 @@ class Discussions extends Component {
     this.state = {
       messages: [],
       events: [],
-      chatBar:false,
-      nextMsg: '',
-      current_event_id:"",
+      chatBar: false,
+      nextMsg: "",
+      current_event_id: "",
       userList: [],
       attendees: false,
       description: false
-    }
+    };
     this.handleItemClick = this.handleItemClick.bind(this);
   }
 
   handleItemClick(event) {
-    axios.get(`http://localhost:5000/discussions/${event.id}`).then(response => {
-      this.setState({ messages: response.data.msglist, chatBar: true, current_event_id: event.id, userList: response.data.userlist, attendees: true, description: true })
-    })
+    axios
+      .get(`http://localhost:5000/discussions/${event.id}`)
+      .then(response => {
+        this.setState({
+          messages: response.data.msglist,
+          chatBar: true,
+          current_event_id: event.id,
+          userList: response.data.userlist,
+          attendees: true,
+          description: true
+        });
+      });
   }
 
   handleChange(event) {
@@ -39,81 +47,92 @@ class Discussions extends Component {
   handleEnterPress(event) {
     const keyPressed = event.key;
 
-    if (keyPressed === 'Enter') {
-      axios.post("/chatMessage", {
-        event_id: this.state.current_event_id,
-        user_id: this.props.currentUser.id,
-        contents: this.state.nextMsg
-      }).then(response => {
-        console.log('response', response);
-        this.setState({ messages: response.data })
-      }).catch(function(e){
-        console.log('error', e);
-      })
-      event.target.value = '';
+    if (keyPressed === "Enter") {
+      axios
+        .post("/chatMessage", {
+          event_id: this.state.current_event_id,
+          user_id: this.props.currentUser.id,
+          contents: this.state.nextMsg
+        })
+        .then(response => {
+          console.log("response", response);
+          this.setState({ messages: response.data });
+        })
+        .catch(function(e) {
+          console.log("error", e);
+        });
+      event.target.value = "";
     }
   }
 
   componentDidMount() {
-    axios.post('/eventsget',{currentUser: this.props.currentUser}).then(response => {
-      if(response.data){
-        this.setState({ events: response.data })
-      }
-
-    })
+    axios
+      .post("/eventsget", { currentUser: this.props.currentUser })
+      .then(response => {
+        if (response.data) {
+          this.setState({ events: response.data });
+        }
+      });
   }
 
   render() {
-
     const messages = this.state.messages.map(message => {
       return (
-        <DiscussionItem key={message.id} message={message} currentUser={this.props.currentUser}/>
-        )
-
+        <DiscussionItem
+          key={message.id}
+          message={message}
+          currentUser={this.props.currentUser}
+        />
+      );
     });
-    let chat = (<span></span>)
-    if (this.state.chatBar){
-      chat = (<Chatbar handleEnterPress={this.handleEnterPress.bind(this)} handleChange={this.handleChange.bind(this)}/>)
+    let chat = <span />;
+    if (this.state.chatBar) {
+      chat = (
+        <Chatbar
+          handleEnterPress={this.handleEnterPress.bind(this)}
+          handleChange={this.handleChange.bind(this)}
+        />
+      );
     }
 
-
-    let rightside = (<span></span>)
+    let rightside = <span />;
     if (this.state.attendees) {
-      rightside = (<JoinedSidebar userList={this.state.userList} className="col-2"></JoinedSidebar>)
+      rightside = (
+        <JoinedSidebar userList={this.state.userList} className="col-2" />
+      );
     }
 
-
-
-    let eventDescription = (<div></div>);
-    this.state.events.forEach((element)=>{
-      if (element.id === this.state.current_event_id){
-        eventDescription = <EventDescription events={element} />
+    let eventDescription = <div />;
+    this.state.events.forEach(element => {
+      if (element.id === this.state.current_event_id) {
+        eventDescription = <EventDescription events={element} />;
       }
-    })
+    });
 
     // if current user does not exists, render please
-    if (this.props.currentUser.id){
+    if (this.props.currentUser.id) {
       return (
-        <div className="row no-gutters">
-          <Sidebar handleItemClick={this.handleItemClick} events={this.state.events}></Sidebar>
+        <div className="row no-gutters" id="discussiondiv">
+          <Sidebar
+            handleItemClick={this.handleItemClick}
+            events={this.state.events}
+          />
 
-          <div className="col-8">
-            {eventDescription}
-            {messages}
-            {chat}
-            <div>
-            </div>
+          <div className="col-7">
+            <div className="eventDescription">{eventDescription}</div>
+            <div className="messages">{messages}</div>
+
           </div>
-          {rightside}
+          <div className="chatbar-input">{chat}</div>
+          <div className="rightsidebar" styles={{ height: "100vh" }}>
+            {rightside}
+          </div>
+
         </div>
       );
     }
-    return (<div></div>)
-
-
+    return <div />;
   }
 }
 
 export default Discussions;
-
-
