@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
+
 require('dotenv').config();
 
 const API_KEY = process.env.REACT_APP_API_KEY
+
 const AnyReactComponent = ({ text }) =>
   (<div>
     <i className="material-icons">

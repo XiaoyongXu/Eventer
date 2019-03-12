@@ -4,6 +4,7 @@ import ActivityItem from './ActivityItem.jsx';
 import axios from 'axios';
 import Calendar from './CalendarSideBar.jsx';
 
+
 class Activities extends Component {
   constructor(props) {
     super(props);
@@ -38,18 +39,44 @@ class Activities extends Component {
       return (<ActivityItem key={activity.id} activity={activity} currentUser={this.props.currentUser} reload={this.reload}/>)
     });
     return (
-      <div className="row">
-        <div className="col-4">
-          <Calendar reloadMsg={this.reloadMsg}/>
-        </div>
-        <CardColumns className="col-7">
+      <div className= "ActTable">
+        <div className="buttonCalendar">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                  Calendar
+        </button>
+      </div>
+
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Event Calendar</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <Calendar reloadMsg={this.reloadMsg} />
+              </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              <div className="row">
+
+        <CardColumns>
 
 
           {activities}
         </CardColumns>
       </div>
+      </div>
 
-    );
+    )
   }
 }
 

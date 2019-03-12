@@ -4,7 +4,6 @@ import axios from 'axios'
 import moment from 'moment'
 import GMap from './GMap.jsx'
 
-
 class ActivityItem extends Component{
   constructor(props) {
     super(props);
@@ -68,7 +67,7 @@ class ActivityItem extends Component{
       lng: parseFloat(this.props.activity.lng)
       }
     return (
-
+      <div className = "activityClass">
       <Card style={{ width: '18rem' }}>
         <Card.Img variant="top" src={this.props.activity.url} />
         <Card.Body>
@@ -92,6 +91,7 @@ class ActivityItem extends Component{
         </Card.Body>
 
       </Card>
+      </div>
     )
   }
 }
