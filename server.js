@@ -137,7 +137,8 @@ app.post("/register", (req, res) => {
           })
           .returning(["id"])
           .then(([user]) => {
-            res.send(user.id);
+
+            res.send({id:user.id});
           });
       }
     });

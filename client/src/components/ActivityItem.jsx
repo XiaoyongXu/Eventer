@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from 'react-router-dom';
 import {
   Card,
   ListGroup,
@@ -17,13 +18,13 @@ class ActivityItem extends Component{
     super(props);
     this.state = {
       activity_id: props.activity.id,
-      join: ""
+      join: null,
+      redirect:false
     };
     this.handleJoinClick = this.handleJoinClick.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
   }
   handleJoinClick() {
-    console.log(this.props.currentUser.id);
     axios
       .post("http://localhost:5000/newMessage", {
         activity_id: this.state.activity_id,
@@ -32,7 +33,7 @@ class ActivityItem extends Component{
         join_message: true
       })
       .then(response => {
-        this.setState({ join: response.data });
+        this.setState({ join: response.data, redirect: response.data});
       });
   }
   handleDeleteClick() {
@@ -53,7 +54,7 @@ class ActivityItem extends Component{
         user_id: this.props.currentUser.id
       })
       .then(response => {
-        this.setState({ join: response.data });
+        this.setState({ join: response.data,redirect:this.state.redirect});
       });
   }
   render() {
@@ -114,7 +115,9 @@ class ActivityItem extends Component{
         </Button>
       </OverlayTrigger>
     );
-
+    let { from } = { from: { pathname: "/discussions" } };
+    let redirectToReferrer = this.state.redirect;
+    if (redirectToReferrer) return <Redirect to={from} />
     return (
       <div className = "activityClass">
       <Card width='100' m-1='true'>
