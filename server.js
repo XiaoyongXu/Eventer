@@ -16,8 +16,6 @@ const storage = multer.diskStorage({
   }
 });
 
-
-
 const upload = multer({ storage });
 
 app.use(bodyParser.json());
@@ -31,7 +29,6 @@ app.use(function(req, res, next) {
   );
   next();
 });
-
 
 app.post("/eventsget", (req, res) => {
   if (req.body.currentUser.id) {
@@ -138,9 +135,9 @@ app.post("/register", (req, res) => {
             password: req.body.password,
             isAdmin: false
           })
-          .returning("id")
-          .then(id => {
-            res.send(id);
+          .returning(["id"])
+          .then(([user]) => {
+            res.send(user.id);
           });
       }
     });
@@ -278,7 +275,15 @@ function sendEmail(email, event_id) {
     .where("id", event_id)
     .first()
     .then(row => {
-      const text = `<table>
+      let text=null
+      if (email.includes("@gmail.com")) {
+        const title = row.title.split(" ").join("+");
+        const description = row.description.split(" ").join("+");
+        const date = moment(row.start_date).format("YYYYMMDDTHHmmss") +'/'+ moment(row.end_date).format("YYYYMMDDTHHmmss")
+        const location = row.location.split(" ").join("+");
+        const link = `https://calendar.google.com/calendar/r/eventedit?text=${title}&dates=${date}&details=${description}&location=${location}`;
+
+        text = `<table>
 
         <tr>
           <td><h3>${row.title}</h3></td>
@@ -289,11 +294,38 @@ function sendEmail(email, event_id) {
         </tr>
 
         <tr>
-          <td>Start Date: ${moment(row.start_date).format('LLLL')} </td>
+          <td>Start Date: ${row.start_date} </td>
         </tr>
 
         <tr>
-          <td>End Date: ${moment(row.end_date).format('LLLL')}</td>
+          <td>End Date: ${row.end_date}</td>
+        </tr>
+
+        <tr>
+          <td>Location: ${row.location} </td>
+        </tr>
+
+        <tr>
+          <a href=${link} >Add event to Google Calendar</a>
+        </tr>
+      </table>`;
+      } else {
+        text = `<table>
+
+        <tr>
+          <td><h3>${row.title}</h3></td>
+        </tr>
+
+        <tr>
+          <td>Event Description: ${row.description}</td>
+        </tr>
+
+        <tr>
+          <td>Start Date: ${row.start_date} </td>
+        </tr>
+
+        <tr>
+          <td>End Date: ${row.end_date}</td>
         </tr>
 
         <tr>
@@ -301,6 +333,7 @@ function sendEmail(email, event_id) {
         </tr>
 
       </table>`;
+      }
 
       let transporter = nodemailer.createTransport({
         service: "gmail",
@@ -406,8 +439,7 @@ app.get("/user/:id", (req, res) => {
       if (row) {
         res.send(row);
       }
-    })
-})
+    });
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
-
