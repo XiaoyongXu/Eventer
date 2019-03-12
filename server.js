@@ -306,7 +306,7 @@ function sendEmail(email, event_id) {
         </tr>
 
         <tr>
-          <a href=${link} >Add event to Google Calendar</a>
+          <td><a href=${link} >Add event to Google Calendar</a></td>
         </tr>
       </table>`;
       } else {

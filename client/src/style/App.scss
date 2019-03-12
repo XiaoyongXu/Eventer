@@ -69,7 +69,11 @@ h3{
   }
 }
 
-
+.no-gutters {
+  .card {
+    border: 0;
+  }
+}
 
 
 .previewText{
@@ -125,6 +129,7 @@ h3{
 .eventDescription {
   flex: 1;
   width: 100%;
+  border-bottom: 1px solid lightgrey;
 }
 
 .messages {
@@ -138,14 +143,21 @@ h3{
   bottom: 0;
   width: 55%;
   height: 40px;
-  border: 3px solid rgba(0,0,0,.125);
-  border-radius: .25rem;
   left: 25%
-
-
 }
 
 .rightsidebar {
   width: 20%;
+  border-left: 1px solid lightgrey;
 }
 
+.col-3 {
+  border-right: 1px solid lightgrey;
+}
+
+.avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  margin-right: 25px;
+}

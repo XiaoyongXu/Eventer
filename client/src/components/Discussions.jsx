@@ -123,7 +123,7 @@ class Discussions extends Component {
             <div className="messages">{messages}</div>
 
           </div>
-          <div className="chatbar-input">{chat}</div>
+          {chat}
           <div className="rightsidebar" styles={{ height: "100vh" }}>
             {rightside}
           </div>
