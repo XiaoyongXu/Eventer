@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 class Register extends Component {
   constructor(props) {
     super(props);
-    this.state = {first_name:'',last_name:'',email: '', password: '',confirm_password:''};
+    this.state = {first_name:'',last_name:'',email: '', password: '',confirm_password:'',redirect:false};
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleLastNameChange = this.handleLastNameChange.bind(this);
@@ -41,8 +41,8 @@ class Register extends Component {
       })//response type
         .then(
           res => {
-            if (res.data) {
-              this.props.login(this.state.first_name, false, res.data)
+            if (res.data.id) {
+              this.props.login(this.state.first_name, false, res.data.id)
             } else {
 
             }
@@ -52,7 +52,17 @@ class Register extends Component {
 
     }
   }
+  componentDidMount() {
+    axios.post('/auth', { user_id: this.props.currentUser.id }).then(response => {
+      if (response.data) {
+        this.setState({ redirect: true })
+      }
+    })
+  }
   render() {
+    let { from } = { from: { pathname: "/activities" } };
+    let redirectToReferrer = this.state.redirect;
+    if (redirectToReferrer) return <Redirect to={from} />
     return (
       <div style={{ width: '50%', marginLeft: "25%", marginTop: "10%" }}>
         <Form onSubmit={this.handleSubmit}>
