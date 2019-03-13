@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 import {
   Card,
   ListGroup,
@@ -12,14 +12,13 @@ import axios from "axios";
 import moment from "moment";
 import GMap from "./GMap.jsx";
 
-
-class ActivityItem extends Component{
+class ActivityItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activity_id: props.activity.id,
       join: null,
-      redirect:false
+      redirect: false
     };
     this.handleJoinClick = this.handleJoinClick.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
@@ -33,7 +32,7 @@ class ActivityItem extends Component{
         join_message: true
       })
       .then(response => {
-        this.setState({ join: response.data, redirect: response.data});
+        this.setState({ join: response.data, redirect: response.data });
       });
   }
   handleDeleteClick() {
@@ -54,7 +53,7 @@ class ActivityItem extends Component{
         user_id: this.props.currentUser.id
       })
       .then(response => {
-        this.setState({ join: response.data,redirect:this.state.redirect});
+        this.setState({ join: response.data, redirect: this.state.redirect });
       });
   }
   render() {
@@ -70,10 +69,10 @@ class ActivityItem extends Component{
     } else if (this.props.activity.weather === "cloudy") {
       weather = <i className="fas fa-cloud" />;
     }
-    let checkJoin = (<div>Reserved by members</div>);
+    let checkJoin = <div>Reserved by members</div>;
     if (this.state.join) {
       checkJoin = <Button variant="secondary">Joined</Button>;
-    }else if(this.props.currentUser.id){
+    } else if (this.props.currentUser.id) {
       checkJoin = <Button onClick={this.handleJoinClick}>Join</Button>;
     }
     let checkAdmin = <span />;
@@ -110,42 +109,41 @@ class ActivityItem extends Component{
     );
     const Example = () => (
       <OverlayTrigger trigger="click" placement="top" overlay={popover}>
-        <Button variant="info" style={{ float: "right" }}>
-          map
+        <Button variant="info" styles={{ float: "left", height: '100%' }}>
+          <i className="fas fa-map-marked-alt" />
         </Button>
       </OverlayTrigger>
     );
     let { from } = { from: { pathname: "/discussions" } };
     let redirectToReferrer = this.state.redirect;
-    if (redirectToReferrer) return <Redirect to={from} />
+    if (redirectToReferrer) return <Redirect to={from} />;
     return (
-      <div className = "activityClass">
-      <Card width='100' m-1='true'>
-        <Card.Img variant="top" src={this.props.activity.url} height= '250' />
-        <Card.Body>
-          <span>{weather}</span>
-          <Card.Title>{this.props.activity.title}</Card.Title>
-          <Card.Text>{this.props.activity.description}</Card.Text>
-        </Card.Body>
-        <ListGroup className="list-group-flush">
-
+      <div className="activityClass">
+        <Card width="100" m-1="true">
+          <Card.Img variant="top" src={this.props.activity.url} height="250" />
+          <Card.Body>
+            <span>{weather}</span>
+            <Card.Title>{this.props.activity.title}</Card.Title>
+            <Card.Text>{this.props.activity.description}</Card.Text>
+          </Card.Body>
+          <ListGroup className="list-group-flush">
             <ListGroupItem>{start_time}</ListGroupItem>
             <ListGroupItem>{end_time}</ListGroupItem>
-          <ListGroupItem>
+            <ListGroupItem style={{ maxHeight: "100px" }}>
+            <div>
+              <Example />
+              <div styles={{marginLeft: '10px', float: 'left'}}>{this.props.activity.location}</div>
+            </div>
+              </ListGroupItem>
+          </ListGroup>
 
-               {this.props.activity.location}
-                <Example />
-
-          </ListGroupItem>
-        </ListGroup>
-
-        <Card.Body>
-          {checkJoin}
-          {checkAdmin}
-        </Card.Body>
-      </Card>
+          <Card.Body>
+            {checkJoin}
+            {checkAdmin}
+          </Card.Body>
+        </Card>
       </div>
-    )
+    );
   }
 }
 export default ActivityItem;

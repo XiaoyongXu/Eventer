@@ -44,7 +44,7 @@ class Activities extends Component {
           <img className= "yachtImage" alt="" src="http://localhost:5000/Yachtimage.jpg" ></img>
       </div>
 
-        <div class="sticky-top">
+        <div className="sticky-top">
         <button type="button" className="calendar-button"  data-toggle="modal" data-target="#exampleModalCenter">
                   Calendar
         </button>
