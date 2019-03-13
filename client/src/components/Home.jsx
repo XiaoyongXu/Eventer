@@ -61,7 +61,7 @@ class Home extends Component {
 
               </Carousel.Caption>
             </Carousel.Item>
-          </Carousel>;
+          </Carousel>
       </div>
     </div>
     );
