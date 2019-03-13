@@ -21,7 +21,7 @@ export default function NavBar(props) {
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand >Dream Club</Navbar.Brand>
+        <Navbar.Brand >Eventer</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
