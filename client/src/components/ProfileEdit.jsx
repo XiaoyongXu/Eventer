@@ -14,8 +14,9 @@ class ProfileEdit extends Component {
       new_email:'',
       file: null,
       imagePreviewUrl: '',
-
+      url:''
     }
+    this.routeChange = this.routeChange.bind(this)
   }
 
   _handleImageChange(e) {
@@ -52,9 +53,14 @@ class ProfileEdit extends Component {
           this.props.login(this.state.new_firstName, false, res.data)
         }
       }
-    )
+    ).then(()=>{
+      this.routeChange()
+    })
   }
-
+  routeChange() {
+    let path = `/profile`;
+    this.props.history.push(path);
+  }
   componentDidMount() {
     axios.get(`http://localhost:5000/user/${this.props.currentUser.id}`).then(
       res => {
@@ -63,6 +69,7 @@ class ProfileEdit extends Component {
           firstName: res.data.first_name,
           lastName: res.data.last_name,
           new_email:res.data.email,
+          url:res.data.url
         })
       }
     )
@@ -77,13 +84,13 @@ class ProfileEdit extends Component {
     let { imagePreviewUrl } = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {
-      $imagePreview = (<img alt="" src={imagePreviewUrl} />);
+      $imagePreview = (<img alt="" src={imagePreviewUrl} style={{ height: '200px', marginLeft: "30%", marginTop: "10px", width: '200px', border: 'solid', borderRadius: '50%'}}/>);
     } else {
       $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
     }
-
       return (
         <div style={{ width: "50%", marginLeft: "25%", marginTop: "10%" }}>
+          <img alt="" src={this.state.url} style={{ height: '200px', marginLeft: "30%", marginBottom: "10px", width: '200px', border: 'solid', borderRadius: '50%' }} />
           <Form>
             <Form.Row>
               <Form.Group as={Col} controlId="formGridEmail">
@@ -96,9 +103,6 @@ class ProfileEdit extends Component {
                 <Form.Control type="" name="new_lastName" placeholder={this.state.lastName} onChange={this.handleChange} />
               </Form.Group>
             </Form.Row>
-
-
-
             <Form.Group controlId="formGridAddress1">
               <Form.Label>Email</Form.Label>
               <Form.Control name="new_email" defaultValue={this.state.email} placeholder={this.state.email} onChange={this.handleChange} />
@@ -112,11 +116,12 @@ class ProfileEdit extends Component {
                     onChange={(e) => this._handleImageChange(e)} />
                 </div>
                 {$imagePreview}
+
               </Form.Group>
             </Form.Row>
             <Button variant="primary" type="button" onClick={this.handleSubmit}>
-              Submit
-       </Button>
+              Save
+            </Button>
           </Form>
         </div>
       );

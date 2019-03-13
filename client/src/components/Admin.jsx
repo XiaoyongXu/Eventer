@@ -24,7 +24,7 @@ class Admin extends Component {
       lng:null,
       weather:"pending",
       file: null,
-      imagePreviewUrl: ''
+      imagePreviewUrl: '',
     };
 
     this.handleStartDate = this.handleStartDate.bind(this);
@@ -34,6 +34,7 @@ class Admin extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLocation = this.handleLocation.bind(this);
     this.handleWeatherChange=this.handleWeatherChange.bind(this);
+    this.routeChange = this.routeChange.bind(this);
   }
 
 
@@ -94,10 +95,14 @@ class Admin extends Component {
     formData.append('lat', this.state.lat)
     formData.append('lng', this.state.lng)
     axios
-      .post("http://localhost:5000/files", formData) //response type
+      .post("http://localhost:5000/files", formData).then(()=>{
+        this.routeChange()
+      }) //response type
   }
-
-
+  routeChange() {
+    let path = `/activities`;
+    this.props.history.push(path);
+  }
   render() {
     let { imagePreviewUrl } = this.state;
     let $imagePreview = null;
