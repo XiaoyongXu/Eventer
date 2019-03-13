@@ -69,8 +69,7 @@ class Activities extends Component {
                     </div>
                   </div>
                 </div>
-
-              <div className="row">
+      <div className="row">
 
           <CardColumns>
 
