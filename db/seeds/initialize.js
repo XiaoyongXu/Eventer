@@ -22,6 +22,42 @@ exports.seed = function(knex, Promise) {
           password: '123',
           url: 'http://localhost:5000/test.jpg'
         },
+        {
+          id: 900,
+          email: 'bob@bob.com',
+          first_name: 'Bob',
+          last_name: 'McBobberson',
+          isAdmin: false,
+          password: '123',
+          url: 'https://picsum.photos/200/300/?random'
+        },
+        {
+          id: 901,
+          email: 'christine@christine.com',
+          first_name: 'Christine',
+          last_name: 'Jackson',
+          isAdmin: false,
+          password: '123',
+          url: 'https://picsum.photos/200/300/?random'
+        },
+        {
+          id: 902,
+          email: 'lily@lily',
+          first_name: 'Lily',
+          last_name: 'Hopkins',
+          isAdmin: false,
+          password: '123',
+          url: 'https://picsum.photos/200/300/?random'
+        },
+        {
+          id: 903,
+          email: 'ryan@ryan.com',
+          first_name: 'Ryan',
+          last_name: 'Dennis',
+          isAdmin: false,
+          password: '123',
+          url: 'https://picsum.photos/200/300/?random'
+        }
       ]);
     }).then(()=>{
       return knex('events').del()
