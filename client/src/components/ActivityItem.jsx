@@ -129,7 +129,8 @@ class ActivityItem extends Component{
         </Card.Body>
         <ListGroup className="list-group-flush">
 
-            <ListGroupItem>{start_time}, {end_time}</ListGroupItem>
+            <ListGroupItem>{start_time}</ListGroupItem>
+            <ListGroupItem>{end_time}</ListGroupItem>
           <ListGroupItem>
 
                {this.props.activity.location}
