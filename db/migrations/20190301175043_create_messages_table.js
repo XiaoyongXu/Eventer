@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
       table.increments();
       table.integer('event_id').references('events.id').onDelete('CASCADE');
       table.integer('user_id').references('users.id');
-      table.string('contents');
+      table.text('contents');
       table.boolean('join_message');
       table.string('url');
       table.timestamp('created_at').defaultTo(knex.fn.now());
