@@ -270,6 +270,7 @@ app.post("/auth", (req, res) => {
   }
 });
 
+
 function sendEmail(email, event_id) {
   knex("events")
     .select("*")

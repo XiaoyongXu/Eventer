@@ -42,7 +42,6 @@ class Login extends Component {
         res => {
           if (res.data) {
             this.props.login(res.data.first_name, res.data.isAdmin, res.data.id)
-
           }
         },
       )

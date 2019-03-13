@@ -26,7 +26,7 @@ class App extends Component {
          response: '',
         post: '',
         responseToPost: ''},
-        apiUrl: 'http://localhost:5000'
+      apiUrl: 'http://localhost:5000',
     }
     this.logout = this.logout.bind(this);
     this.login = this.login.bind(this);
@@ -40,7 +40,6 @@ class App extends Component {
     this.setState({ currentUser: { 'name': '', admin: false, id:'' } });
   }
   login(name,admin,id) {
-
     this.setState({ currentUser: { 'name': name, admin: admin, id: id, } });
   }
   addActivity(title,description){
@@ -50,6 +49,7 @@ class App extends Component {
   }
 
   render() {
+
     return (
       <Router>
         <div>
@@ -61,11 +61,11 @@ class App extends Component {
             <Route exact path='/Activities' component={withProps(Activities, { activities: this.state.activities, currentUser:this.state.currentUser})} />
             <Route exact path='/Discussions' component={withProps(Discussions, { messages: this.state.messages,currentUser:this.state.currentUser})} />
             <Route exact path='/Login' component={withProps(Login, { login: this.login, currentUser:this.state.currentUser})} />
-            <Route exact path='/Admin' component={withProps(Admin,{addActivity: this.addActivity})} />
+            <Route exact path='/Admin' component={withProps(Admin, { addActivity: this.addActivity, currentUser: this.state.currentUser })} />
             <Route exact path='/register' component={withProps(Register, { login: this.login, currentUser:this.state.currentUser})} />
             <Route exact path='/Profile' component={withProps(Profile, { apiUrl: this.state.apiUrl, currentUser: this.state.currentUser})} />
             <Route exact path='/ProfileEdit' component={withProps(ProfileEdit, { apiUrl: this.state.apiUrl, currentUser: this.state.currentUser, login:this.login })} />
-            </Switch>
+          </Switch>
         </div>
       </Router>
     );
