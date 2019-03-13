@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CardColumns } from 'react-bootstrap';
+import { CardColumns} from 'react-bootstrap';
 import ActivityItem from './ActivityItem.jsx';
 import axios from 'axios';
 import Calendar from './CalendarSideBar.jsx';
@@ -72,11 +72,11 @@ class Activities extends Component {
 
               <div className="row">
 
-        <CardColumns>
+          <CardColumns>
 
 
           {activities}
-        </CardColumns>
+          </CardColumns>
       </div>
       </div>
 

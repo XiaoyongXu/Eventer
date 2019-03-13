@@ -18,10 +18,32 @@ class ActivityItem extends Component {
     this.state = {
       activity_id: props.activity.id,
       join: null,
-      redirect: false
+      redirect: false,
+      context: this.props.activity.description.substr(0,100),
+      more:false,
+      buttonName:'Read more',
+      dot:'...'
     };
     this.handleJoinClick = this.handleJoinClick.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
+    this.more=this.more.bind(this);
+  }
+  more(){
+    if (this.state.more){
+      this.setState({
+        context: this.props.activity.description.substr(0, 100),
+        more: false,
+        buttonName: 'Read more',
+        dot: '...'
+      })
+    }else{
+      this.setState({
+        context: this.props.activity.description,
+        more: true,
+        buttonName: 'Read less',
+        dot: ''
+      })
+    }
   }
   handleJoinClick() {
     axios
@@ -124,7 +146,7 @@ class ActivityItem extends Component {
           <Card.Body>
             <span>{weather}</span>
             <Card.Title>{this.props.activity.title}</Card.Title>
-            <Card.Text>{this.props.activity.description}</Card.Text>
+            <Card.Text><p>{this.state.context}{this.state.dot}</p><button onClick={this.more}>{this.state.buttonName}</button></Card.Text>
           </Card.Body>
           <ListGroup className="list-group-flush">
             <ListGroupItem>{start_time}</ListGroupItem>
