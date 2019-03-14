@@ -10,16 +10,15 @@ class Home extends Component {
 
   render() {
     return (
-    <div className= "homeLayOut">
+    <div className= "homeLayOut" >
 
-      <div className = "imageGallery">
+        <div className="imageGallery" >
           <Carousel>
             <Carousel.Item>
               <img
                 className="imageHomepage"
                 src="http://localhost:5000/welcome.jpg"
                 alt="Zero Slide"
-
               />
 
             </Carousel.Item>

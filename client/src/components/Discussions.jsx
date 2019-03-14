@@ -19,7 +19,8 @@ class Discussions extends Component {
       current_event_id: "",
       userList: [],
       attendees: false,
-      description: false
+      description: false,
+
     };
     this.handleItemClick = this.handleItemClick.bind(this);
   }
@@ -34,7 +35,8 @@ class Discussions extends Component {
           current_event_id: event.id,
           userList: response.data.userlist,
           attendees: true,
-          description: true
+          description: true,
+
         });
       });
   }
@@ -111,6 +113,7 @@ class Discussions extends Component {
 
     // if current user does not exists, render please
     if (this.props.currentUser.id) {
+
       return (
         <div className="row no-gutters" id="discussiondiv">
           <Sidebar
@@ -123,6 +126,8 @@ class Discussions extends Component {
             <div className="messages">{messages}</div>
 
           </div>
+
+
           {chat}
           <div className="rightsidebar" styles={{ height: "100vh" }}>
             {rightside}
