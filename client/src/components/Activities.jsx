@@ -48,6 +48,9 @@ class Activities extends Component {
         <button type="button" className="calendar-button"  data-toggle="modal" data-target="#exampleModalCenter">
                   Calendar
         </button>
+          <button type="button" className="reload-button" onClick={this.reload}>
+            Reload
+        </button>
       </div>
 
         <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -63,8 +66,8 @@ class Activities extends Component {
                         <Calendar reloadMsg={this.reloadMsg} />
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary">Save changes</button>
+                <button type="button" className="btn btn-primary" data-dismiss="modal">Save changes</button>
+
                       </div>
                     </div>
                   </div>

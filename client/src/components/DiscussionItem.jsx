@@ -16,7 +16,7 @@ class DiscussionItem extends Component {
 
   componentDidMount() {
     axios
-      .get(`http://localhost:5000/user/${this.props.currentUser.id}`)
+      .get(`http://localhost:5000/user/${this.props.message.user_id}`)
       .then(res => {
         this.setState({
           firstName: res.data.first_name,

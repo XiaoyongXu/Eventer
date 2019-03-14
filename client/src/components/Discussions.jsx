@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar.jsx";
 import Chatbar from "./Chatbar.jsx";
 import JoinedSidebar from "./JoinedSidebar.jsx";
 import EventDescription from "./EventDescription.jsx";
+import Card from "react-bootstrap/Card";
 
 import axios from "axios";
 
@@ -19,12 +20,15 @@ class Discussions extends Component {
       current_event_id: "",
       userList: [],
       attendees: false,
-      description: false
+      description: false,
+      showIntro: true
     };
     this.handleItemClick = this.handleItemClick.bind(this);
   }
 
   handleItemClick(event) {
+    this.setState({ showIntro: false });
+
     axios
       .get(`http://localhost:5000/discussions/${event.id}`)
       .then(response => {
@@ -34,7 +38,8 @@ class Discussions extends Component {
           current_event_id: event.id,
           userList: response.data.userlist,
           attendees: true,
-          description: true
+          description: true,
+
         });
       });
   }
@@ -111,23 +116,39 @@ class Discussions extends Component {
 
     // if current user does not exists, render please
     if (this.props.currentUser.id) {
+      let hello = <div />;
+      if (this.state.showIntro) {
+        hello = (
+          <div className="intro">
+            <Card style={{ width: '100%' }}>
+              <Card.Header>Event Discussion Board</Card.Header>
+              <Card.Body>
+                <Card.Text>
+                  Please select an event from the left to see the messages.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+        );
+      }
+
       return (
         <div className="row no-gutters" id="discussiondiv">
           <Sidebar
             handleItemClick={this.handleItemClick}
             events={this.state.events}
           />
-
           <div className="col-7">
+            {hello}
             <div className="eventDescription">{eventDescription}</div>
             <div className="messages">{messages}</div>
-
           </div>
+
+
           {chat}
           <div className="rightsidebar" styles={{ height: "100vh" }}>
             {rightside}
           </div>
-
         </div>
       );
     }

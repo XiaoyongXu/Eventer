@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav,Button } from 'react-bootstrap';
+import { Navbar, Nav, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 
@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 export default function NavBar(props) {
   let checkLogin = (<Link to={'/Login'} className="nav-link">Login</Link>)
-  if (props.currentUser.name){
+  if (props.currentUser.name) {
     checkLogin = (<Button onClick={props.logout} className="nav-link">Logout</Button>)
   }
   let checkAdmin = (<Link to={'/home'} className="nav-link">guest</Link>)
