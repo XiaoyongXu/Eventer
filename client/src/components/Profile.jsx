@@ -50,27 +50,28 @@ class Profile extends Component {
             <Card.Img variant="top" src={this.state.url} />
 
           </Card>
-          <Card style={{ width: '18rem' }}>
+          <CardGroup>
+            <Card style={{ width: '18rem' }}>
               <ListGroup variant="flush">
-              <ListGroup.Item>Email: {this.state.email}
+                <ListGroup.Item>Email: {this.state.email}
+                </ListGroup.Item>
+                <ListGroup.Item>First Name: {this.state.firstName}
 
+                </ListGroup.Item>
 
-              </ListGroup.Item>
+                <ListGroup.Item>Last Name: {this.state.lastName}
 
-              <ListGroup.Item>First Name: {this.state.firstName}
+                </ListGroup.Item>
 
-              </ListGroup.Item>
-
-              <ListGroup.Item>Last Name: {this.state.lastName}
-
-              </ListGroup.Item>
+              </ListGroup>
               <Card.Footer>
-                <Link to={{pathname:"/profileedit", state:{user:this.props.currentUser}}}>
+                <Link to={{ pathname: "/profileedit", state: { user: this.props.currentUser } }}>
                   <Button variant="primary">Edit Information</Button>
                 </Link>
               </Card.Footer>
-            </ListGroup>
-          </Card>
+            </Card>
+          </CardGroup>
+
 
         </CardGroup>
 

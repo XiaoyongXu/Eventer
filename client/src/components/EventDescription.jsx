@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 
 class EventDescription extends Component {
   constructor(props) {
@@ -41,7 +41,7 @@ class EventDescription extends Component {
               {this.state.context}
               {this.state.dot}
             </p>
-            <button onClick={this.myFunction}>{this.state.buttonName}</button>
+            <Button onClick={this.myFunction} variant="secondary" size="sm">{this.state.buttonName}</Button>
           </blockquote>
         </Card.Body>
       </Card>
