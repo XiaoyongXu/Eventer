@@ -41,7 +41,7 @@ class Activities extends Component {
     return (
       <div className= "ActTable">
       <div>
-          <img className= "yachtImage" alt="" src="http://localhost:5000/Yachtimage.jpg" ></img>
+          <img className= "yachtImage" alt="" src="http://localhost:5000/mountain.jpg" style={{height: "20rem"}}></img>
       </div>
 
         <div className="sticky-top">

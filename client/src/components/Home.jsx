@@ -17,40 +17,12 @@ class Home extends Component {
             <Carousel.Item>
               <img
                 className="imageHomepage"
-                src="http://localhost:5000/welcome.jpg"
+                src="http://localhost:5000/logo.png"
                 alt="Zero Slide"
               />
 
             </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="imageHomepage"
-                src="http://localhost:5000/Yachtimage.jpg"
-                alt="First slide"
 
-              />
-
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="imageHomepage"
-                src="http://localhost:5000/BBQ.jpg"
-                alt="Third slide"
-
-              />
-
-
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="imageHomepage"
-                src="http://localhost:5000/Coffee.jpg"
-                alt="Third slide"
-
-              />
-
-
-            </Carousel.Item>
           </Carousel>
       </div>
     </div>
