@@ -146,7 +146,7 @@ class ActivityItem extends Component {
           <Card.Body>
             <span>{weather}</span>
             <Card.Title>{this.props.activity.title}</Card.Title>
-            <Card.Text><p>{this.state.context}{this.state.dot}</p><Button variant="secondary" size="sm" onClick={this.more}>{this.state.buttonName}</Button></Card.Text>
+            <Card.Text>{this.state.context}{this.state.dot}<Button variant="secondary" size="sm" onClick={this.more}>{this.state.buttonName}</Button></Card.Text>
           </Card.Body>
           <ListGroup className="list-group-flush">
             <ListGroupItem>{start_time} to {end_time}</ListGroupItem>

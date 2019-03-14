@@ -48,6 +48,9 @@ class Activities extends Component {
         <button type="button" className="calendar-button"  data-toggle="modal" data-target="#exampleModalCenter">
                   Calendar
         </button>
+          <button type="button" className="reload-button" onClick={this.reload}>
+            Reload
+        </button>
       </div>
 
         <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

@@ -123,7 +123,14 @@ h3{
 }
 
 .calendar-button{
-  width:100%;
+  width:50%;
+  margin:auto;
+  background-color: #343a40;
+  color: white
+}
+.reload-button{
+  width:50%;
+  float:right;
   margin:auto;
   background-color: #343a40;
   color: white
