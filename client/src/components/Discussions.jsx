@@ -71,13 +71,30 @@ class Discussions extends Component {
   }
 
   componentDidMount() {
-    axios
-      .post("/eventsget", { currentUser: this.props.currentUser })
-      .then(response => {
-        if (response.data) {
-          this.setState({ events: response.data });
-        }
-      });
+    axios.all([
+      axios
+        .post("/eventsget", { currentUser: this.props.currentUser })
+        .then(response => {
+          if (response.data) {
+            this.setState({ events: response.data });
+          }
+        }),
+      axios
+        .get(`http://localhost:5000/discussions/1000`)
+        .then(response => {
+          this.setState({
+            messages: response.data.msglist,
+            chatBar: true,
+            current_event_id: 1000,
+            userList: response.data.userlist,
+            attendees: true,
+            description: true,
+
+          });
+        })
+
+    ])
+
   }
 
   render() {
@@ -121,10 +138,11 @@ class Discussions extends Component {
         hello = (
           <div className="intro">
             <Card style={{ width: '100%' }}>
-              <Card.Header>Event Discussion Board</Card.Header>
+              <Card.Header>Welcome to the Event Discussion Board</Card.Header>
               <Card.Body>
                 <Card.Text>
                   Please select an event from the left to see the messages.
+
                 </Card.Text>
               </Card.Body>
             </Card>
