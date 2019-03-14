@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CardColumns } from 'react-bootstrap';
+import { CardColumns} from 'react-bootstrap';
 import ActivityItem from './ActivityItem.jsx';
 import axios from 'axios';
 import Calendar from './CalendarSideBar.jsx';
@@ -63,17 +63,19 @@ class Activities extends Component {
                         <Calendar reloadMsg={this.reloadMsg} />
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary">Save changes</button>
+                <button type="button" className="btn btn-primary" data-dismiss="modal">Save changes</button>
+
                       </div>
                     </div>
                   </div>
                 </div>
       <div className="row">
 
-        <CardColumns>
+          <CardColumns>
+
+
           {activities}
-        </CardColumns>
+          </CardColumns>
       </div>
       </div>
 
