@@ -57,7 +57,7 @@ class App extends Component {
             < NavBar currentUser={this.state.currentUser} logout={this.logout}/>
           </div>
           <Switch>
-            <Route exact path='/home' component={Home} />
+            <Route exact path='/' component={Home} />
             <Route exact path='/Activities' component={withProps(Activities, { activities: this.state.activities, currentUser:this.state.currentUser})} />
             <Route exact path='/Discussions' component={withProps(Discussions, { messages: this.state.messages,currentUser:this.state.currentUser})} />
             <Route exact path='/Login' component={withProps(Login, { login: this.login, currentUser:this.state.currentUser})} />

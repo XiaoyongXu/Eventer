@@ -54,7 +54,7 @@ class ActivityItem extends Component {
         join_message: true
       })
       .then(response => {
-        this.setState({ join: response.data, redirect: response.data });
+        this.setState({ join: response.data});
       });
   }
   handleDeleteClick() {
@@ -125,6 +125,7 @@ class ActivityItem extends Component {
           center={center}
           lat={parseFloat(this.props.activity.lat)}
           lng={parseFloat(this.props.activity.lng)}
+
           zoom={11}
         />
       </Popover>
