@@ -91,7 +91,7 @@ class ActivityItem extends Component {
     } else if (this.props.activity.weather === "cloudy") {
       weather = <i className="fas fa-cloud" />;
     }
-    let checkJoin = <div>Reserved by members</div>;
+    let checkJoin = <div>Reserved for members</div>;
     if (this.state.join) {
       checkJoin = <Button variant="secondary">Joined</Button>;
     } else if (this.props.currentUser.id) {
@@ -131,7 +131,7 @@ class ActivityItem extends Component {
     );
     const Example = () => (
       <OverlayTrigger trigger="click" placement="top" overlay={popover}>
-        <Button variant="info" styles={{ float: "left", height: '100%' }}>
+        <Button variant="outline-info" size="sm" styles={{ float: "left", height: '100%' }}>
           <i className="fas fa-map-marked-alt" />
         </Button>
       </OverlayTrigger>
@@ -146,15 +146,15 @@ class ActivityItem extends Component {
           <Card.Body>
             <span>{weather}</span>
             <Card.Title>{this.props.activity.title}</Card.Title>
-            <Card.Text><p>{this.state.context}{this.state.dot}</p><button onClick={this.more}>{this.state.buttonName}</button></Card.Text>
+            <Card.Text><p>{this.state.context}{this.state.dot}</p><Button variant="secondary" size="sm" onClick={this.more}>{this.state.buttonName}</Button></Card.Text>
           </Card.Body>
           <ListGroup className="list-group-flush">
-            <ListGroupItem>{start_time}</ListGroupItem>
-            <ListGroupItem>{end_time}</ListGroupItem>
+            <ListGroupItem>{start_time} to {end_time}</ListGroupItem>
+
             <ListGroupItem style={{ maxHeight: "100px" }}>
             <div>
               <Example />
-              <div styles={{marginLeft: '10px', float: 'left'}}>{this.props.activity.location}</div>
+              <div styles={{marginLeft: '10px', float: 'left'}}>Location: {this.props.activity.location}</div>
             </div>
               </ListGroupItem>
           </ListGroup>

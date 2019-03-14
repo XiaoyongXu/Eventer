@@ -136,6 +136,18 @@ exports.seed = function(knex, Promise) {
               user_id: 900,
               join_message: false,
               contents: 'Ok~ Thanks.',
+            }, {
+              id: 1004,
+              event_id: 999,
+              user_id: 902,
+              join_message: true,
+              contents: 'Lily',
+            }, {
+              id: 1005,
+              event_id: 999,
+              user_id: 902,
+              join_message: false,
+              contents: 'Hello~',
             }
           ])
         })
