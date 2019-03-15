@@ -15,16 +15,17 @@ This project was bootstrapped with Create React App.
 
 ## Remember to include .env file
 1. The .env file in the project dir should be like the following
-`DB_HOST=localhost`
-`DB_USER="YOUR_NAME"`
-`DB_PASS="YOUR_PASSWORD"`
-`DB_NAME="YOUR_DB_NAME"`
-`DB_SSL=true if heroku`
-`DB_PORT=5432`
+1 `DB_HOST=localhost`
+2 `DB_USER="YOUR_NAME"`
+3 `DB_PASS="YOUR_PASSWORD"`
+4 `DB_NAME="YOUR_DB_NAME"`
+5 `DB_SSL=true if heroku`
+6 `DB_PORT=5432`
+
 2. The .env file in the client dir should be like the following
-`REACT_APP_API_KEY="YOUR_API_KEY"`
-`CHOKIDAR_USEPOLLING=true`
-`REACT_APP_WEATHER_API_KEY="YOUR_API_KEY"`
+1 `REACT_APP_API_KEY="YOUR_API_KEY"`
+2 `CHOKIDAR_USEPOLLING=true`
+3 `REACT_APP_WEATHER_API_KEY="YOUR_API_KEY"`
 
 
 
