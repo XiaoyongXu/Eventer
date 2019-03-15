@@ -1,7 +1,10 @@
 # Eventer
 
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+# Brief
 A FULL-STACK Web app for events management system
-This project was bootstrapped with Create React App.
+
 
 ## Setup
 
