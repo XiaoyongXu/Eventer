@@ -29,6 +29,14 @@ This project was bootstrapped with Create React App.
 `CHOKIDAR_USEPOLLING=true`
 `REACT_APP_WEATHER_API_KEY="YOUR_API_KEY"`
 
+**Screenshot of Home page**
+!["Screenshot of Home"](https://github.com/XiaoyongXu/LHL-final-project/blob/master/files/Screen%20Shot%202019-03-15%20at%2012.33.51%20PM.png)
+
+**Screenshot of Activities page**
+!["Screenshot of Activities"](https://github.com/XiaoyongXu/LHL-final-project/blob/master/files/Screen%20Shot%202019-03-15%20at%2012.34.29%20PM.png)
+
+**Screenshot of Login pag**
+!["Screenshot of Login"](https://github.com/XiaoyongXu/LHL-final-project/blob/master/files/Screen%20Shot%202019-03-15%20at%2012.34.39%20PM.png)
 
 
 
