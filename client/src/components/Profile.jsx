@@ -50,7 +50,7 @@ class Profile extends Component {
             <Card.Img variant="top" src={this.state.url} />
 
           </Card>
-          <CardGroup>
+
             <Card style={{ width: '18rem' }}>
               <ListGroup variant="flush">
                 <ListGroup.Item>Email: {this.state.email}
@@ -70,7 +70,7 @@ class Profile extends Component {
                 </Link>
               </Card.Footer>
             </Card>
-          </CardGroup>
+
 
 
         </CardGroup>

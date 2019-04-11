@@ -72,8 +72,8 @@ exports.seed = function(knex, Promise) {
               lat: '49.334339',
               lng: '-123.261446',
               weather: 'cloudy',
-              start_date: 'Mar 13, 2019 14:30',
-              end_date: 'Mar 13, 2019 16:30',
+              start_date: 'Mar 16, 2019 14:30',
+              end_date: 'Mar 16, 2019 16:30',
               url: 'http://localhost:5000/lighthouse.jpg'
             },
             {
@@ -84,8 +84,8 @@ exports.seed = function(knex, Promise) {
               lat: '49.378863',
               lng: '-123.076821',
               weather: 'sunny',
-              start_date: 'Mar 14, 2019 10:30',
-              end_date: 'Mar 14, 2019 12:30',
+              start_date: 'Mar 17, 2019 10:30',
+              end_date: 'Mar 17, 2019 12:30',
               url: 'http://localhost:5000/p-1492157-10152204962653081-53473183-o_54_990x660_201404251300.jpg'
             },
 

@@ -5,7 +5,6 @@ import Sidebar from "./Sidebar.jsx";
 import Chatbar from "./Chatbar.jsx";
 import JoinedSidebar from "./JoinedSidebar.jsx";
 import EventDescription from "./EventDescription.jsx";
-import Card from "react-bootstrap/Card";
 
 import axios from "axios";
 
@@ -133,22 +132,6 @@ class Discussions extends Component {
 
     // if current user does not exists, render please
     if (this.props.currentUser.id) {
-      let hello = <div />;
-      if (this.state.showIntro) {
-        hello = (
-          <div className="intro">
-            <Card style={{ width: '100%' }}>
-              <Card.Header>Welcome to the Event Discussion Board</Card.Header>
-              <Card.Body>
-                <Card.Text>
-                  Please select an event from the left to see the messages.
-
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-        );
-      }
 
       return (
         <div className="row no-gutters" id="discussiondiv">
@@ -157,7 +140,7 @@ class Discussions extends Component {
             events={this.state.events}
           />
           <div className="col-7">
-            {hello}
+
             <div className="eventDescription">{eventDescription}</div>
             <div className="messages">{messages}</div>
           </div>

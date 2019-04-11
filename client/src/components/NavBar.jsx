@@ -25,7 +25,7 @@ export default function NavBar(props) {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Link to={'/home'} className="nav-link"> Home </Link>
+            <Link to={'/'} className="nav-link"> Home </Link>
             <Link to={'/activities'} className="nav-link">Activities</Link>
             <Link to={'/discussions'} className="nav-link">Discussions</Link>
 
